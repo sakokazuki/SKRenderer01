@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		9BEB8D101FD810A000AE3450 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB8D0F1FD810A000AE3450 /* main.cpp */; };
+		9BEB8D181FD810F200AE3450 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D171FD810E600AE3450 /* OpenGL.framework */; };
+		9BEB8D1C1FD8120B00AE3450 /* libGLEW.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D1B1FD8120B00AE3450 /* libGLEW.dylib */; };
+		9BEB8D1E1FD8182E00AE3450 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D1D1FD8182E00AE3450 /* libglfw3.a */; };
+		9BEB8D201FD8198F00AE3450 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D1F1FD8198600AE3450 /* Cocoa.framework */; };
+		9BEB8D221FD819A600AE3450 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D211FD8199E00AE3450 /* IOKit.framework */; };
+		9BEB8D241FD819BF00AE3450 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D231FD819B600AE3450 /* CoreVideo.framework */; };
+		9BEB8D271FD8241000AE3450 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB8D251FD8241000AE3450 /* Test.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +32,16 @@
 /* Begin PBXFileReference section */
 		9BEB8D0C1FD810A000AE3450 /* Game01 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game01; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEB8D0F1FD810A000AE3450 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9BEB8D171FD810E600AE3450 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		9BEB8D191FD811FF00AE3450 /* libglfw.3.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.2.dylib; path = ../../../../../../usr/local/lib/libglfw.3.2.dylib; sourceTree = "<group>"; };
+		9BEB8D1B1FD8120B00AE3450 /* libGLEW.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.dylib; path = ../../../../../../usr/local/lib/libGLEW.dylib; sourceTree = "<group>"; };
+		9BEB8D1D1FD8182E00AE3450 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = ../../../../../../usr/local/lib/libglfw3.a; sourceTree = "<group>"; };
+		9BEB8D1F1FD8198600AE3450 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		9BEB8D211FD8199E00AE3450 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		9BEB8D231FD819B600AE3450 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		9BEB8D251FD8241000AE3450 /* Test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
+		9BEB8D261FD8241000AE3450 /* Test.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Test.hpp; sourceTree = "<group>"; };
+		9BEB8D281FD836F800AE3450 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BEB8D241FD819BF00AE3450 /* CoreVideo.framework in Frameworks */,
+				9BEB8D221FD819A600AE3450 /* IOKit.framework in Frameworks */,
+				9BEB8D201FD8198F00AE3450 /* Cocoa.framework in Frameworks */,
+				9BEB8D1E1FD8182E00AE3450 /* libglfw3.a in Frameworks */,
+				9BEB8D181FD810F200AE3450 /* OpenGL.framework in Frameworks */,
+				9BEB8D1C1FD8120B00AE3450 /* libGLEW.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +64,10 @@
 		9BEB8D031FD810A000AE3450 = {
 			isa = PBXGroup;
 			children = (
+				9BEB8D281FD836F800AE3450 /* README.md */,
 				9BEB8D0E1FD810A000AE3450 /* Game01 */,
 				9BEB8D0D1FD810A000AE3450 /* Products */,
+				9BEB8D161FD810E600AE3450 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +83,24 @@
 			isa = PBXGroup;
 			children = (
 				9BEB8D0F1FD810A000AE3450 /* main.cpp */,
+				9BEB8D251FD8241000AE3450 /* Test.cpp */,
+				9BEB8D261FD8241000AE3450 /* Test.hpp */,
 			);
 			path = Game01;
+			sourceTree = "<group>";
+		};
+		9BEB8D161FD810E600AE3450 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9BEB8D231FD819B600AE3450 /* CoreVideo.framework */,
+				9BEB8D211FD8199E00AE3450 /* IOKit.framework */,
+				9BEB8D1F1FD8198600AE3450 /* Cocoa.framework */,
+				9BEB8D1D1FD8182E00AE3450 /* libglfw3.a */,
+				9BEB8D1B1FD8120B00AE3450 /* libGLEW.dylib */,
+				9BEB8D191FD811FF00AE3450 /* libglfw.3.2.dylib */,
+				9BEB8D171FD810E600AE3450 /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BEB8D101FD810A000AE3450 /* main.cpp in Sources */,
+				9BEB8D271FD8241000AE3450 /* Test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +275,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -241,6 +285,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

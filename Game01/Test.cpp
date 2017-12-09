@@ -7,3 +7,8 @@
 //
 
 #include "Test.hpp"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+#include <GLFW/glfw3.h>
+#pragma clang diagnostic pop
