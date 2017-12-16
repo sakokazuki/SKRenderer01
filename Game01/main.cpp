@@ -23,47 +23,40 @@ using std::ifstream;
 const int G_WIDTH = 640;
 const int G_HEIGHT = 480;
 
-std::string shader_basic_vert =
-R"(
-#version 410
-layout (location=0) in vec3 VertexPosition;
-layout (location=1) in vec3 VertexColor;
-out vec3 Color;
-void main()
+bool CreateCompileShader( std::string filename, GLenum shaderType, GLuint& shader )
 {
-    Color = VertexColor;
-    gl_Position = vec4(VertexPosition,1.0);
-}
-)";
-
-
-std::string shader_basic_frag =
-R"(
-#version 410
-in vec3 Color;
-layout (location=0) out vec4 FragColor;
-void main() {
-    FragColor = vec4(Color, 1.0);
-}
-)";
-
-
-bool CreateCompileShader( std::string code, GLenum shaderType, GLuint& shader )
-{
-    // Create the shader object
-    shader = glCreateShader( shaderType );
-    
-    if( 0 == shader ) {
-        fprintf( stderr, "Error creating shader\n" );
-        return false;
+    //create shader
+    shader = glCreateShader(shaderType);
+    if( 0 == shader )
+    {
+        fprintf(stderr, "Error creating shader.\n");
+        exit(1);
     }
     
-    // Load the source code into the shader object
-    const GLchar* codeArray[] = { code.c_str() };
-    std::cout << "----- old -----" << code.c_str() << "----------" << std::endl;
-    glShaderSource( shader, 1, codeArray, NULL );
+    //read shader file
+    GLchar * shaderCode;
+    ifstream fragFile( "./shaders/"+filename, ifstream::in );
     
-    // Compile the shader
+    if( !fragFile ) {
+        fprintf(stderr, "Error opening file: shader/basic.frag\n" );
+        exit(1);
+    }
+    shaderCode = (char *)malloc(10000);
+    int i = 0;
+    while( fragFile.good() ) {
+        int c = fragFile.get();
+        if(c == -1){
+            break;
+        }
+        shaderCode[i++] = c;
+    }
+    fragFile.close();
+    shaderCode[i++] = '\0';
+    const GLchar* codeArray[] = {shaderCode};
+    free(shaderCode);
+
+    //compile shader
+    glShaderSource( shader, 1, codeArray, NULL );
     glCompileShader( shader );
     
     // Check compilation status
@@ -88,7 +81,6 @@ bool CreateCompileShader( std::string code, GLenum shaderType, GLuint& shader )
         
         return false;
     }
-    
     return true;
 }
 
@@ -113,275 +105,24 @@ bool LinkShader( GLint shader1, GLint shader2 )
     glGetProgramiv( programHandle, GL_LINK_STATUS, &status );
     
     if (GL_FALSE == status) {
-        
         fprintf( stderr, "Failed to link shader program!\n" );
-        
         GLint logLen;
         glGetProgramiv( programHandle, GL_INFO_LOG_LENGTH, &logLen );
         
         if( logLen > 0 ) {
             char * log = new char[logLen];
-            
             GLsizei written;
             glGetProgramInfoLog( programHandle, logLen, &written, log );
-            
             fprintf( stderr, "Program log: \n%s", log );
             
             delete [] log;
         }
-        
         return false;
         
     } else {
-        
         glUseProgram( programHandle );
-        
     }
-    
     return true;
-}
-
-bool CreateCompileShaderFromFile(){
-    return false;
-}
-
-GLint test(){
-    // Create the shader object
-    GLuint fragShader = glCreateShader( GL_FRAGMENT_SHADER );
-    if( 0 == fragShader )
-    {
-        fprintf(stderr, "Error creating vertex shader.\n");
-        exit(1);
-    }
-    const GLchar* codeArray[] = {shader_basic_frag.c_str()};
-    glShaderSource( fragShader, 1, codeArray, NULL );
-    
-    // Compile the shader
-    glCompileShader( fragShader );
-    
-    // Check compilation status
-    GLint result;
-    glGetShaderiv( fragShader, GL_COMPILE_STATUS, &result );
-    if( GL_FALSE == result )
-    {
-        
-        fprintf( stderr, "Vertex shader compilation failed!\n" );
-        
-        GLint logLen;
-        glGetShaderiv( fragShader, GL_INFO_LOG_LENGTH, &logLen );
-        
-        if( logLen > 0 )
-        {
-            char * log = (char *)malloc(logLen);
-            
-            GLsizei written;
-            glGetShaderInfoLog(fragShader, logLen, &written, log);
-            
-            fprintf(stderr, "Shader log: \n%s", log);
-            
-            free(log);
-        }
-    }
-    return result;
-}
-
-GLint bothShader(std::string filename, GLenum shaderType){
-    GLchar * shaderCode;
-    
-    // Load contents of file into shaderCode here…
-    ifstream inFile( "/Users/kazukisako/Documents/practice/game/Game01/Game01/shaders/"+filename, ifstream::in );
-    if( !inFile ) {
-        fprintf(stderr, "Error opening file: shaders/point.vert\n" );
-        exit(1);
-    }
-    
-    shaderCode = (char *)malloc(10000);
-    int i = 0;
-    while( inFile.good() ) {
-        int c = inFile.get();
-        
-        if(c == -1){
-            break;
-        }
-        shaderCode[i++] = c;
-    }
-    inFile.close();
-    shaderCode[i++] = '\0';
-    
-    // Create the shader object
-    GLuint vertShader = glCreateShader( shaderType );
-    if( 0 == vertShader )
-    {
-        fprintf(stderr, "Error creating vertex shader.\n");
-        exit(1);
-    }
-    
-    // Load the source code into the shader object
-    const GLchar* codeArray[] = {shaderCode};
-    glShaderSource( vertShader, 1, codeArray, NULL );
-    free(shaderCode); // can be removed from book.
-    
-    // Compile the shader
-    glCompileShader( vertShader );
-    
-    // Check compilation status
-    GLint result;
-    glGetShaderiv( vertShader, GL_COMPILE_STATUS, &result );
-    if( GL_FALSE == result )
-    {
-        
-        fprintf( stderr, "Vertex shader compilation failed!\n" );
-        
-        GLint logLen;
-        glGetShaderiv( vertShader, GL_INFO_LOG_LENGTH, &logLen );
-        
-        if( logLen > 0 )
-        {
-            char * log = (char *)malloc(logLen);
-            
-            GLsizei written;
-            glGetShaderInfoLog(vertShader, logLen, &written, log);
-            
-            fprintf(stderr, "Shader log: \n%s", log);
-            
-            free(log);
-        }
-    }
-    return result;
-}
-
-
-
-GLint fragshader(){
-    GLchar * shaderCode;
-    
-    // Load contents of file into shaderCode here…
-    ifstream fragFile( "/Users/kazukisako/Documents/practice/game/Game01/Game01/shaders/point.frag", ifstream::in );
-    if( !fragFile ) {
-        fprintf(stderr, "Error opening file: shader/basic.frag\n" );
-        exit(1);
-    }
-    
-    shaderCode = (char *)malloc(10000);
-    int i = 0;
-    while( fragFile.good() ) {
-        int c = fragFile.get();
-        if(c == -1){
-            break;
-        }
-        shaderCode[i++] = c;
-    }
-    fragFile.close();
-    shaderCode[i++] = '\0';
-    std::cout << shaderCode << std::endl;
-    ////////////////////////////////////////////
-    
-    // Create the shader object
-    GLuint fragShader = glCreateShader( GL_FRAGMENT_SHADER );
-    if( 0 == fragShader )
-    {
-        fprintf(stderr, "Error creating fragment shader.\n");
-        exit(1);
-    }
-    
-    // Load the source code into the shader object
-    
-    const GLchar* codeArray[] = {shaderCode};
-    glShaderSource( fragShader, 1, codeArray, NULL );
-    free(shaderCode); // can be removed from book.
-    
-    // Compile the shader
-    glCompileShader( fragShader );
-    
-    // Check compilation status
-    GLint result;
-    glGetShaderiv( fragShader, GL_COMPILE_STATUS, &result );
-    if( GL_FALSE == result )
-    {
-        
-        fprintf( stderr, "Fragment shader compilation failed!\n" );
-        
-        GLint logLen;
-        glGetShaderiv( fragShader, GL_INFO_LOG_LENGTH, &logLen );
-        
-        if( logLen > 0 )
-        {
-            char * log = (char *)malloc(logLen);
-            
-            GLsizei written;
-            glGetShaderInfoLog(fragShader, logLen, &written, log);
-            
-            fprintf(stderr, "Shader log: \n%s", log);
-            
-            free(log);
-        }
-    }
-    return result;
-}
-
-GLint vertshader(){
-    GLchar * shaderCode;
-    
-    // Load contents of file into shaderCode here…
-    ifstream inFile( "/Users/kazukisako/Documents/practice/game/Game01/Game01/shaders/point.vert", ifstream::in );
-    if( !inFile ) {
-        fprintf(stderr, "Error opening file: shaders/point.vert\n" );
-        exit(1);
-    }
-    
-    shaderCode = (char *)malloc(10000);
-    int i = 0;
-    while( inFile.good() ) {
-        int c = inFile.get();
-        
-        if(c == -1){
-            break;
-        }
-        shaderCode[i++] = c;
-    }
-    inFile.close();
-    shaderCode[i++] = '\0';
-    
-    // Create the shader object
-    GLuint vertShader = glCreateShader( GL_VERTEX_SHADER );
-    if( 0 == vertShader )
-    {
-        fprintf(stderr, "Error creating vertex shader.\n");
-        exit(1);
-    }
-    
-    // Load the source code into the shader object
-    const GLchar* codeArray[] = {shaderCode};
-    glShaderSource( vertShader, 1, codeArray, NULL );
-    free(shaderCode); // can be removed from book.
-    
-    // Compile the shader
-    glCompileShader( vertShader );
-    
-    // Check compilation status
-    GLint result;
-    glGetShaderiv( vertShader, GL_COMPILE_STATUS, &result );
-    if( GL_FALSE == result )
-    {
-        
-        fprintf( stderr, "Vertex shader compilation failed!\n" );
-        
-        GLint logLen;
-        glGetShaderiv( vertShader, GL_INFO_LOG_LENGTH, &logLen );
-        
-        if( logLen > 0 )
-        {
-            char * log = (char *)malloc(logLen);
-            
-            GLsizei written;
-            glGetShaderInfoLog(vertShader, logLen, &written, log);
-            
-            fprintf(stderr, "Shader log: \n%s", log);
-            
-            free(log);
-        }
-    }
-    return result;
 }
 
 
@@ -423,20 +164,13 @@ int main(void)
     
     glfwSwapInterval(1);
     
-    GLuint vertShader = bothShader("point.vert", GL_VERTEX_SHADER);
-//    GLuint fragShader = fragshader();
-    // Create a Shader and Compile a Shader
-    /////////////////// Create the VBO ////////////////////
-    GLuint fragShader = bothShader("point.frag", GL_FRAGMENT_SHADER);
-    fragShader = test();
-////    vertShader = vertshader();
-//    if(!CreateCompileShader(shader_basic_vert, GL_VERTEX_SHADER, vertShader)){
-//        return -1;
-//    }
-//    if(!CreateCompileShader(shader_basic_frag, GL_FRAGMENT_SHADER, fragShader)){
-//        return -1;
-//    }
-
+    GLuint fragShader, vertShader;
+    if(!CreateCompileShader("point.vert", GL_VERTEX_SHADER, vertShader)){
+        return -1;
+    }
+    if(!CreateCompileShader("point.frag", GL_FRAGMENT_SHADER, fragShader)){
+        return -1;
+    }
     if(!LinkShader(vertShader, fragShader)){
         return -1;
     }
