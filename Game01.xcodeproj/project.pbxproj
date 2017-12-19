@@ -14,7 +14,6 @@
 		9BEB8D201FD8198F00AE3450 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D1F1FD8198600AE3450 /* Cocoa.framework */; };
 		9BEB8D221FD819A600AE3450 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D211FD8199E00AE3450 /* IOKit.framework */; };
 		9BEB8D241FD819BF00AE3450 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BEB8D231FD819B600AE3450 /* CoreVideo.framework */; };
-		9BEB8D271FD8241000AE3450 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BEB8D251FD8241000AE3450 /* Test.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,11 +29,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9B60971A1FE93D9800352782 /* init.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = init.vert; sourceTree = "<group>"; };
+		9B60971B1FE93DB600352782 /* init.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = init.frag; sourceTree = "<group>"; };
 		9BB643921FE04A2700C88834 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../../../usr/local/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
 		9BB643961FE056EA00C88834 /* point.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = point.vert; sourceTree = "<group>"; };
 		9BB643971FE056F900C88834 /* point.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = point.frag; sourceTree = "<group>"; };
-		9BB643981FE05C8800C88834 /* point.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = point.frag; sourceTree = "<group>"; };
-		9BB643991FE05C8800C88834 /* point.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = point.vert; sourceTree = "<group>"; };
 		9BEB8D0C1FD810A000AE3450 /* Game01 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Game01; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEB8D0F1FD810A000AE3450 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9BEB8D171FD810E600AE3450 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -44,8 +43,6 @@
 		9BEB8D1F1FD8198600AE3450 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9BEB8D211FD8199E00AE3450 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		9BEB8D231FD819B600AE3450 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		9BEB8D251FD8241000AE3450 /* Test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Test.cpp; sourceTree = "<group>"; };
-		9BEB8D261FD8241000AE3450 /* Test.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Test.hpp; sourceTree = "<group>"; };
 		9BEB8D281FD836F800AE3450 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +68,8 @@
 			children = (
 				9BB643961FE056EA00C88834 /* point.vert */,
 				9BB643971FE056F900C88834 /* point.frag */,
+				9B60971A1FE93D9800352782 /* init.vert */,
+				9B60971B1FE93DB600352782 /* init.frag */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -98,10 +97,6 @@
 			children = (
 				9BB643951FE056BB00C88834 /* shaders */,
 				9BEB8D0F1FD810A000AE3450 /* main.cpp */,
-				9BEB8D251FD8241000AE3450 /* Test.cpp */,
-				9BB643981FE05C8800C88834 /* point.frag */,
-				9BB643991FE05C8800C88834 /* point.vert */,
-				9BEB8D261FD8241000AE3450 /* Test.hpp */,
 			);
 			path = Game01;
 			sourceTree = "<group>";
@@ -179,7 +174,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BEB8D101FD810A000AE3450 /* main.cpp in Sources */,
-				9BEB8D271FD8241000AE3450 /* Test.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
