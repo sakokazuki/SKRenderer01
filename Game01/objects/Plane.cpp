@@ -16,8 +16,7 @@
 
 Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
 {
-    glGenVertexArrays( 1, &vaoHandle );
-    glBindVertexArray(vaoHandle);
+   
     faces = xdivs * zdivs;
     float * v = new float[3 * (xdivs + 1) * (zdivs + 1)];
     float * tex = new float[2 * (xdivs + 1) * (zdivs + 1)];
@@ -65,10 +64,10 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
             idx += 6;
         }
     }
-    std::cout << "vertex size: " << (3 * (xdivs + 1) * (zdivs + 1))/3 << std::endl;
-    std::cout << "texcoord size: " << (2 * (xdivs + 1) * (zdivs + 1))/2 << std::endl;
-    std::cout << "faces: " << faces << "," << xdivs << "," << zdivs << std::endl;
-    std::cout << "indices: " << sizeof(el) << std::endl;
+//    std::cout << "vertex size: " << (3 * (xdivs + 1) * (zdivs + 1))/3 << std::endl;
+//    std::cout << "texcoord size: " << (2 * (xdivs + 1) * (zdivs + 1))/2 << std::endl;
+//    std::cout << "faces: " << faces << "," << xdivs << "," << zdivs << std::endl;
+//    std::cout << "indices: " << sizeof(el) << std::endl;
     
 
     
@@ -119,6 +118,9 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
         tang[p2*4+3] = 0.0f;
     }
     
+    glGenVertexArrays( 1, &vaoHandle );
+    glBindVertexArray(vaoHandle);
+    
     unsigned int handle[5];
     glGenBuffers(5, handle);
     
@@ -145,6 +147,7 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle[4]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * xdivs * zdivs * sizeof(unsigned int), el, GL_STATIC_DRAW);
     
+    glBindVertexArray(0);
     delete [] v;
     delete [] tex;
     delete [] tang;

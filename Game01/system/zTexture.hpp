@@ -22,7 +22,7 @@ public:
     zTexture();
     bool loadTexture(const char* fileName);
     void render(GLenum target);
-    GLuint getID(void);
+    GLuint getID(void) const;
 };
 
 

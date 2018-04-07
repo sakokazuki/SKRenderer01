@@ -36,7 +36,7 @@ Window::Window(int width, int height, const char *title): window(glfwCreateWindo
 
 void Window::resize(GLFWwindow *const window, int width, int height)
 {
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, width*2, height*2);
     // このインスタンスの this ポインタを得る
     Window *const instance(static_cast<Window *>(glfwGetWindowUserPointer(window)));
     

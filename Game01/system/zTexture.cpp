@@ -132,7 +132,7 @@ void zTexture::render(GLenum target){
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-GLuint zTexture::getID() {
+GLuint zTexture::getID() const{
     return texture;
 }
 
