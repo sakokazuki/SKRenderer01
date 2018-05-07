@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #include "../system/3DObject.hpp"
-class Camera:_3DObject{
+class Camera:public _3DObject{
 public:
     Camera(int w, int h);
     glm::vec3 lookPos;

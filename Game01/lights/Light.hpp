@@ -14,12 +14,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include "../system/frustum.h"
+#include "../system/3DObject.hpp"
 
-class Light{
+class Light:public _3DObject{
 private:
     Frustum *lightFrustum;
     glm::mat4 shadowBias;
-    glm::vec4 position;
     glm::vec3 intensity;
 public:
     Light();
@@ -28,6 +28,8 @@ public:
     glm::mat4 getPVMatrix() const;
     glm::vec4 getPosition() const;
     glm::vec3 getIntensity() const;
+    
+    void update();
 };
 
 #endif /* Light_hpp */

@@ -12,24 +12,47 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
     
     light = new Light();
+    light->setTranslate(0, 7, -5);
+    light->update();
     camera = new Camera(windowW, windowH);
 
     plane = new PlaneMesh();
     plane->setTranslate(0, -2, 0);
     plane->setScale(10, 10, 10);
     
-    texmat1 = new TextureMeshMaterial();
-    plane->meshMaterial = texmat1;
+    groundMeshMat = new PbrMeshMaterial();
+    groundMeshMat->metallic = 0.0;
+    groundMeshMat->roughness = 0.0;
+    plane->meshMaterial = groundMeshMat;
+    
     
     
     torus = new TorusMesh();
-    torus->setTranslate(0, 0, 0);
-    torus->setScale(1, 1, 1);
-    texmat2 = new TextureMeshMaterial();
-    torus->meshMaterial = texmat2;
-    meshes.push_back(torus);
+    torus->setTranslate(    2, -1, -1);
+    torus->setScale(0.5, 0.5, 0.5);
+    torusMeshMat = new PbrMeshMaterial();
+    torusMeshMat->metallic = 1.0;
+    torusMeshMat->roughness = 1.0;
+    torus->meshMaterial = torusMeshMat;
     
+    model = new ModelMesh("assets/objs/teapot.obj");
+    model->setTranslate(0, -2, 0);
+    model->setScale(0.5, 0.5, 0.5);
+    teapotMeshMat = new PbrMeshMaterial();
+    teapotMeshMat->metallic = 0.5;
+    teapotMeshMat->roughness = 0.5;
+    model->meshMaterial = teapotMeshMat;
+    
+    
+//
+    
+    meshes.push_back(model);
+    meshes.push_back(torus);
     meshes.push_back(plane);
+    
+    
+    
+    
     shadowmapPass = new ShadowmapPass();
     shadowmapPass->init(light, camera, meshes);
     
@@ -39,7 +62,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     gBufferPass = new GBufferPass();
     gBufferPass->init(light, camera, meshes);
     
-    shadingPass = new ShadingPass();
+    shadingPass = new PbrShadingPass();
     shadingPass->init(light, camera, meshes);
 
     
@@ -71,11 +94,17 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glGenFramebuffers(1, &shadowmapFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
     
+    glGenRenderbuffers(1, &shadowDepthBuf);
+    glBindRenderbuffer(GL_RENDERBUFFER, shadowDepthBuf);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW*2, windowH*2);
+    
     glGenTextures(1, &unlitColorTex);
     glBindTexture(GL_TEXTURE_2D, unlitColorTex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW*2, windowH*2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadowDepthBuf);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, unlitColorTex, 0);
     
     GLenum drawbuffers2[] = {GL_NONE, GL_COLOR_ATTACHMENT0};
@@ -99,16 +128,18 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     
     glGenTextures(1, &normTex);
     glBindTexture(GL_TEXTURE_2D, normTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW*2, windowH*2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW*2, windowH*2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
+
     glGenTextures(1, &colorTex);
     glBindTexture(GL_TEXTURE_2D, colorTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW*2, windowH*2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW*2, windowH*2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+    
+    
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuf);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, posTex, 0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, normTex, 0);
@@ -127,9 +158,13 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     if(!groundTex.loadTexture("assets/images/floor.dds")){
         std::cout << "texture load is failed" << std::endl;
     }
+    if(!alphaTex.loadTexture("assets/images/alphaTex.dds")){
+        std::cout << "texture load is failed" << std::endl;
+    }
     
-    texmat1->mainTex = groundTex.getID();
-    texmat2->mainTex = greenTex.getID();
+    groundMeshMat->mainTex = groundTex.getID();
+    torusMeshMat->mainTex = greenTex.getID();
+    teapotMeshMat->mainTex = greenTex.getID();
     
     GLubyte whiteTexColor[] = { 255, 255, 255, 255 };
     glGenTextures(1, &whiteTex);
@@ -139,6 +174,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
 }
 
 void Scene01::render() const{
+    light->update();
     glEnable(GL_DEPTH_TEST);
     
     //pass1 record depth ====================================
@@ -158,48 +194,48 @@ void Scene01::render() const{
     //pass2 create shadowmap ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
     
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
     glCullFace(GL_BACK);
     
     glUseProgram(shadowmapPass->prog);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadowmapPass->setTextureUniform("ShadowMap", 0, depthTex);
     shadowmapPass->draw();
     glUseProgram(0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    
-    
+
+
     //pass3 create g-buffer ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
+
+    glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
     
-    glClear(GL_DEPTH_TEST);
-    
-    glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
-    glDisable(GL_DEPTH_TEST);
-//    glEnable(GL_DEPTH_TEST);
-    
+
     glUseProgram(gBufferPass->prog);
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
     gBufferPass->draw();
     glUseProgram(0);
-    
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    
-    
+
+
     //pass4 shading ====================================
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
-    
+    glDisable(GL_BLEND);
+
     glUseProgram(shadingPass->prog);
-    shadowmapPass->setTextureUniform("PositionTex", 0, posTex);
-    shadowmapPass->setTextureUniform("NormalTex", 1, normTex);
-    shadowmapPass->setTextureUniform("ColorTex", 2, colorTex);
-    shadowmapPass->setTextureUniform("ShadowmapTex", 3, unlitColorTex);
+
+    shadingPass->setTextureUniform("PositionTex", 0, posTex);
+    shadingPass->setTextureUniform("NormalTex", 1, normTex);
+    shadingPass->setTextureUniform("ColorTex", 2, colorTex);
+    shadingPass->setTextureUniform("ShadowmapTex", 3, alphaTex.getID());
     shadingPass->draw();
     glUseProgram(0);
-    
+//
 }
 
 

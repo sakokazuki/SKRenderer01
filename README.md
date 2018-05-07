@@ -262,6 +262,36 @@ meshにrenderPassの参照を渡してそれぞれでuniformをセットしよ�
 ひとまずtextureをセットするTextureMeshMaterialというクラスをつくってPlane, Torusにそれぞれ設定したところ
 ちゃんと別々のテクスチャが描画されたので成功したっぽい。
 
+### 4/7
+z位置の評価がされてなく、オブジェクト描画順を変えると前後関係が変になる件について向き合った。
+単に、`glEnable(DEPTH_TEST)`を忘れていただけだった。。
+のはすぐに解決したんだけれど、どうやらシャドウマップも変になってしまうことがわかり
+そこに若干はまった。いろいろ検証していたら単にシャドウマップパスで出した絵は正常にでてるのに
+fboに書き込まれた絵は正常ではないということがわかり、fboあたり見直していたところ、
+`glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadowDepthBuf);`
+これやらないとfboのdepthが有効にならないっぽい。本が手元にないので後で調べる。
+
+
+### 4/30
+完全に計画性とか継続性がなくなってきた。もしくは書いてないだけかな？
+とりあえず簡易的にdeferred shadingとshadowmapでシーンがつくれていたので
+次はシェーディングを整えることにした。ということで物理ベースレンダリングの実装に手をかけ始めた。
+本当は全体のリファクタリングするか迷ったがどうせまた不都合な部分でてくるしホントの最後に気力があれば
+やればいいかみたいな感じになっている。
+物理ベースレンダリングについてはこの記事(https://qiita.com/mebiusbox2/items/8a4734ab5b0854528789)
+がすごく勉強になりそうなのでthreejs環境もつくって比較しながら進めていくことにする。
+この記事はfowardなのでdefferd用の調整を行った。
+normalとpositionはgbufferで取ってきているのでそれを使う。metallicとroughnessは
+この記事(https://www.hiagodesena.com/pbr-deferred-renderer.html)ではnormal, colorのa値にそれぞれ入れていたので
+そうした。それに伴い若干つまづいたのはalphaを使うにはglEnable(GL_BLEND)とかそういうことをしてアルファを
+有効にしないといけないと勘違いして(事実、gbuffer passでfboに入れずにそのまま出したら有効にしないと実行結果にalpha値反映されなかったので)
+はまった。どうもfbo textureのrgbaの値がおかしい。。結果そういうのいらないらしくそのまま素直にやったらできた。
+あ、textureのフォーマットがRGBだったのでその2つはRGBAにしました。
+これで準備は整ったはず。。
+
+あと今影にモアレみたいなのがうつっていてこれは物理ベースレンダリングが終わったあと対応する予定。
+どうやらシャドウアクネという現象らしい(めも)(https://msdn.microsoft.com/ja-jp/library/ee416324(v=vs.85).aspx)
+
 
 
 

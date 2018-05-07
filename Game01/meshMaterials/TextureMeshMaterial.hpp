@@ -19,7 +19,7 @@ private:
 public:
     TextureMeshMaterial();
     GLuint mainTex;
-    void setUniforms(RenderPass* renderPass);
+    void setUniforms(RenderPass* renderPass) override;
     ~TextureMeshMaterial();
 };
 

@@ -22,26 +22,29 @@
 #include "../camera/Camera.hpp"
 #include "../meshes/TorusMesh.hpp"
 #include "../meshes/PlaneMesh.hpp"
+#include "../meshes/ModelMesh.hpp"
 #include "../meshes/Mesh.hpp"
 
 #include "../renderpass/ShadowmapPass.hpp"
 #include "../renderpass/RecordLightDepthPass.hpp"
 #include "../renderpass/GBufferPass.hpp"
-#include "../renderpass/ShadingPass.hpp"
+#include "../renderpass/PbrShadingPass.hpp"
+
 
 #include "../system/zTexture.hpp"
-#include "../meshMaterials/TextureMeshMaterial.hpp"
+#include "../meshMaterials/PbrMeshMaterial.hpp"
 
 class Scene01:public Scene{
 private:
     
     PlaneMesh* plane;
     TorusMesh* torus;
+    ModelMesh* model;
 
     GLuint shadowFBO;
     GLuint depthTex;
     GLuint deferredFBO;
-    GLuint depthBuf, posTex, normTex, colorTex, shadowTex;
+    GLuint depthBuf, shadowDepthBuf, posTex, normTex, colorTex, shadowTex;
     GLuint shadowmapFBO, unlitColorTex;
     
     Light* light;
@@ -52,11 +55,13 @@ private:
     RenderPass* gBufferPass;
     RenderPass* shadingPass;
     
-    TextureMeshMaterial *texmat1;
-    TextureMeshMaterial *texmat2;
+    PbrMeshMaterial *teapotMeshMat;
+    PbrMeshMaterial *torusMeshMat;
+    PbrMeshMaterial *groundMeshMat;
     
     zTexture greenTex;
     zTexture groundTex;
+    zTexture alphaTex;
     GLuint whiteTex;
     
     
