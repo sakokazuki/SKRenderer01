@@ -11,7 +11,8 @@
 Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
     
-    light = new Light();
+//    light = new SpotLight(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 100.0f, 45.0f, 0.0f, 1.0f);
+    light = new Light(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f);
     light->setTranslate(0, 7, -5);
     light->update();
     camera = new Camera(windowW, windowH);
@@ -44,13 +45,9 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     model->meshMaterial = teapotMeshMat;
     
     
-//
-    
     meshes.push_back(model);
     meshes.push_back(torus);
     meshes.push_back(plane);
-    
-    
     
     
     shadowmapPass = new ShadowmapPass();
@@ -62,7 +59,8 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     gBufferPass = new GBufferPass();
     gBufferPass->init(light, camera, meshes);
     
-    shadingPass = new PbrShadingPass();
+//    shadingPass = new PbrShadingPass();
+    shadingPass = new ShadingPass();
     shadingPass->init(light, camera, meshes);
 
     
@@ -177,6 +175,8 @@ void Scene01::render() const{
     light->update();
     glEnable(GL_DEPTH_TEST);
     
+    
+    
     //pass1 record depth ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
     
@@ -205,17 +205,16 @@ void Scene01::render() const{
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
     //pass3 create g-buffer ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
 
     glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
-    
+
     glCullFace(GL_BACK);
 
     glUseProgram(gBufferPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+
     gBufferPass->draw();
     glUseProgram(0);
 
@@ -235,7 +234,7 @@ void Scene01::render() const{
     shadingPass->setTextureUniform("ShadowmapTex", 3, alphaTex.getID());
     shadingPass->draw();
     glUseProgram(0);
-//
+
 }
 
 

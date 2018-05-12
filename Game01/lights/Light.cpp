@@ -8,15 +8,17 @@
 
 #include "Light.hpp"
 
-Light::Light(){
+Light::Light(glm::vec3 color, float intensity){
     shadowBias = glm::mat4(glm::vec4(0.5f,0.0f,0.0f,0.0f),
                            glm::vec4(0.0f,0.5f,0.0f,0.0f),
                            glm::vec4(0.0f,0.0f,0.5f,0.0f),
                            glm::vec4(0.5f,0.5f,0.5f,1.0f)
                            );
     lightFrustum = new Frustum(Projection::PERSPECTIVE);
-
-    intensity = glm::vec3(0.9f, 0.9f, 0.9f);
+    
+    this->color = color;
+    this->intensity = intensity;
+    
     lightFrustum->orient(getPosition(), glm::vec3(0.0f), glm::vec3(0.0f,1.0f,0.0f));
     lightFrustum->setPerspective( 30.0f, 1.0f, 1.0f, 25.0f);
 }
@@ -27,7 +29,8 @@ void Light::update(){
 
 
 glm::vec3 Light::getIntensity() const{
-    return intensity;
+    return glm::vec3(0.9f, 0.9f, 0.9f);
+//    return intensity * color;
 }
 
 glm::mat4 Light::getProjectionMatrix() const{

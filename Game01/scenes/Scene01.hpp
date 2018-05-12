@@ -19,6 +19,7 @@
 #include "../objects/Quad.hpp"
 
 #include "../lights/Light.hpp"
+#include "../lights/SpotLight.hpp"
 #include "../camera/Camera.hpp"
 #include "../meshes/TorusMesh.hpp"
 #include "../meshes/PlaneMesh.hpp"
@@ -29,6 +30,7 @@
 #include "../renderpass/RecordLightDepthPass.hpp"
 #include "../renderpass/GBufferPass.hpp"
 #include "../renderpass/PbrShadingPass.hpp"
+#include "../renderpass/ShadingPass.hpp"
 
 
 #include "../system/zTexture.hpp"

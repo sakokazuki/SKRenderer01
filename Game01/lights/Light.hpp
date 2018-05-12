@@ -20,16 +20,18 @@ class Light:public _3DObject{
 private:
     Frustum *lightFrustum;
     glm::mat4 shadowBias;
-    glm::vec3 intensity;
+    float intensity;
+    glm::vec3 color;
 public:
-    Light();
+    Light(glm::vec3 color, float intensity);
     glm::mat4 getProjectionMatrix() const;
     glm::mat4 getViewMatrix() const;
     glm::mat4 getPVMatrix() const;
     glm::vec4 getPosition() const;
     glm::vec3 getIntensity() const;
     
-    void update();
+    
+    virtual void update();
 };
 
 #endif /* Light_hpp */

@@ -42,6 +42,7 @@
 		9BA91F0C201F90F3007E5076 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA91F0B201F90F3007E5076 /* frustum.cpp */; };
 		9BB643941FE04C0000C88834 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB643921FE04A2700C88834 /* libGLEW.2.1.0.dylib */; };
 		9BC4297D2045A39B00913FF0 /* MeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BC4297B2045A39B00913FF0 /* MeshMaterial.cpp */; };
+		9BD05A4420A74B9200FB4C34 /* SpotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */; };
 		9BE0D28A2019FA240019D12C /* NormalTexMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D2882019FA240019D12C /* NormalTexMaterial.cpp */; };
 		9BE0D28D2019FD150019D12C /* ModelMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D28B2019FD150019D12C /* ModelMesh.cpp */; };
 		9BE0D292201A1AA70019D12C /* DeferredMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D290201A1AA70019D12C /* DeferredMaterial.cpp */; };
@@ -1629,6 +1630,8 @@
 		9BB643971FE056F900C88834 /* point.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = point.frag; sourceTree = "<group>"; };
 		9BC4297B2045A39B00913FF0 /* MeshMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MeshMaterial.cpp; sourceTree = "<group>"; };
 		9BC4297C2045A39B00913FF0 /* MeshMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMaterial.hpp; sourceTree = "<group>"; };
+		9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpotLight.cpp; sourceTree = "<group>"; };
+		9BD05A4320A74B9200FB4C34 /* SpotLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpotLight.hpp; sourceTree = "<group>"; };
 		9BE0D2882019FA240019D12C /* NormalTexMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NormalTexMaterial.cpp; sourceTree = "<group>"; };
 		9BE0D2892019FA240019D12C /* NormalTexMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NormalTexMaterial.hpp; sourceTree = "<group>"; };
 		9BE0D28B2019FD150019D12C /* ModelMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelMesh.cpp; sourceTree = "<group>"; };
@@ -1700,6 +1703,8 @@
 			children = (
 				9B39C6702026003600849ACB /* Light.cpp */,
 				9B39C6712026003600849ACB /* Light.hpp */,
+				9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */,
+				9BD05A4320A74B9200FB4C34 /* SpotLight.hpp */,
 			);
 			path = lights;
 			sourceTree = "<group>";
@@ -3753,6 +3758,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B6CEFB2202BEC7300C03397 /* GBufferPass.cpp in Sources */,
+				9BD05A4420A74B9200FB4C34 /* SpotLight.cpp in Sources */,
 				9BE0D292201A1AA70019D12C /* DeferredMaterial.cpp in Sources */,
 				9B3EC7D62013067E00F01A0A /* ObjMesh.cpp in Sources */,
 				9B6CEFAD202BE1C800C03397 /* RecordLightDepthPass.cpp in Sources */,

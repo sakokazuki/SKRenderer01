@@ -140,12 +140,12 @@ void ObjMesh::loadOBJ( const char * fileName, bool reCenterMesh ) {
     
     storeVBO(points, normals, texCoords, tangents, faces);
     
-    cout << "Loaded mesh from: " << fileName << endl;
-    cout << " " << points.size() << " points" << endl;
-    cout << " " << nFaces << " faces" << endl;
-    cout << " " << normals.size() << " normals" << endl;
-    cout << " " << tangents.size() << " tangents " << endl;
-    cout << " " << texCoords.size() << " texture coordinates." << endl;
+//    cout << "Loaded mesh from: " << fileName << endl;
+//    cout << " " << points.size() << " points" << endl;
+//    cout << " " << nFaces << " faces" << endl;
+//    cout << " " << normals.size() << " normals" << endl;
+//    cout << " " << tangents.size() << " tangents " << endl;
+//    cout << " " << texCoords.size() << " texture coordinates." << endl;
 }
 
 void ObjMesh::center( vector<vec3> & points ) {

@@ -13,7 +13,7 @@
 
 SceneShadowDeferred::SceneShadowDeferred(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
-    light = new Light();
+    light = new Light(glm::vec3(1.0f, 1.0f, 1.0f), 1.0);
     quad = new Quad();
 
     shadowmappass = new ShadowmapPassMaterial();
