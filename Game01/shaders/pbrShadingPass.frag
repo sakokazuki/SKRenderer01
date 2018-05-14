@@ -9,6 +9,7 @@
 #define LOG2 1.442695
 #define EPSILON 1e-6
 
+
 struct LightInfo{
     vec4 Position;
     vec3 Intensity;
@@ -17,6 +18,10 @@ uniform LightInfo Light;
 
 
 uniform sampler2D PositionTex, NormalTex, ColorTex, ShadowmapTex;
+uniform sampler2D TestTex;
+
+
+
 
 in vec3 Position;
 in vec3 Normal;
@@ -65,6 +70,15 @@ struct Material {
     vec3 specularColor;
     float specularRoughness;
 };
+
+#define LIGHT_MAX 4
+uniform DirectionalLight directionalLights[LIGHT_MAX];
+uniform PointLight pointLights[LIGHT_MAX];
+uniform SpotLight spotLights[LIGHT_MAX];
+uniform int numDirectionalLights;
+uniform int numPointLights;
+uniform int numSpotLights;
+
 
 //x 0-1
 float saturate(float x){
@@ -248,13 +262,15 @@ void main(){
     
     
     
-//    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);
+    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);
+    FragColor = FragColor * vec4(shadow, 1.0);
     
 //    FragColor = vec4(albedoColor.rgb, 1.0);
 //    FragColor = albedoColor;
-    FragColor = vec4(shadow, 1.0);
+    
+//    FragColor = vec4(vec3(texture(TestTex, TexCoord).r), 1.0);
    
-//    FragColor = FragColor * vec4(shadow, 1.0);
+//
 //    FragColor = vec4(norm, 1.0);
     //    FragColor = vec4(pos, 1.0);
 //    FragColor = vec4(albedo, 1.0);

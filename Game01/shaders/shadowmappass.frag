@@ -19,7 +19,7 @@ void shadeWithShadow(){
 
     FragColor = vec4(shadow, shadow, shadow, 1.0);
     ShadowColor = vec4(shadow, shadow, shadow, 1.0);
-    FragColor = vec4(ShadowCoord.x, ShadowCoord.y, 1.0, 1.0);
+//    FragColor = vec4(ShadowCoord.x, ShadowCoord.y, 1.0, 1.0);
 }
 
 subroutine(RenderPassType)

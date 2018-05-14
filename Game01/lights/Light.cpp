@@ -7,38 +7,39 @@
 //
 
 #include "Light.hpp"
+#include "../renderpass/RenderPass.hpp"
 
-Light::Light(glm::vec3 color, float intensity){
+Light::Light(glm::vec3 color, float intensity): castShadow(false), visible(true){
     shadowBias = glm::mat4(glm::vec4(0.5f,0.0f,0.0f,0.0f),
                            glm::vec4(0.0f,0.5f,0.0f,0.0f),
                            glm::vec4(0.0f,0.0f,0.5f,0.0f),
                            glm::vec4(0.5f,0.5f,0.5f,1.0f)
                            );
-    lightFrustum = new Frustum(Projection::PERSPECTIVE);
     
     this->color = color;
     this->intensity = intensity;
-    
-    lightFrustum->orient(getPosition(), glm::vec3(0.0f), glm::vec3(0.0f,1.0f,0.0f));
-    lightFrustum->setPerspective( 30.0f, 1.0f, 1.0f, 25.0f);
+
 }
 
 void Light::update(){
-    lightFrustum->orient(getPosition(), glm::vec3(0.0f), glm::vec3(0.0f,1.0f,0.0f));
+}
+
+void Light::lighting(RenderPass *renderPass, int index){
+    renderPass->setUniform("Light.Intensity", getIntensity());
+    renderPass->setUniform("Light.Position", getPosition());
 }
 
 
 glm::vec3 Light::getIntensity() const{
-    return glm::vec3(0.9f, 0.9f, 0.9f);
-//    return intensity * color;
+    return intensity * color;
 }
 
 glm::mat4 Light::getProjectionMatrix() const{
-    return lightFrustum->getProjectionMatrix();
+    return projectionMatrix;
 }
 
 glm::mat4 Light::getViewMatrix() const{
-    return lightFrustum->getViewMatrix();
+    return viewMatrix;
 }
 
 glm::mat4 Light::getPVMatrix() const{

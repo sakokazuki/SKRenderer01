@@ -43,6 +43,7 @@
 		9BB643941FE04C0000C88834 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB643921FE04A2700C88834 /* libGLEW.2.1.0.dylib */; };
 		9BC4297D2045A39B00913FF0 /* MeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BC4297B2045A39B00913FF0 /* MeshMaterial.cpp */; };
 		9BD05A4420A74B9200FB4C34 /* SpotLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */; };
+		9BD05A4720A88A6000FB4C34 /* DirectionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BD05A4520A88A6000FB4C34 /* DirectionalLight.cpp */; };
 		9BE0D28A2019FA240019D12C /* NormalTexMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D2882019FA240019D12C /* NormalTexMaterial.cpp */; };
 		9BE0D28D2019FD150019D12C /* ModelMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D28B2019FD150019D12C /* ModelMesh.cpp */; };
 		9BE0D292201A1AA70019D12C /* DeferredMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0D290201A1AA70019D12C /* DeferredMaterial.cpp */; };
@@ -1632,6 +1633,8 @@
 		9BC4297C2045A39B00913FF0 /* MeshMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MeshMaterial.hpp; sourceTree = "<group>"; };
 		9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SpotLight.cpp; sourceTree = "<group>"; };
 		9BD05A4320A74B9200FB4C34 /* SpotLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SpotLight.hpp; sourceTree = "<group>"; };
+		9BD05A4520A88A6000FB4C34 /* DirectionalLight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DirectionalLight.cpp; sourceTree = "<group>"; };
+		9BD05A4620A88A6000FB4C34 /* DirectionalLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DirectionalLight.hpp; sourceTree = "<group>"; };
 		9BE0D2882019FA240019D12C /* NormalTexMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NormalTexMaterial.cpp; sourceTree = "<group>"; };
 		9BE0D2892019FA240019D12C /* NormalTexMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NormalTexMaterial.hpp; sourceTree = "<group>"; };
 		9BE0D28B2019FD150019D12C /* ModelMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ModelMesh.cpp; sourceTree = "<group>"; };
@@ -1705,6 +1708,8 @@
 				9B39C6712026003600849ACB /* Light.hpp */,
 				9BD05A4220A74B9200FB4C34 /* SpotLight.cpp */,
 				9BD05A4320A74B9200FB4C34 /* SpotLight.hpp */,
+				9BD05A4520A88A6000FB4C34 /* DirectionalLight.cpp */,
+				9BD05A4620A88A6000FB4C34 /* DirectionalLight.hpp */,
 			);
 			path = lights;
 			sourceTree = "<group>";
@@ -3784,6 +3789,7 @@
 				9B39C6722026003600849ACB /* Light.cpp in Sources */,
 				9B65B46720963AB4001D132F /* PbrShadingPass.cpp in Sources */,
 				9B47187C2018C3B8009366A0 /* ShaderFunc.cpp in Sources */,
+				9BD05A4720A88A6000FB4C34 /* DirectionalLight.cpp in Sources */,
 				9BE0D297201F4B770019D12C /* SceneDeferred.cpp in Sources */,
 				9B4718802018C5B8009366A0 /* TorusMesh.cpp in Sources */,
 				9BE0D29D201F54A60019D12C /* SceneShadowmap.cpp in Sources */,

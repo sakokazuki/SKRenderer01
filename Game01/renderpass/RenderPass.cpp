@@ -8,6 +8,7 @@
 
 #include "RenderPass.hpp"
 #include "../meshes/Mesh.hpp"
+#include "../lights/Light.hpp"
 
 RenderPass::RenderPass(std::string vert, std::string frag): shadername_vert(vert), shadername_frag(frag){
     compileShader();
@@ -20,8 +21,8 @@ RenderPass::RenderPass(std::string vert, std::string frag): shadername_vert(vert
 
 }
 
-void RenderPass::init(Light *l, Camera *c, std::vector<Mesh *> m){
-    light = l;
+void RenderPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
+    lights = l;
     camera = c;
     meshes = m;
 }
@@ -70,7 +71,6 @@ void RenderPass::setUniform(const char *name, float data) const{
     GLint loc = glGetUniformLocation(prog, name);
     glUniform1f(loc, data);
 }
-
 
 
 

@@ -9,7 +9,7 @@
 #include "Camera.hpp"
 
 Camera::Camera(int w, int h){
-    setTranslate(2.0f, 3.0f, 5.0f);
+    setTranslate(0.0f, 2.0f, 5.0f);
     lookPos = glm::vec3(0.0f, 0.0f, 0.0f);
     viewMatrix = glm::lookAt(position, lookPos, glm::vec3(0.0f, 1.0f, 0.0f));
     

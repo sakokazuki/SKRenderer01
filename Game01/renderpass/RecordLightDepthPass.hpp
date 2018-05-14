@@ -18,7 +18,7 @@ private:
 public:
     RecordLightDepthPass();
     void draw() override;
-    void init(Light* l, Camera* c, std::vector<Mesh*> m) override;
+    void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) override;
 };
 
 #endif /* RecordLightDepthPass_hpp */

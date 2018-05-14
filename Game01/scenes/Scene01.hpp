@@ -20,6 +20,7 @@
 
 #include "../lights/Light.hpp"
 #include "../lights/SpotLight.hpp"
+#include "../lights/DirectionalLight.hpp"
 #include "../camera/Camera.hpp"
 #include "../meshes/TorusMesh.hpp"
 #include "../meshes/PlaneMesh.hpp"
@@ -30,7 +31,6 @@
 #include "../renderpass/RecordLightDepthPass.hpp"
 #include "../renderpass/GBufferPass.hpp"
 #include "../renderpass/PbrShadingPass.hpp"
-#include "../renderpass/ShadingPass.hpp"
 
 
 #include "../system/zTexture.hpp"
@@ -49,9 +49,10 @@ private:
     GLuint depthBuf, shadowDepthBuf, posTex, normTex, colorTex, shadowTex;
     GLuint shadowmapFBO, unlitColorTex;
     
-    Light* light;
+    
     Camera* camera;
     std::vector<Mesh*> meshes;
+    std::vector<Light*> lights;
     RenderPass* shadowmapPass;
     RenderPass* recordLightDepthPass;
     RenderPass* gBufferPass;
@@ -63,7 +64,6 @@ private:
     
     zTexture greenTex;
     zTexture groundTex;
-    zTexture alphaTex;
     GLuint whiteTex;
     
     

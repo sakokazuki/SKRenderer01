@@ -13,15 +13,17 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-#include "../system/frustum.h"
 #include "../system/3DObject.hpp"
+class RenderPass;
 
 class Light:public _3DObject{
 private:
-    Frustum *lightFrustum;
     glm::mat4 shadowBias;
     float intensity;
     glm::vec3 color;
+protected:
+    glm::mat4 projectionMatrix;
+    glm::mat4 viewMatrix;
 public:
     Light(glm::vec3 color, float intensity);
     glm::mat4 getProjectionMatrix() const;
@@ -30,8 +32,11 @@ public:
     glm::vec4 getPosition() const;
     glm::vec3 getIntensity() const;
     
+    bool visible;
+    bool castShadow;
     
     virtual void update();
+    virtual void lighting(RenderPass *renderPass, int index);
 };
 
 #endif /* Light_hpp */

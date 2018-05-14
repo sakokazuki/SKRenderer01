@@ -17,11 +17,11 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glew.h>
 #include "../system/ShaderFunc.hpp"
-#include "../lights/Light.hpp"
+//#include "../lights/Light.hpp"
 #include "../camera/Camera.hpp"
 //#include "../meshes/Mesh.hpp"
 
-
+class Light;
 class Mesh;
 
 class RenderPass{
@@ -38,19 +38,20 @@ public:
     glm::mat4 viewMatrix, projectionMatrix;
     RenderPass(std::string vert, std::string frag);
     virtual void draw();
-    virtual void init(Light* l, Camera* c, std::vector<Mesh*> m);
-    Light* light;
+    virtual void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m);
+//    Light* light;
     Camera* camera;
     std::vector<Mesh*> meshes;
+    std::vector<Light*> lights;
     
     void setUniform(const char* name, glm::vec3 data) const;
     void setUniform(const char* name, glm::vec4 data) const;
     void setUniform(const char* name, glm::mat4 data) const;
     void setUniform(const char* name, float data) const;
+
     
     //tmp
     void setTextureUniform(const char* name, int index, GLuint tex);
-//    void setVec3Uniform(const char* name, )
 };
 
 #endif /* RenderPass_hpp */

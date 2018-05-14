@@ -9,6 +9,7 @@
 #include "ShadowmapPass.hpp"
 #include "glm/ext.hpp"
 #include "../meshes/Mesh.hpp"
+#include "../lights/Light.hpp"
 
 ShadowmapPass::ShadowmapPass():RenderPass("unlit.vert", "unlit.frag"){
     shadowMatrixLoc = glGetUniformLocation(prog, "ShadowMatrix");
@@ -18,7 +19,7 @@ ShadowmapPass::ShadowmapPass():RenderPass("unlit.vert", "unlit.frag"){
 //    rMatrix = glm::rotate(glm::mat4(), float(0), glm::vec3(1.0f, 0.0f, 0.0f));
 }
 
-void ShadowmapPass::init(Light *l, Camera *c, std::vector<Mesh *> m){
+void ShadowmapPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
     RenderPass::init(l, c, m);
     viewMatrix = camera->viewMatrix;
     projectionMatrix = camera->projectionMatrix;
@@ -27,13 +28,17 @@ void ShadowmapPass::init(Light *l, Camera *c, std::vector<Mesh *> m){
 
 void ShadowmapPass::draw(){
     
+    //シャドウマップ生成に使うライトは1つだけ。castshadow=trueにしたものにする。
+    Light *light = lights[0];
+    for(int i=0; i<lights.size(); i++){
+        if(lights[i]->castShadow == true){
+            light = lights[i];
+            break;
+        }
+    }
+    
     for(int i=0; i<meshes.size(); i++){
-//        glm::mat4 mv = viewMatrix * meshes[i]->getModelMatrix();
-//        glUniformMatrix4fv(modelviewloc, 1, GL_FALSE, &mv[0][0]);
-//        glm::mat3 normal = glm::mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
-//        glUniformMatrix3fv(normalloc, 1, GL_FALSE, &normal[0][0]);
-//        glm::mat4 mvp = projectionMatrix * mv;
-//        glUniformMatrix4fv(mvploc, 1, GL_FALSE, &mvp[0][0]);
+
         glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &(light->getPVMatrix() * meshes[i]->getModelMatrix())[0][0]);
         meshes[i]->draw(this);
     }    

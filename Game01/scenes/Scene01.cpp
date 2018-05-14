@@ -10,11 +10,19 @@
 
 Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
+
     
-//    light = new SpotLight(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 100.0f, 45.0f, 0.0f, 1.0f);
-    light = new Light(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f);
-    light->setTranslate(0, 7, -5);
-    light->update();
+    Light* spotLight = new SpotLight(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f, 100.0f, 45.0f, 0.0f, 1.0f);
+    spotLight->setTranslate(5, 5, 0);
+    lights.push_back(spotLight);
+    
+    Light* directionalLight = new DirectionalLight(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f);
+    directionalLight->setTranslate(0, 5, -5);
+    directionalLight->castShadow = true;
+    lights.push_back(directionalLight);
+    
+    
+    
     camera = new Camera(windowW, windowH);
 
     plane = new PlaneMesh();
@@ -51,17 +59,16 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     
     
     shadowmapPass = new ShadowmapPass();
-    shadowmapPass->init(light, camera, meshes);
+    shadowmapPass->init(lights, camera, meshes);
     
     recordLightDepthPass = new RecordLightDepthPass();
-    recordLightDepthPass->init(light, camera, meshes);
+    recordLightDepthPass->init(lights, camera, meshes);
     
     gBufferPass = new GBufferPass();
-    gBufferPass->init(light, camera, meshes);
+    gBufferPass->init(lights, camera, meshes);
     
-//    shadingPass = new PbrShadingPass();
-    shadingPass = new ShadingPass();
-    shadingPass->init(light, camera, meshes);
+    shadingPass = new PbrShadingPass();
+    shadingPass->init(lights, camera, meshes);
 
     
     //FBO 1 -----------------------------------------------------------
@@ -156,9 +163,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     if(!groundTex.loadTexture("assets/images/floor.dds")){
         std::cout << "texture load is failed" << std::endl;
     }
-    if(!alphaTex.loadTexture("assets/images/alphaTex.dds")){
-        std::cout << "texture load is failed" << std::endl;
-    }
+
     
     groundMeshMat->mainTex = groundTex.getID();
     torusMeshMat->mainTex = greenTex.getID();
@@ -172,7 +177,10 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
 }
 
 void Scene01::render() const{
-    light->update();
+
+    for(int i=0; i<lights.size(); i++){
+        lights[i]->update();
+    }
     glEnable(GL_DEPTH_TEST);
     
     
@@ -189,22 +197,22 @@ void Scene01::render() const{
     glUseProgram(0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    
-    
+
+
     //pass2 create shadowmap ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
-    
+
     glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
     glCullFace(GL_BACK);
-    
+
     glUseProgram(shadowmapPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadowmapPass->setTextureUniform("ShadowMap", 0, depthTex);
     shadowmapPass->draw();
     glUseProgram(0);
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//
     //pass3 create g-buffer ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
 
@@ -231,7 +239,8 @@ void Scene01::render() const{
     shadingPass->setTextureUniform("PositionTex", 0, posTex);
     shadingPass->setTextureUniform("NormalTex", 1, normTex);
     shadingPass->setTextureUniform("ColorTex", 2, colorTex);
-    shadingPass->setTextureUniform("ShadowmapTex", 3, alphaTex.getID());
+    shadingPass->setTextureUniform("ShadowmapTex", 3, unlitColorTex);
+    shadingPass->setTextureUniform("TestTex", 4, depthTex);
     shadingPass->draw();
     glUseProgram(0);
 

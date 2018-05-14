@@ -7,6 +7,9 @@
 //
 
 #include "ShadingPass.hpp"
+#include "../lights/Light.hpp"
+#include "../lights/DirectionalLight.hpp"
+#include "../lights/SpotLight.hpp"
 
 ShadingPass::ShadingPass():RenderPass("shadingPass.vert", "shadingPass.frag"){
     postexloc = glGetUniformLocation(prog, "PositionTex");
@@ -18,7 +21,7 @@ ShadingPass::ShadingPass():RenderPass("shadingPass.vert", "shadingPass.frag"){
     
 }
 
-void ShadingPass::init(Light *l, Camera *c, std::vector<Mesh *> m){
+void ShadingPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
     RenderPass::init(l, c, m);
     viewMatrix = glm::mat4(1);
     projectionMatrix = glm::mat4(1);
@@ -27,15 +30,27 @@ void ShadingPass::init(Light *l, Camera *c, std::vector<Mesh *> m){
 
 
 void ShadingPass::draw(){
-    setUniform("Light.Intensity", light->getIntensity());
-    setUniform("Light.Position", light->getPosition());
     
-//    glm::mat4 mv = viewMatrix * quad->getModelMatrix();
-//    glUniformMatrix4fv(modelviewloc, 1, GL_FALSE, &mv[0][0]);
-//    glm::mat3 normal = glm::mat3(glm::vec3(mv[0]), glm::vec3(mv[1]), glm::vec3(mv[2]));
-//    glUniformMatrix3fv(normalloc, 1, GL_FALSE, &normal[0][0]);
-//    glm::mat4 mvp = projectionMatrix * mv;
-//    glUniformMatrix4fv(mvploc, 1, GL_FALSE, &mvp[0][0]);
+    int directionalLightNum = 0, spotLightNum = 0, pointLightNum = 0;
+    for(int i=0; i<lights.size(); i++){
+        Light *light = lights[i];
+        
+        const std::type_info& lightType = typeid(*light);
+        if(lightType == typeid(DirectionalLight)){
+            //            std::cout << "directonal light" << std::endl;
+            lights[i]->lighting(this, directionalLightNum);
+            
+            directionalLightNum++;
+        }else if(lightType == typeid(SpotLight)){
+            //            std::cout << "spot light" << std::endl;
+            lights[i]->lighting(this, spotLightNum);
+            spotLightNum++;
+        }else{
+            //            std::cout << "other light" << std::endl;
+            lights[i]->lighting(this, pointLightNum);
+            pointLightNum++;
+        }
+    }
     
     glUniform1i(postexloc, 0);
     glUniform1i(normtexloc, 1);
