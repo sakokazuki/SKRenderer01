@@ -32,7 +32,7 @@ public:
     glm::vec4 getPosition() const;
     glm::vec3 getIntensity() const;
     
-    bool visible;
+    bool enable;
     bool castShadow;
     
     virtual void update();

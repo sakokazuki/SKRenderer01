@@ -12,40 +12,58 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
 
     
-    Light* spotLight = new SpotLight(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f, 100.0f, 45.0f, 0.0f, 1.0f);
-    spotLight->setTranslate(5, 5, 0);
+    Light* spotLight = new SpotLight(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 20.0f, 25.0f, 1.0f, 1.0f);
+    spotLight->setTranslate(2, 8, 1);
     lights.push_back(spotLight);
     
-    Light* directionalLight = new DirectionalLight(glm::vec3(0.9f, 0.9f, 0.9f), 1.0f);
-    directionalLight->setTranslate(0, 5, -5);
+    Light* directionalLight = new DirectionalLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
+    directionalLight->setTranslate(-2, 3, -3);
     directionalLight->castShadow = true;
+    
     lights.push_back(directionalLight);
     
     
+    Light* pointLight0 = new PointLight(glm::vec3(0.9f, 0.0f, 0.0f), 2.0f, 5.0f, 1.0f);
+    pointLight0->setTranslate(3, 3, 0);
+    lights.push_back(pointLight0);
+    
+    Light* pointLight1 = new PointLight(glm::vec3(0.0f, 0.9f, 0.0f), 2.0f, 5.0f, 1.0f);
+    pointLight1->setTranslate(-3, 3, 0);
+    lights.push_back(pointLight1);
+    
+    Light* pointLight2 = new PointLight(glm::vec3(0.0f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
+    pointLight2->setTranslate(0, 3, 3);
+    lights.push_back(pointLight2);
+    
+    Light* pointLight3 = new PointLight(glm::vec3(0.9f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
+    pointLight3->setTranslate(0, 3, -3);
+    lights.push_back(pointLight3);
     
     camera = new Camera(windowW, windowH);
-
+    camera->setTranslate(0, 2, 5);
+    
     plane = new PlaneMesh();
-    plane->setTranslate(0, -2, 0);
-    plane->setScale(10, 10, 10);
+    plane->setTranslate(0, 0, 0);
+    plane->setScale(20, 20, 20);
+
     
     groundMeshMat = new PbrMeshMaterial();
-    groundMeshMat->metallic = 0.0;
-    groundMeshMat->roughness = 0.0;
+    groundMeshMat->metallic = 0.5;
+    groundMeshMat->roughness = 0.5;
     plane->meshMaterial = groundMeshMat;
     
     
     
     torus = new TorusMesh();
-    torus->setTranslate(    2, -1, -1);
+    torus->setTranslate(2, 1, -1);
     torus->setScale(0.5, 0.5, 0.5);
     torusMeshMat = new PbrMeshMaterial();
-    torusMeshMat->metallic = 1.0;
-    torusMeshMat->roughness = 1.0;
+    torusMeshMat->metallic = 0.5;
+    torusMeshMat->roughness = 0.5;
     torus->meshMaterial = torusMeshMat;
     
     model = new ModelMesh("assets/objs/teapot.obj");
-    model->setTranslate(0, -2, 0);
+    model->setTranslate(-2, 0, 0);
     model->setScale(0.5, 0.5, 0.5);
     teapotMeshMat = new PbrMeshMaterial();
     teapotMeshMat->metallic = 0.5;
@@ -181,6 +199,7 @@ void Scene01::render() const{
     for(int i=0; i<lights.size(); i++){
         lights[i]->update();
     }
+    camera->update();
     glEnable(GL_DEPTH_TEST);
     
     

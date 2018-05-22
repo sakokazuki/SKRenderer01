@@ -10,6 +10,7 @@
 #include "../lights/Light.hpp"
 #include "../lights/DirectionalLight.hpp"
 #include "../lights/SpotLight.hpp"
+#include "../lights/PointLight.hpp"
 
 PbrShadingPass::PbrShadingPass():RenderPass("pbrShadingPass.vert", "pbrShadingPass.frag"){
     postexloc = glGetUniformLocation(prog, "PositionTex");
@@ -37,20 +38,20 @@ void PbrShadingPass::draw(){
         
         const std::type_info& lightType = typeid(*light);
         if(lightType == typeid(DirectionalLight)){
-//            std::cout << "directonal light" << std::endl;
             lights[i]->lighting(this, directionalLightNum);
-            
             directionalLightNum++;
         }else if(lightType == typeid(SpotLight)){
-//            std::cout << "spot light" << std::endl;
             lights[i]->lighting(this, spotLightNum);
             spotLightNum++;
-        }else{
-//            std::cout << "other light" << std::endl;
+        }else if(lightType == typeid(PointLight)){
             lights[i]->lighting(this, pointLightNum);
             pointLightNum++;
         }
     }
+
+    setUniform("numDirectionalLights", directionalLightNum);
+    setUniform("numPointLights", pointLightNum);
+    setUniform("numSpotLights", spotLightNum);
 
     glUniform1i(postexloc, 0);
     glUniform1i(normtexloc, 1);

@@ -21,6 +21,7 @@ void GBufferPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
 
 
 void GBufferPass::draw(){
+    
     viewMatrix = camera->viewMatrix;
     projectionMatrix = camera->projectionMatrix;
     

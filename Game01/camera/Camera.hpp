@@ -17,7 +17,8 @@ public:
     Camera(int w, int h);
     glm::vec3 lookPos;
     glm::mat4 viewMatrix, projectionMatrix;
-    
+    int width, height;
+    void update();
     
 };
 

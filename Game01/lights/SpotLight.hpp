@@ -17,6 +17,10 @@ class SpotLight:public Light{
 public:
     SpotLight(glm::vec3 color, float intensity, float distance, float angle, float penumbra, float decay);
     glm::vec3 lookPos;
+    float distance;
+    float angle;
+    float penumbra;
+    float decay;
     void update() override;
     void lighting(RenderPass *renderPass, int index) override;
 };

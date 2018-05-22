@@ -9,7 +9,7 @@
 #include "Light.hpp"
 #include "../renderpass/RenderPass.hpp"
 
-Light::Light(glm::vec3 color, float intensity): castShadow(false), visible(true){
+Light::Light(glm::vec3 color, float intensity): castShadow(false), enable(true){
     shadowBias = glm::mat4(glm::vec4(0.5f,0.0f,0.0f,0.0f),
                            glm::vec4(0.0f,0.5f,0.0f,0.0f),
                            glm::vec4(0.0f,0.0f,0.5f,0.0f),

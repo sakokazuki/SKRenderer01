@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "./Light.hpp"
+
 class DirectionalLight: public Light{
 public:
     DirectionalLight(glm::vec3 color, float intensity);

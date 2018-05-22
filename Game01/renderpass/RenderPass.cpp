@@ -15,8 +15,6 @@ RenderPass::RenderPass(std::string vert, std::string frag): shadername_vert(vert
     
     modelviewloc = glGetUniformLocation(prog, "ModelViewMatrix");
     mvploc = glGetUniformLocation(prog, "MVP");
-    
-//    mvploc(glGetUniformLocation(prog, "MVP"));
     normalloc = glGetUniformLocation(prog, "NormalMatrix");
 
 }
@@ -47,8 +45,6 @@ void RenderPass::setTextureUniform(const char* name, int index, GLuint tex){
     glBindTexture(GL_TEXTURE_2D, tex);
     GLint loc = glGetUniformLocation(prog, name);
     glUniform1i(loc, index);
-//    std::cout << name << "   " << no << std::endl;
-
 }
 
 
@@ -70,6 +66,11 @@ void RenderPass::setUniform(const char *name, glm::mat4 data) const{
 void RenderPass::setUniform(const char *name, float data) const{
     GLint loc = glGetUniformLocation(prog, name);
     glUniform1f(loc, data);
+}
+
+void RenderPass::setUniform(const char *name, int data) const{
+    GLint loc = glGetUniformLocation(prog, name);
+    glUniform1i(loc, data);
 }
 
 

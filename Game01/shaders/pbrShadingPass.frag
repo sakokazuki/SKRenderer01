@@ -72,9 +72,9 @@ struct Material {
 };
 
 #define LIGHT_MAX 4
-uniform DirectionalLight directionalLights[LIGHT_MAX];
-uniform PointLight pointLights[LIGHT_MAX];
-uniform SpotLight spotLights[LIGHT_MAX];
+uniform DirectionalLight DirectionalLights[LIGHT_MAX];
+uniform PointLight PointLights[LIGHT_MAX];
+uniform SpotLight SpotLights[LIGHT_MAX];
 uniform int numDirectionalLights;
 uniform int numPointLights;
 uniform int numSpotLights;
@@ -112,18 +112,22 @@ void getPointDirectLightIrradiance(const in PointLight pointLight, const in Geom
         directLight.color = pointLight.color;
         directLight.color *= punctualLightIntensityToIrradianceFactor(lightDistance, pointLight.distance, pointLight.decay);
         directLight.visible = true;
+        
     }else{
         directLight.color = vec3(0.0);
         directLight.visible = false;
     }
 }
 
-void getSpotDirectLightIrradience(const in SpotLight spotLight, const GeometricContext geometry, out IncidentLight directLight){
+void getSpotDirectLightIrradiance(const in SpotLight spotLight, const GeometricContext geometry, out IncidentLight directLight){
     vec3 L = spotLight.position - geometry.position;
     directLight.direction = normalize(L);
     
+    
     float lightDistance = length(L);
+    
     float angleCos = dot(directLight.direction, spotLight.direction);
+
     if(all(bvec2(angleCos > spotLight.coneCos, testLightInRange(lightDistance, spotLight.distance)))){
         float spotEffect = smoothstep(spotLight.coneCos, spotLight.penumbraCos, angleCos);
         directLight.color = spotLight.color;
@@ -196,7 +200,6 @@ void RE_Direct(const in IncidentLight directLight, const in GeometricContext geo
     reflectedLight.directSpecular += irradiance * SpecularBRDF(directLight, geometry, material.specularColor, material.specularRoughness);
 }
 
-
 vec3 diffuseModel(vec3 pos, vec3 norm, vec3 diff){
     vec3 s = normalize(vec3(Light.Position) - pos);
     float sDotN = max(dot(s, norm), 0.0);
@@ -235,34 +238,41 @@ void main(){
     
     IncidentLight directLight;
     
-//    for(int i=0; i<LIGHT_MAX; i++){
-//        if(i>=numPointLights) break;
-//        getPointDirectLightIrradiance(pointLights[i], geometry, directLight);
-//        if(directLight.visible){
-//            RE_Direct(directLight, geometry, material, reflectedLight);
-//        }
-//    }
-//
-//    for(int i=0; i<LIGHT_MAX; i++){
-//        if(i >= numSpotLights) break;
-//        getSpotDirectLightIrradiance(spotLights[i], geometry, directLight);
-//        if(directLight.visible){
-//            RE_Direct(directLight, geometry, material, reflectedLight);
-//        }
-//    }
-//
-//    for(int i=0; i<LIGHT_MAX; i++){
-//        if(i >= numDirectionalLights) break;
-//        getDirectionalDirectLightIrradiance(directionalLights[i], geometry, directLight);
-//        RE_Direct(directLight, geometry, material, reflectedLight);
-//    }
+    FragColor = vec4(vec3(0.0), 1.0);
     
-//    vec3 outgoingLight = emissive + reflectedLight.directDiffuse + reflectedLight.directSpecular + reflectedLight.indirectDiffuse + reflectedLight.indirectSpecular;
-//    FragColor =  vec4(outgoingLight, opacity);
+    for(int i=0; i<LIGHT_MAX; i++){
+        if(i>=numPointLights) break;
+        
+        getPointDirectLightIrradiance(PointLights[i], geometry, directLight);
+        
+        if(directLight.visible){
+            RE_Direct(directLight, geometry, material, reflectedLight);
+        }
+    }
+
+    for(int i=0; i<LIGHT_MAX; i++){
+        if(i >= numSpotLights) break;
+        getSpotDirectLightIrradiance(SpotLights[i], geometry, directLight);
+        
+        if(directLight.visible){
+            RE_Direct(directLight, geometry, material, reflectedLight);
+        }
+    }
+
+    for(int i=0; i<LIGHT_MAX; i++){
+        if(i >= numDirectionalLights) break;
+        getDirectionalDirectLightIrradiance(DirectionalLights[i], geometry, directLight);
+        RE_Direct(directLight, geometry, material, reflectedLight);
+//        FragColor.rgb += DirectionalLights[i].direction;
+//        FragColor.rgb = directLight.direction;
+//        FragColor.rgb += reflectedLight.directSpecular + reflectedLight.directDiffuse;
+    }
     
+    vec3 outgoingLight = emissive + reflectedLight.directDiffuse + reflectedLight.directSpecular + reflectedLight.indirectDiffuse + reflectedLight.indirectSpecular;
+    FragColor =  vec4(outgoingLight, 1.0f);
+//    FragColor.rgb = geometry.normal;
     
-    
-    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);
+//    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);
     FragColor = FragColor * vec4(shadow, 1.0);
     
 //    FragColor = vec4(albedoColor.rgb, 1.0);

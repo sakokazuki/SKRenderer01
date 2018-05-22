@@ -8,6 +8,7 @@
 
 #include "DirectionalLight.hpp"
 #include "../renderpass/RenderPass.hpp"
+#include <fmt/format.h>
 
 DirectionalLight::DirectionalLight(glm::vec3 color, float intensity): Light(color, intensity){
     lookPos = glm::vec3(0, 0, 0);
@@ -17,13 +18,14 @@ DirectionalLight::DirectionalLight(glm::vec3 color, float intensity): Light(colo
 }
 
 void DirectionalLight::lighting(RenderPass *renderPass, int index){
-    renderPass->setUniform("Light.Intensity", getIntensity());
-    renderPass->setUniform("Light.Position", getPosition());
     
-//    std::string before = "tests[";
-//    std::string after = "].color";
-//    std::string uniformName = before + std::to_string(0) + after;
-//    renderPass->setUniform(uniformName.c_str(), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+    std::string name = fmt::format("{0}[{1}].{2}", "DirectionalLights", index, "direction");
+    glm::vec4 lightDir = glm::vec4(glm::normalize(position - lookPos), 0);
+    glm::vec3 direction = renderPass->camera->viewMatrix*lightDir;
+    renderPass->setUniform(name.c_str(), direction);
+    
+    name = fmt::format("{0}[{1}].{2}", "DirectionalLights", index, "color");
+    renderPass->setUniform(name.c_str(), getIntensity());
 }
 
 void DirectionalLight::update(){

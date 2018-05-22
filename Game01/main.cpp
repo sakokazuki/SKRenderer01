@@ -13,6 +13,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/ext.hpp>
+#include <fmt/format.cc>
+#include <fmt/format.h>
+
 
 #include <GL/glew.h>
 #pragma clang diagnostic push
@@ -24,9 +27,7 @@
 
 #include <gli/gli.hpp>
 
-#include "scenes/SceneShadowmap.hpp"
-#include "scenes/SceneDeferred.hpp"
-#include "scenes/SceneShadowDeferred.hpp"
+
 #include "scenes/Scene01.hpp"
 
 int main(void)

@@ -21,12 +21,12 @@ ShadowmapPass::ShadowmapPass():RenderPass("unlit.vert", "unlit.frag"){
 
 void ShadowmapPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
     RenderPass::init(l, c, m);
-    viewMatrix = camera->viewMatrix;
-    projectionMatrix = camera->projectionMatrix;
 }
 
 
 void ShadowmapPass::draw(){
+    viewMatrix = camera->viewMatrix;
+    projectionMatrix = camera->projectionMatrix;
     
     //シャドウマップ生成に使うライトは1つだけ。castshadow=trueにしたものにする。
     Light *light = lights[0];

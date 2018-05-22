@@ -48,6 +48,7 @@ public:
     void setUniform(const char* name, glm::vec4 data) const;
     void setUniform(const char* name, glm::mat4 data) const;
     void setUniform(const char* name, float data) const;
+    void setUniform(const char* name, int data) const;
 
     
     //tmp

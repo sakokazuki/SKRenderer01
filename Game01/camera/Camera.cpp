@@ -9,12 +9,19 @@
 #include "Camera.hpp"
 
 Camera::Camera(int w, int h){
-    setTranslate(0.0f, 2.0f, 5.0f);
+    
     lookPos = glm::vec3(0.0f, 0.0f, 0.0f);
     viewMatrix = glm::lookAt(position, lookPos, glm::vec3(0.0f, 1.0f, 0.0f));
+    width = w;
+    height = h;
     
+    
+}
+
+void Camera::update(){
+    viewMatrix = glm::lookAt(position, lookPos, glm::vec3(0.0f, 1.0f, 0.0f));
     const float fovy = 100.0 * 0.01f;
-    const float aspect = (float)w / h;
+    const float aspect = (float)width / height;
     projectionMatrix = glm::perspective(fovy, aspect, 1.0f, 100.0f);
 }
 

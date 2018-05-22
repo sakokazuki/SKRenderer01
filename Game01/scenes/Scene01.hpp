@@ -21,6 +21,7 @@
 #include "../lights/Light.hpp"
 #include "../lights/SpotLight.hpp"
 #include "../lights/DirectionalLight.hpp"
+#include "../lights/PointLight.hpp"
 #include "../camera/Camera.hpp"
 #include "../meshes/TorusMesh.hpp"
 #include "../meshes/PlaneMesh.hpp"

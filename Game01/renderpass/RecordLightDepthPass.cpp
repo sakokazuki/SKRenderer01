@@ -16,8 +16,6 @@ RecordLightDepthPass::RecordLightDepthPass():RenderPass("recordLightDepthPass.ve
 
 void RecordLightDepthPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
     RenderPass::init(l, c, m);
-    
-    
 }
 
 
