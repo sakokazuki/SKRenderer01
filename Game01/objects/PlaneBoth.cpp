@@ -70,8 +70,8 @@ PlaneBoth::PlaneBoth(float xsize, float zsize, int xdivs, int zdivs)
             el[idx+4] = nextRowStart + j + 1;
             el[idx+5] = rowStart + j + 1;
 //            std::cout << "--" << std::endl;
-            std::cout << el[idx] << ", " << el[idx+1] << ", " << el[idx+2] << ", " << std::endl;
-            std::cout << el[idx+3] << ", " << el[idx+4] << ", " << el[idx+5] << ", " << std::endl;
+//            std::cout << el[idx] << ", " << el[idx+1] << ", " << el[idx+2] << ", " << std::endl;
+//            std::cout << el[idx+3] << ", " << el[idx+4] << ", " << el[idx+5] << ", " << std::endl;
             idx += 6;
         }
     }
