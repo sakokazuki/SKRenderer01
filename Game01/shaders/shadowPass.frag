@@ -12,15 +12,9 @@ layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 UnlitColor;
 
 void main(){
-    float shadow = textureProj(ShadowMap, ShadowCoord);
-    
-//    vec4 shadowColor = texture(ShadowMap, TexCoord);
-//    FragColor = shadowColor;
-//    FragColor= vec4(1.0);
-//    if(diff >= 0){
-//        FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-//    }
-    
+    float bias = 0.0003;
+    float shadow = texture( ShadowMap, vec3(ShadowCoord.xy, (ShadowCoord.z-bias)/ShadowCoord.w));
+
 
     FragColor = vec4(shadow, shadow, shadow, 1.0);
     UnlitColor = vec4(shadow, shadow, shadow, 1.0);

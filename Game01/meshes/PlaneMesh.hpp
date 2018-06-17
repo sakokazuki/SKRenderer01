@@ -13,10 +13,12 @@
 
 #include "Mesh.hpp"
 #include "../objects/Plane.hpp"
+#include "../objects/PlaneBoth.hpp"
 
 class PlaneMesh:public Mesh{
 private:
     Plane* plane;
+    PlaneBoth* planeBoth;
     
 public:
     PlaneMesh();

@@ -213,12 +213,14 @@ vec3 diffuseModel(vec3 pos, vec3 norm, vec3 diff){
 void main(){
     vec4 albedoColor = texture(ColorTex, TexCoord);
     vec4 normColor = texture(NormalTex, TexCoord);
+    vec3 shadow = vec3(texture(ShadowmapTex, TexCoord));
     
     vec3 albedo = albedoColor.rgb;
+    albedo *= shadow;
     vec3 norm = normColor.rgb;
     
     vec3 pos = vec3(texture(PositionTex, TexCoord));
-    vec3 shadow = vec3(texture(ShadowmapTex, TexCoord));
+    
     float metallic = albedoColor.a;
     float roughness = normColor.a;
     
@@ -263,9 +265,6 @@ void main(){
         if(i >= numDirectionalLights) break;
         getDirectionalDirectLightIrradiance(DirectionalLights[i], geometry, directLight);
         RE_Direct(directLight, geometry, material, reflectedLight);
-//        FragColor.rgb += DirectionalLights[i].direction;
-//        FragColor.rgb = directLight.direction;
-//        FragColor.rgb += reflectedLight.directSpecular + reflectedLight.directDiffuse;
     }
     
     vec3 outgoingLight = emissive + reflectedLight.directDiffuse + reflectedLight.directSpecular + reflectedLight.indirectDiffuse + reflectedLight.indirectSpecular;
@@ -273,18 +272,8 @@ void main(){
 //    FragColor.rgb = geometry.normal;
     
 //    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);
-    FragColor = FragColor * vec4(shadow, 1.0);
+//    FragColor = FragColor * vec4(shadow, 1.0);
     
-//    FragColor = vec4(albedoColor.rgb, 1.0);
-//    FragColor = albedoColor;
-    
-//    FragColor = vec4(vec3(texture(TestTex, TexCoord).r), 1.0);
-   
-//
-//    FragColor = vec4(norm, 1.0);
-    //    FragColor = vec4(pos, 1.0);
-//    FragColor = vec4(albedo, 1.0);
-//    FragColor = vec4 (shadow, 1.0);
-    //    FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+
 }
 

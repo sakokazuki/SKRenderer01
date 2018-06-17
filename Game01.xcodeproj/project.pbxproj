@@ -38,6 +38,7 @@
 		9B6CEFB2202BEC7300C03397 /* GBufferPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB0202BEC7300C03397 /* GBufferPass.cpp */; };
 		9B6CEFB5202C622400C03397 /* ShadingPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB3202C622400C03397 /* ShadingPass.cpp */; };
 		9B6CEFBA202C668C00C03397 /* QuadScreenMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB8202C668C00C03397 /* QuadScreenMesh.cpp */; };
+		9BA07C2120D662C40090841A /* PlaneBoth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07C1F20D662C40090841A /* PlaneBoth.cpp */; };
 		9BA505DD20256AE9005CC900 /* SceneShadowDeferred.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA505DB20256AE9005CC900 /* SceneShadowDeferred.cpp */; };
 		9BA505E22025785F005CC900 /* ShadowmapPassMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA505E02025785F005CC900 /* ShadowmapPassMaterial.cpp */; };
 		9BA91F0C201F90F3007E5076 /* frustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA91F0B201F90F3007E5076 /* frustum.cpp */; };
@@ -83,8 +84,8 @@
 		9B39C6742026088C00849ACB /* DeferredPassMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DeferredPassMaterial.hpp; sourceTree = "<group>"; };
 		9B39C67620260DFA00849ACB /* deferredpass.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = deferredpass.vert; sourceTree = "<group>"; };
 		9B39C67720260E0600849ACB /* deferredpass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = deferredpass.frag; sourceTree = "<group>"; };
-		9B39C6782027011F00849ACB /* unlit.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = unlit.frag; sourceTree = "<group>"; };
-		9B39C6792027012C00849ACB /* unlit.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = unlit.vert; sourceTree = "<group>"; };
+		9B39C6782027011F00849ACB /* shadowPass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadowPass.frag; sourceTree = "<group>"; };
+		9B39C6792027012C00849ACB /* shadowPass.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadowPass.vert; sourceTree = "<group>"; };
 		9B39C67A2027026000849ACB /* UnlitMaterial.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnlitMaterial.cpp; sourceTree = "<group>"; };
 		9B39C67B2027026000849ACB /* UnlitMaterial.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = UnlitMaterial.hpp; sourceTree = "<group>"; };
 		9B3EBCD42007A7CF00F01A0A /* perfrag.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = perfrag.vert; sourceTree = "<group>"; };
@@ -1620,6 +1621,8 @@
 		9B98944820134F8F009B24D1 /* rendertotex.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = rendertotex.vert; sourceTree = "<group>"; };
 		9B98944920134F8F009B24D1 /* rendertotex.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = rendertotex.frag; sourceTree = "<group>"; };
 		9B98944A20135775009B24D1 /* chapter05 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = chapter05; sourceTree = "<group>"; };
+		9BA07C1F20D662C40090841A /* PlaneBoth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlaneBoth.cpp; sourceTree = "<group>"; };
+		9BA07C2020D662C40090841A /* PlaneBoth.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlaneBoth.hpp; sourceTree = "<group>"; };
 		9BA505DB20256AE9005CC900 /* SceneShadowDeferred.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneShadowDeferred.cpp; sourceTree = "<group>"; };
 		9BA505DC20256AE9005CC900 /* SceneShadowDeferred.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SceneShadowDeferred.hpp; sourceTree = "<group>"; };
 		9BA505DE20257762005CC900 /* shadowmappass.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadowmappass.vert; sourceTree = "<group>"; };
@@ -3505,6 +3508,8 @@
 				9B3EC7D52013067E00F01A0A /* ObjMesh.hpp */,
 				9B47187020179926009366A0 /* Quad.cpp */,
 				9B47187120179926009366A0 /* Quad.hpp */,
+				9BA07C1F20D662C40090841A /* PlaneBoth.cpp */,
+				9BA07C2020D662C40090841A /* PlaneBoth.hpp */,
 			);
 			path = objects;
 			sourceTree = "<group>";
@@ -3611,8 +3616,8 @@
 				9BA505DF20257771005CC900 /* shadowmappass.frag */,
 				9B39C67620260DFA00849ACB /* deferredpass.vert */,
 				9B39C67720260E0600849ACB /* deferredpass.frag */,
-				9B39C6792027012C00849ACB /* unlit.vert */,
-				9B39C6782027011F00849ACB /* unlit.frag */,
+				9B39C6792027012C00849ACB /* shadowPass.vert */,
+				9B39C6782027011F00849ACB /* shadowPass.frag */,
 				9B6CEFA9202BE0CF00C03397 /* recordLightDepthPass.vert */,
 				9B6CEFAA202BE0FD00C03397 /* recordLightDepthPass.frag */,
 				9B6CEFAE202BEA3C00C03397 /* gBufferPass.vert */,
@@ -3770,6 +3775,7 @@
 				9B6CEFB2202BEC7300C03397 /* GBufferPass.cpp in Sources */,
 				9BD05A4420A74B9200FB4C34 /* SpotLight.cpp in Sources */,
 				9BE0D292201A1AA70019D12C /* DeferredMaterial.cpp in Sources */,
+				9BA07C2120D662C40090841A /* PlaneBoth.cpp in Sources */,
 				9B3EC7D62013067E00F01A0A /* ObjMesh.cpp in Sources */,
 				9B6CEFAD202BE1C800C03397 /* RecordLightDepthPass.cpp in Sources */,
 				9BA505DD20256AE9005CC900 /* SceneShadowDeferred.cpp in Sources */,

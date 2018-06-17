@@ -11,7 +11,7 @@
 #include "../meshes/Mesh.hpp"
 #include "../lights/Light.hpp"
 
-ShadowmapPass::ShadowmapPass():RenderPass("unlit.vert", "unlit.frag"){
+ShadowmapPass::ShadowmapPass():RenderPass("shadowPass.vert", "shadowPass.frag"){
     shadowMatrixLoc = glGetUniformLocation(prog, "ShadowMatrix");
     
 //    tMatrix = glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 0.0f));

@@ -45,7 +45,9 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     plane = new PlaneMesh();
     plane->setTranslate(0, 0, 0);
     plane->setScale(20, 20, 20);
-
+//    plane->setRotate(glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    
+    
     
     groundMeshMat = new PbrMeshMaterial();
     groundMeshMat->metallic = 0.5;
@@ -69,6 +71,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     teapotMeshMat->metallic = 0.5;
     teapotMeshMat->roughness = 0.5;
     model->meshMaterial = teapotMeshMat;
+    model->setRotate(glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     
     
     meshes.push_back(model);
@@ -222,7 +225,7 @@ void Scene01::render() const{
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
 
     glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
-    glCullFace(GL_BACK);
+    glCullFace(GL_FRONT);
 
     glUseProgram(shadowmapPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

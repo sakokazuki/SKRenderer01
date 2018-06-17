@@ -9,13 +9,16 @@
 #include "PlaneMesh.hpp"
 
 PlaneMesh::PlaneMesh(){
-    plane = new Plane(1, 1, 1, 1);
+//    plane = new Plane(1, 1, 1, 1);
+    planeBoth = new PlaneBoth(1, 1, 1, 1);
 }
 
 void PlaneMesh::draw() const{
-    plane->render();
+//    plane->render();
+    planeBoth->render();
 }
 
 PlaneMesh::~PlaneMesh(){
-    delete plane;
+//    delete plane;
+    delete planeBoth;
 }

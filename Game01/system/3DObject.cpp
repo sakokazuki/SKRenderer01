@@ -24,6 +24,10 @@ void _3DObject::setTranslate(float x, float y, float z){
     tMatrix = glm::translate(glm::mat4(), position);
 }
 
+
+void _3DObject::setRotate(float angle, glm::vec3 dir){
+    rMatrix = glm::rotate(glm::mat4(), angle, dir);
+}
 void _3DObject::setScale(float x, float y, float z){
     scale = glm::vec3(x, y, z);
     sMatrix =  glm::scale(glm::mat4(1.0f), scale);

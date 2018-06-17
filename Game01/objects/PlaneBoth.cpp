@@ -1,12 +1,12 @@
 //
-//  Plane.cpp
+//  PlaneBoth.cpp
 //  Game01
 //
-//  Created by kazuki sako on 2018/01/12.
+//  Created by kazuki sako on 2018/06/17.
 //  Copyright © 2018年 kazuki sako. All rights reserved.
 //
 
-#include "Plane.hpp"
+#include "PlaneBoth.hpp"
 #include <GL/glew.h>
 #include <iostream>
 #include <cstdio>
@@ -14,15 +14,15 @@
 #include <glm/glm.hpp>
 
 
-Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
+PlaneBoth::PlaneBoth(float xsize, float zsize, int xdivs, int zdivs)
 {
-   
+    
     faces = xdivs * zdivs;
-    float * v = new float[3 * (xdivs + 1) * (zdivs + 1)];
-    float * tex = new float[2 * (xdivs + 1) * (zdivs + 1)];
-    float * n = new float[3 * (xdivs + 1) * (zdivs + 1)];
-    unsigned int * el = new unsigned int[6 * xdivs * zdivs];
-    float *tang = new float[4 * (xdivs + 1) * (zdivs + 1)];
+    float * v = new float[3 * (xdivs + 1) * (zdivs + 1) * 2];
+    float * tex = new float[2 * (xdivs + 1) * (zdivs + 1) * 2];
+    float * n = new float[3 * (xdivs + 1) * (zdivs + 1) * 2];
+    unsigned int * el = new unsigned int[6 * xdivs * zdivs * 2];
+    float *tang = new float[4 * (xdivs + 1) * (zdivs + 1) * 2];
     
     float x2 = xsize / 2.0f;
     float z2 = zsize / 2.0f;
@@ -32,25 +32,33 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
     float texj = 1.0f / xdivs;
     float x, z;
     int vidx = 0, tidx = 0;
-    for( int i = 0; i <= zdivs; i++ ) {
-        z = iFactor * i - z2;
-        for( int j = 0; j <= xdivs; j++ ) {
-            x = jFactor * j - x2;
-            v[vidx] = x;
-            v[vidx+1] = 0.0f;
-            v[vidx+2] = z;
-            n[vidx] = 0.0f;
-            n[vidx+1] = 1.0f;
-            n[vidx+2] = 0.0f;
-            vidx += 3;
-            tex[tidx] = i * texi;
-            tex[tidx+1] = j * texj;
-            tidx += 2;
+    for( int k = 0; k < 2; k++){
+        float nDir = k == 0 ? 1.0f : -1.0f;
+        float yPos = k == 0 ? 0.0f : 0.00001f;
+        for( int i = 0; i <= zdivs; i++ ) {
+            z = iFactor * i - z2;
+            for( int j = 0; j <= xdivs; j++ ) {
+                x = jFactor * j - x2;
+                v[vidx] = x;
+                v[vidx+1] = yPos;
+                v[vidx+2] = z;
+                n[vidx] = 0.0f;
+                n[vidx+1] = nDir;
+                n[vidx+2] = 0.0f;
+                vidx += 3;
+                tex[tidx] = i * texi;
+                tex[tidx+1] = j * texj;
+                tidx += 2;
+                
+                
+            }
         }
     }
     
+    
     unsigned int rowStart, nextRowStart;
     int idx = 0;
+    //front
     for( int i = 0; i < zdivs; i++ ) {
         rowStart = i * (xdivs+1);
         nextRowStart = (i+1) * (xdivs+1);
@@ -61,17 +69,33 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
             el[idx+3] = rowStart + j;
             el[idx+4] = nextRowStart + j + 1;
             el[idx+5] = rowStart + j + 1;
+//            std::cout << "--" << std::endl;
+            std::cout << el[idx] << ", " << el[idx+1] << ", " << el[idx+2] << ", " << std::endl;
+            std::cout << el[idx+3] << ", " << el[idx+4] << ", " << el[idx+5] << ", " << std::endl;
             idx += 6;
         }
     }
-    std::cout << "vertex size: " << (3 * (xdivs + 1) * (zdivs + 1))/3 << std::endl;
-    std::cout << "texcoord size: " << (2 * (xdivs + 1) * (zdivs + 1))/2 << std::endl;
-    std::cout << "faces: " << faces << "," << xdivs << "," << zdivs << std::endl;
-    std::cout << "indices: " << sizeof(el) << std::endl;
+    //back
+    for( int i = 0; i < zdivs; i++ ) {
+        rowStart = i * (xdivs+1);
+        nextRowStart = (i+1) * (xdivs+1);
+        for( int j = 0; j < xdivs; j++ ) {
+            el[idx] = rowStart + j;
+            el[idx+1] = nextRowStart + j + 1;
+            el[idx+2] = nextRowStart + j;
+            el[idx+3] = rowStart + j;
+            el[idx+4] = rowStart + j + 1;
+            el[idx+5] = nextRowStart + j + 1;
+//            std::cout << "--" << std::endl;
+//            std::cout << el[idx] << ", " << el[idx+1] << ", " << el[idx+2] << ", " << std::endl;
+//            std::cout << el[idx+3] << ", " << el[idx+4] << ", " << el[idx+5] << ", " << std::endl;
+            idx += 6;
+        }
+    }
     
 
     
-    for(int i=0; i <6 * xdivs * zdivs; i+=3){
+    for(int i=0; i <6 * xdivs * zdivs * 2 ; i+=3){
         int p0 = el[i];
         int p1 = el[i+1];
         int p2 = el[i+2];
@@ -125,27 +149,27 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
     glGenBuffers(5, handle);
     
     glBindBuffer(GL_ARRAY_BUFFER, handle[0]);
-    glBufferData(GL_ARRAY_BUFFER, 3 * (xdivs+1) * (zdivs+1) * sizeof(float), v, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 3 * (xdivs+1) * (zdivs+1) * sizeof(float) * 2, v, GL_STATIC_DRAW);
     glVertexAttribPointer( (GLuint)0, 3, GL_FLOAT, GL_FALSE, 0, ((GLubyte *)NULL + (0)) );
     glEnableVertexAttribArray(0);  // Vertex position
     
     glBindBuffer(GL_ARRAY_BUFFER, handle[1]);
-    glBufferData(GL_ARRAY_BUFFER, 3 * (xdivs+1) * (zdivs+1) * sizeof(float), n, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 3 * (xdivs+1) * (zdivs+1) * sizeof(float) * 2, n, GL_STATIC_DRAW);
     glVertexAttribPointer( (GLuint)1, 3, GL_FLOAT, GL_FALSE, 0, ((GLubyte *)NULL + (0)) );
     glEnableVertexAttribArray(1);  // Vertex normal
     
     glBindBuffer(GL_ARRAY_BUFFER, handle[2]);
-    glBufferData(GL_ARRAY_BUFFER, 2 * (xdivs+1) * (zdivs+1) * sizeof(float), tex, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 2 * (xdivs+1) * (zdivs+1) * sizeof(float) * 2, tex, GL_STATIC_DRAW);
     glVertexAttribPointer( (GLuint)2, 2, GL_FLOAT, GL_FALSE, 0, ((GLubyte *)NULL + (0)) );
     glEnableVertexAttribArray(2);  // Texture coords
     
     glBindBuffer(GL_ARRAY_BUFFER, handle[3]);
-    glBufferData(GL_ARRAY_BUFFER, 4 * (xdivs+1) * (zdivs+1) * sizeof(float), tang, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 4 * (xdivs+1) * (zdivs+1) * sizeof(float) * 2, tang, GL_STATIC_DRAW);
     glVertexAttribPointer( (GLuint)3, 4, GL_FLOAT, GL_FALSE, 0, ((GLubyte *)NULL + (0)) );
     glEnableVertexAttribArray(3); // Tangent vector;
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle[4]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * xdivs * zdivs * sizeof(unsigned int), el, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * xdivs * zdivs * sizeof(unsigned int) * 2, el, GL_STATIC_DRAW);
     
     glBindVertexArray(0);
     delete [] v;
@@ -156,7 +180,7 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
     
 }
 
-void Plane::render() const {
+void PlaneBoth::render() const {
     glBindVertexArray(vaoHandle);
-    glDrawElements(GL_TRIANGLES, 6 * faces, GL_UNSIGNED_INT, ((GLubyte *)NULL + (0)));
+    glDrawElements(GL_TRIANGLES, 6 * faces * 2, GL_UNSIGNED_INT, ((GLubyte *)NULL + (0)));
 }
