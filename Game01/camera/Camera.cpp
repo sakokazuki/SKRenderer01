@@ -19,10 +19,14 @@ Camera::Camera(int w, int h){
 }
 
 void Camera::update(){
+    Object3D::update();
+    
     viewMatrix = glm::lookAt(position, lookPos, glm::vec3(0.0f, 1.0f, 0.0f));
     const float fovy = 100.0 * 0.01f;
     const float aspect = (float)width / height;
     projectionMatrix = glm::perspective(fovy, aspect, 1.0f, 100.0f);
+    
+    
 }
 
 

@@ -68,9 +68,13 @@ private:
     GLuint whiteTex;
     
     
+    
+    
+    
 public:
     Scene01(int ww, int wh);
     void render() const override;
+    void addScene();
 };
 
 

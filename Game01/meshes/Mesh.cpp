@@ -9,7 +9,7 @@
 #include "Mesh.hpp"
 #include "../renderpass/RenderPass.hpp"
 
-Mesh::Mesh():_3DObject(){
+Mesh::Mesh():Object3D(){
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    meshMaterial = new MeshMaterial();
 }
 

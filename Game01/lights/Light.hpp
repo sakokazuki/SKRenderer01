@@ -13,10 +13,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
-#include "../system/3DObject.hpp"
+#include "../system/Object3D.hpp"
 class RenderPass;
 
-class Light:public _3DObject{
+class Light:public Object3D{
 private:
     glm::mat4 shadowBias;
     float intensity;
@@ -35,7 +35,6 @@ public:
     bool enable;
     bool castShadow;
     
-    virtual void update();
     virtual void lighting(RenderPass *renderPass, int index);
 };
 

@@ -16,13 +16,17 @@
 #include <glm/ext.hpp>
 #include <gli/gli.hpp>
 #include <GL/glew.h>
+#include "../system/Object3D.hpp"
 
 class Scene{
+protected:
 public:
     int windowW;
     int windowH;
     Scene(int ww, int wh);
     virtual void render() const;
+    
+    
     
 };
 

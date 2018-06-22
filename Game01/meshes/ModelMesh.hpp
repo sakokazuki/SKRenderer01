@@ -21,6 +21,7 @@ public:
     ModelMesh(const char * fileName);
     void draw() const override;
     ~ModelMesh();
+    void update() override;
 };
 
 #endif /* ModelMesh_hpp */

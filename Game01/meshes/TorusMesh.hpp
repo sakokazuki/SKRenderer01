@@ -20,6 +20,8 @@ public:
     TorusMesh();
     void draw() const override;
     ~TorusMesh();
+    
+    void update() override;
 };
 
 #endif /* TorusMesh_hpp */

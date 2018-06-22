@@ -24,7 +24,7 @@
 		9B65B46720963AB4001D132F /* PbrShadingPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B65B46520963AB4001D132F /* PbrShadingPass.cpp */; };
 		9B65B46A20963FCC001D132F /* PbrMeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B65B46820963FCC001D132F /* PbrMeshMaterial.cpp */; };
 		9B6CEF91202AADA700C03397 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF8F202AADA700C03397 /* RenderPass.cpp */; };
-		9B6CEF94202ABE6000C03397 /* 3DObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF92202ABE6000C03397 /* 3DObject.cpp */; };
+		9B6CEF94202ABE6000C03397 /* Object3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF92202ABE6000C03397 /* Object3D.cpp */; };
 		9B6CEF97202AC13800C03397 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF95202AC13800C03397 /* Mesh.cpp */; };
 		9B6CEF9E202ACB6E00C03397 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF9C202ACB6E00C03397 /* Camera.cpp */; };
 		9B6CEFA1202ACFB300C03397 /* Scene01.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF9F202ACFB300C03397 /* Scene01.cpp */; };
@@ -1563,8 +1563,8 @@
 		9B65EDAB207935FE009C4515 /* teapot.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
 		9B6CEF8F202AADA700C03397 /* RenderPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
 		9B6CEF90202AADA700C03397 /* RenderPass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RenderPass.hpp; sourceTree = "<group>"; };
-		9B6CEF92202ABE6000C03397 /* 3DObject.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = 3DObject.cpp; sourceTree = "<group>"; };
-		9B6CEF93202ABE6000C03397 /* 3DObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = 3DObject.hpp; sourceTree = "<group>"; };
+		9B6CEF92202ABE6000C03397 /* Object3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Object3D.cpp; sourceTree = "<group>"; };
+		9B6CEF93202ABE6000C03397 /* Object3D.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Object3D.hpp; sourceTree = "<group>"; };
 		9B6CEF95202AC13800C03397 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
 		9B6CEF96202AC13800C03397 /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
 		9B6CEF9C202ACB6E00C03397 /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
@@ -1642,8 +1642,8 @@
 				9B3EC7AB200E280100F01A0A /* zTexture.hpp */,
 				9B47187A2018C3B8009366A0 /* ShaderFunc.cpp */,
 				9B47187B2018C3B8009366A0 /* ShaderFunc.hpp */,
-				9B6CEF92202ABE6000C03397 /* 3DObject.cpp */,
-				9B6CEF93202ABE6000C03397 /* 3DObject.hpp */,
+				9B6CEF92202ABE6000C03397 /* Object3D.cpp */,
+				9B6CEF93202ABE6000C03397 /* Object3D.hpp */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -3670,7 +3670,7 @@
 				9B492A5420AA06B3000608DB /* PointLight.cpp in Sources */,
 				9B6CEFA7202AE8BA00C03397 /* ShadowmapPass.cpp in Sources */,
 				9B3EC7AC200E280100F01A0A /* zTexture.cpp in Sources */,
-				9B6CEF94202ABE6000C03397 /* 3DObject.cpp in Sources */,
+				9B6CEF94202ABE6000C03397 /* Object3D.cpp in Sources */,
 				9B3EC7CF2013045000F01A0A /* Shape.cpp in Sources */,
 				9B07D92F207682F0009482A6 /* TextureMeshMaterial.cpp in Sources */,
 				9B6CEFB5202C622400C03397 /* ShadingPass.cpp in Sources */,

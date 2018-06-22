@@ -16,6 +16,11 @@ void ModelMesh::draw() const {
     model->render();
 }
 
+
+void ModelMesh::update(){
+    Object3D::update();
+}
+
 ModelMesh::~ModelMesh(){
     delete model;
 }

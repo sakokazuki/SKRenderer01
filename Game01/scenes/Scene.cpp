@@ -14,5 +14,7 @@ Scene::Scene(int ww, int wh){
 }
 
 void Scene::render() const{
-    
+
 }
+
+

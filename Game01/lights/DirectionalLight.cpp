@@ -29,6 +29,10 @@ void DirectionalLight::lighting(RenderPass *renderPass, int index){
 }
 
 void DirectionalLight::update(){
+    Object3D::update();
+    
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     viewMatrix = glm::lookAt(position, lookPos, up);
+    
+    
 }

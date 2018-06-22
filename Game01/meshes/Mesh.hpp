@@ -12,13 +12,13 @@
 #include <stdio.h>
 #include "glm/ext.hpp"
 #include <iostream>
-#include "../system/3DObject.hpp"
+#include "../system/Object3D.hpp"
 #include "../meshMaterials/MeshMaterial.hpp"
 class RenderPass;
 //#include "../renderpass/RenderPass.hpp"
 
 
-class Mesh:public _3DObject{
+class Mesh:public Object3D{
 protected:
 public:
     Mesh();

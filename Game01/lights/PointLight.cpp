@@ -36,6 +36,9 @@ void PointLight::lighting(RenderPass *renderPass, int index){
 }
 
 void PointLight::update(){
+    Object3D::update();
     //point lihgtは影に使うmatrix関連は適当のまま
     viewMatrix = glm::mat4(0.0);
+    
+    
 }

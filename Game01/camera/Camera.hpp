@@ -11,14 +11,14 @@
 
 #include <stdio.h>
 
-#include "../system/3DObject.hpp"
-class Camera:public _3DObject{
+#include "../system/Object3D.hpp"
+class Camera:public Object3D{
 public:
     Camera(int w, int h);
     glm::vec3 lookPos;
     glm::mat4 viewMatrix, projectionMatrix;
     int width, height;
-    void update();
+    void update() override;
     
 };
 

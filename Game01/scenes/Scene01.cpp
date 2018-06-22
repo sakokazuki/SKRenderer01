@@ -45,7 +45,6 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     plane = new PlaneMesh();
     plane->setTranslate(0, 0, 0);
     plane->setScale(20, 20, 20);
-//    plane->setRotate(glm::radians(180.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     
     
     
@@ -64,6 +63,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     torusMeshMat->roughness = 0.5;
     torus->meshMaterial = torusMeshMat;
     
+    
     model = new ModelMesh("assets/objs/teapot.obj");
     model->setTranslate(-2, 0, 0);
     model->setScale(0.5, 0.5, 0.5);
@@ -71,12 +71,15 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     teapotMeshMat->metallic = 0.5;
     teapotMeshMat->roughness = 0.5;
     model->meshMaterial = teapotMeshMat;
-    model->setRotate(glm::radians(0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    
+    
+    
     
     
     meshes.push_back(model);
     meshes.push_back(torus);
     meshes.push_back(plane);
+    
     
     
     shadowmapPass = new ShadowmapPass();
@@ -194,15 +197,21 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glGenTextures(1, &whiteTex);
     glBindTexture(GL_TEXTURE_2D,whiteTex);
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,1,1,0,GL_RGBA,GL_UNSIGNED_BYTE,whiteTexColor);
-    
+        
 }
 
-void Scene01::render() const{
 
+void Scene01::render() const{
+    Scene::render();
+    
+    camera->update();
     for(int i=0; i<lights.size(); i++){
         lights[i]->update();
     }
-    camera->update();
+    for(int i=0; i<meshes.size(); i++){
+        meshes[i]->update();
+    }
+    
     glEnable(GL_DEPTH_TEST);
     
     

@@ -21,8 +21,6 @@ Light::Light(glm::vec3 color, float intensity): castShadow(false), enable(true){
 
 }
 
-void Light::update(){
-}
 
 void Light::lighting(RenderPass *renderPass, int index){
     renderPass->setUniform("Light.Intensity", getIntensity());

@@ -16,6 +16,13 @@ void TorusMesh::draw() const{
     torus->render();
 }
 
+
+void TorusMesh::update(){
+    Object3D::update();
+}
+
 TorusMesh::~TorusMesh(){
     delete torus;
 }
+
+
