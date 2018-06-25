@@ -22,6 +22,7 @@ void PointLight::lighting(RenderPass *renderPass, int index){
     renderPass->setUniform("Light.Position", getPosition());
     
     std::string name = fmt::format("{0}[{1}].{2}", "PointLights", index, "position");
+    glm::vec3 position = Object3D::getPosition();
     glm::vec3 lightPos = renderPass->camera->viewMatrix * glm::vec4(position, 1.0f);
     renderPass->setUniform(name.c_str(), lightPos);
 

@@ -24,6 +24,7 @@ void SpotLight::lighting(RenderPass *renderPass, int index){
 
     
     std::string name = fmt::format("{0}[{1}].{2}", "SpotLights", index, "position");
+    glm::vec3 position = Object3D::getPosition();
     glm::vec3 lightPos = renderPass->camera->viewMatrix * glm::vec4(position, 1.0f);
     renderPass->setUniform(name.c_str(), lightPos);
     
@@ -60,7 +61,7 @@ void SpotLight::update(){
     Object3D::update();
     
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    viewMatrix = glm::lookAt(position, lookPos, up);
+    viewMatrix = glm::lookAt(Object3D::getPosition(), lookPos, up);
     
     
 }

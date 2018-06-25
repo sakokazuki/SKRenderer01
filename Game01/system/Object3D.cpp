@@ -7,88 +7,90 @@
 //
 
 #include "Object3D.hpp"
+#include "Object3DBehaviour.hpp"
 
 
-Object3D::Object3D():
-    rotation(glm::vec3(0)),
-    quaternion(glm::quat(0, 0, 0, 1)),
-    position(glm::vec3(0)),
-    scale(glm::vec3(1))
+
+Object3D::Object3D()
 {
-    
-    tMatrix = glm::translate(glm::mat4(), position);
-    sMatrix = glm::scale(glm::mat4(1.0f), scale);
+    tMatrix = glm::translate(glm::mat4(), glm::vec3(0));
+    sMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1));
     rMatrix = glm::rotate(glm::mat4(), float(0), glm::vec3(1.0f, 0.0f, 0.0f));
+    p_tMatrix = &tMatrix;
+    p_sMatrix = &sMatrix;
+    p_rMatrix = &rMatrix;
 }
 
 char* Object3D::classname(){
-    int a;
-    return abi::__cxa_demangle(typeid(*this).name(), 0, 0, &a );
+    int n;
+    return abi::__cxa_demangle(typeid(*this).name(), 0, 0, &n);
 }
 
 void Object3D::update(){
+    for(int i=0; i<behaviours.size(); i++){
+        behaviours[i]->update();
+    }
+    for(int i=0; i<children.size(); i++){
+        children[i]->update();
+    }
 }
 
 void Object3D::setTranslate(float x, float y, float z){
-    position = glm::vec3(x, y, z);
-    tMatrix = glm::translate(glm::mat4(), position);
+    *p_tMatrix = glm::translate(glm::mat4(), glm::vec3(x, y, z));
 }
 
 glm::vec3 Object3D::getPosition() const {
-    return position;
+    glm::mat4 tMat = *p_tMatrix;
+    return glm::vec3(tMat[3][0], tMat[3][1], tMat[3][2]);
 }
 
 void Object3D::setScale(float x, float y, float z){
-    scale = glm::vec3(x, y, z);
-    sMatrix =  glm::scale(glm::mat4(1.0f), scale);
+    *p_sMatrix =  glm::scale(glm::mat4(1.0f), glm::vec3(x, y, z));
 }
 
 glm::vec3 Object3D::getScale() const {
-    return scale;
+    glm::mat4 sMat = *p_sMatrix;
+    return glm::vec3(sMat[0][0], sMat[1][1], sMat[2][2]);
 }
 
 
 void Object3D::setAngleAxis(float angle, glm::vec3 axis){
     glm::quat q = glm::angleAxis(glm::radians(angle), glm::normalize(axis));
-    setQuaternion(q);
+    *p_rMatrix = glm::toMat4(q);
 }
 
 void Object3D::setQuaternion(glm::quat q){
-    quaternion = q;
-    onChangeQuaternion();
-    updateRMatrix();
+    *p_rMatrix = glm::toMat4(q);
 }
 
 void Object3D::setRotation(glm::vec3 r){
-    rotation = r;
-    onChangeRotation();
-    updateRMatrix();
+    glm::quat q = glm::quat(r * 2.0f * M_PI / 360.0f);
+    *p_rMatrix = glm::toMat4(q);
 }
-
-void Object3D::onChangeRotation(){
-    quaternion = glm::quat(rotation * 2.0f * M_PI / 360.0f);
-}
-
-void Object3D::onChangeQuaternion(){
-    glm::vec3 eulerAngle = glm::eulerAngles(quaternion) * 360.0f / (M_PI * 2.0f);
-    rotation = eulerAngle;
-}
-
-void Object3D::updateRMatrix(){
-    rMatrix = glm::toMat4(quaternion);
-}
-
 
 glm::vec3 Object3D::getEulerAnlge() const{
-    return rotation;
+    glm::quat q = getQuaternion();
+    glm::vec3 eulerAngle = glm::eulerAngles(q) * 360.0f / (M_PI * 2.0f);
+    return eulerAngle;
 }
 
 glm::quat Object3D::getQuaternion() const{
-    return quaternion;
+    return glm::quat(*p_rMatrix);
 }
 
 glm::mat4 Object3D::getModelMatrix() const{
-    return tMatrix * rMatrix * sMatrix;
+    return *p_tMatrix * *p_rMatrix * *p_sMatrix;
+}
+
+void Object3D::addChildren(Object3D *object){
+    children.push_back(object);
+}
+
+void Object3D::addBheaviour(Object3DBehaviour *behaviour){
+    behaviour->p_tMatrix = p_tMatrix;
+    behaviour->p_sMatrix = p_sMatrix;
+    behaviour->p_rMatrix = p_rMatrix;
+    behaviours.push_back(behaviour);
 }
 
 

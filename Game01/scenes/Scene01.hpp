@@ -37,6 +37,9 @@
 #include "../system/zTexture.hpp"
 #include "../meshMaterials/PbrMeshMaterial.hpp"
 
+#include "../behaviours/TestBehaviour.hpp"
+#include "../system/Object3DBehaviour.hpp"
+
 class Scene01:public Scene{
 private:
     

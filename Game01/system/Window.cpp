@@ -8,6 +8,8 @@
 
 #include "Window.hpp"
 
+
+
 Window::Window(int width, int height, const char *title): window(glfwCreateWindow(width, height, title, NULL, NULL)), scale(100.0f){
     if(window==NULL){
         std::cerr << "Can't create GLFW window." << std::endl;

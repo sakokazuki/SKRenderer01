@@ -30,6 +30,10 @@
 
 #include "scenes/Scene01.hpp"
 
+#include <glm/glm.hpp>
+
+
+
 int main(void)
 {
     atexit(glfwTerminate);
@@ -43,9 +47,6 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     
-
-    
-    
     Window window;
     // GLEW を初期化する
     glewExperimental = GL_TRUE;
@@ -54,29 +55,28 @@ int main(void)
         std::cerr << "Can't initialize GLEW" << std::endl;
         return 1;
     }
-    
+
     const GLfloat *const size(window.getSize());
     const Scene01* scene = new Scene01(size[0], size[1]);
 //    const SceneDeferred* scene = new SceneDeferred(size[0], size[1]);
 
     glfwSetTime(0.0);
-    
+
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
     glEnable(GL_CULL_FACE);
-    
+
     glClearDepth(1.0);
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
 
 
-    
+
     while (window.shouldClose() == GL_FALSE)
     {
         scene->render();
         /* Swap front and back buffers */
         window.swapBuffers();
-
-       
     }
+    return 0;
 }

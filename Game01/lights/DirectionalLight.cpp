@@ -20,7 +20,7 @@ DirectionalLight::DirectionalLight(glm::vec3 color, float intensity): Light(colo
 void DirectionalLight::lighting(RenderPass *renderPass, int index){
     
     std::string name = fmt::format("{0}[{1}].{2}", "DirectionalLights", index, "direction");
-    glm::vec4 lightDir = glm::vec4(glm::normalize(position - lookPos), 0);
+    glm::vec4 lightDir = glm::vec4(glm::normalize(Object3D::getPosition() - lookPos), 0);
     glm::vec3 direction = renderPass->camera->viewMatrix*lightDir;
     renderPass->setUniform(name.c_str(), direction);
     
@@ -32,7 +32,7 @@ void DirectionalLight::update(){
     Object3D::update();
     
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-    viewMatrix = glm::lookAt(position, lookPos, up);
+    viewMatrix = glm::lookAt(Object3D::getPosition(), lookPos, up);
     
     
 }

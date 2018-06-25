@@ -45,6 +45,7 @@ glm::mat4 Light::getPVMatrix() const{
 }
 
 glm::vec4 Light::getPosition() const{
+    glm::vec3 position = Object3D::getPosition();
     return glm::vec4(position.x, position.y, position.z, 1.0f);
 }
 

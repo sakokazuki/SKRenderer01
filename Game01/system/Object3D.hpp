@@ -10,6 +10,7 @@
 #define _DObject_hpp
 
 #include <stdio.h>
+#include <vector>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,19 +22,16 @@
 #include <cxxabi.h>
 #include <iostream>
 
-
+class Object3DBehaviour;
 
 class Object3D{
 private:
-    void onChangeRotation();
-    void onChangeQuaternion();
-    void updateRMatrix();
-protected:
-    glm::vec3 position;
-    glm::vec3 scale;
-    glm::vec3 rotation;
-    glm::quat quaternion;
+    std::vector<Object3D*> children;
+    std::vector<Object3D*> behaviours;
     glm::mat4 tMatrix, sMatrix, rMatrix;
+    glm::mat4 *p_tMatrix, *p_sMatrix, *p_rMatrix;
+protected:
+    
 public:
     Object3D();
     
@@ -44,8 +42,11 @@ public:
     void setRotation(glm::vec3 r);
     void setQuaternion(glm::quat q);
     
+    void addChildren(Object3D *object);
+    void addBheaviour(Object3DBehaviour *behaviour);
+    
     virtual char* classname();
-
+    
     
     glm::vec3 getPosition() const;
     glm::vec3 getScale() const;

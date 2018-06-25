@@ -8,6 +8,7 @@
 
 #include "Scene01.hpp"
 
+
 Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
 
@@ -62,6 +63,11 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     torusMeshMat->metallic = 0.5;
     torusMeshMat->roughness = 0.5;
     torus->meshMaterial = torusMeshMat;
+    
+//    torus->setAngleAxis(90.0f, glm::vec3(0, 1, 0));
+    
+    Object3DBehaviour* test = new behaviour::TestBehaviour();
+    torus->addBheaviour(test);
     
     
     model = new ModelMesh("assets/objs/teapot.obj");

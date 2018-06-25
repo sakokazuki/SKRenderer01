@@ -21,6 +21,8 @@
 		9B47187C2018C3B8009366A0 /* ShaderFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B47187A2018C3B8009366A0 /* ShaderFunc.cpp */; };
 		9B4718802018C5B8009366A0 /* TorusMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B47187E2018C5B8009366A0 /* TorusMesh.cpp */; };
 		9B492A5420AA06B3000608DB /* PointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B492A5220AA06B3000608DB /* PointLight.cpp */; };
+		9B63745020DE274300DD5A1D /* Object3DBehaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B63744E20DE274300DD5A1D /* Object3DBehaviour.cpp */; };
+		9B63745420DE2F9D00DD5A1D /* TestBehaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B63745220DE2F9D00DD5A1D /* TestBehaviour.cpp */; };
 		9B65B46720963AB4001D132F /* PbrShadingPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B65B46520963AB4001D132F /* PbrShadingPass.cpp */; };
 		9B65B46A20963FCC001D132F /* PbrMeshMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B65B46820963FCC001D132F /* PbrMeshMaterial.cpp */; };
 		9B6CEF91202AADA700C03397 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEF8F202AADA700C03397 /* RenderPass.cpp */; };
@@ -1553,6 +1555,10 @@
 		9B492A5320AA06B3000608DB /* PointLight.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PointLight.hpp; sourceTree = "<group>"; };
 		9B60971A1FE93D9800352782 /* init.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = init.vert; sourceTree = "<group>"; };
 		9B60971B1FE93DB600352782 /* init.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = init.frag; sourceTree = "<group>"; };
+		9B63744E20DE274300DD5A1D /* Object3DBehaviour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Object3DBehaviour.cpp; sourceTree = "<group>"; };
+		9B63744F20DE274300DD5A1D /* Object3DBehaviour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Object3DBehaviour.hpp; sourceTree = "<group>"; };
+		9B63745220DE2F9D00DD5A1D /* TestBehaviour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestBehaviour.cpp; sourceTree = "<group>"; };
+		9B63745320DE2F9D00DD5A1D /* TestBehaviour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestBehaviour.hpp; sourceTree = "<group>"; };
 		9B65B46320963A1D001D132F /* pbrShadingPass.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = pbrShadingPass.vert; sourceTree = "<group>"; };
 		9B65B46420963A2F001D132F /* pbrShadingPass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = pbrShadingPass.frag; sourceTree = "<group>"; };
 		9B65B46520963AB4001D132F /* PbrShadingPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PbrShadingPass.cpp; sourceTree = "<group>"; };
@@ -1644,6 +1650,8 @@
 				9B47187B2018C3B8009366A0 /* ShaderFunc.hpp */,
 				9B6CEF92202ABE6000C03397 /* Object3D.cpp */,
 				9B6CEF93202ABE6000C03397 /* Object3D.hpp */,
+				9B63744E20DE274300DD5A1D /* Object3DBehaviour.cpp */,
+				9B63744F20DE274300DD5A1D /* Object3DBehaviour.hpp */,
 			);
 			path = system;
 			sourceTree = "<group>";
@@ -3481,6 +3489,15 @@
 			path = meshes;
 			sourceTree = "<group>";
 		};
+		9B63745120DE2F6E00DD5A1D /* behaviours */ = {
+			isa = PBXGroup;
+			children = (
+				9B63745220DE2F9D00DD5A1D /* TestBehaviour.cpp */,
+				9B63745320DE2F9D00DD5A1D /* TestBehaviour.hpp */,
+			);
+			path = behaviours;
+			sourceTree = "<group>";
+		};
 		9B6CEF8E202AAD8300C03397 /* renderpass */ = {
 			isa = PBXGroup;
 			children = (
@@ -3574,6 +3591,7 @@
 		9BEB8D0E1FD810A000AE3450 /* Game01 */ = {
 			isa = PBXGroup;
 			children = (
+				9B63745120DE2F6E00DD5A1D /* behaviours */,
 				9BC4297A2045A38100913FF0 /* meshMaterials */,
 				9B6CEF9B202ACB5F00C03397 /* camera */,
 				9B6CEF8E202AAD8300C03397 /* renderpass */,
@@ -3668,6 +3686,7 @@
 				9B3EC7D62013067E00F01A0A /* ObjMesh.cpp in Sources */,
 				9B6CEFAD202BE1C800C03397 /* RecordLightDepthPass.cpp in Sources */,
 				9B492A5420AA06B3000608DB /* PointLight.cpp in Sources */,
+				9B63745020DE274300DD5A1D /* Object3DBehaviour.cpp in Sources */,
 				9B6CEFA7202AE8BA00C03397 /* ShadowmapPass.cpp in Sources */,
 				9B3EC7AC200E280100F01A0A /* zTexture.cpp in Sources */,
 				9B6CEF94202ABE6000C03397 /* Object3D.cpp in Sources */,
@@ -3676,6 +3695,7 @@
 				9B6CEFB5202C622400C03397 /* ShadingPass.cpp in Sources */,
 				9B47187220179926009366A0 /* Quad.cpp in Sources */,
 				9BC4297D2045A39B00913FF0 /* MeshMaterial.cpp in Sources */,
+				9B63745420DE2F9D00DD5A1D /* TestBehaviour.cpp in Sources */,
 				9B6CEFA1202ACFB300C03397 /* Scene01.cpp in Sources */,
 				9B65B46A20963FCC001D132F /* PbrMeshMaterial.cpp in Sources */,
 				9B6CEF91202AADA700C03397 /* RenderPass.cpp in Sources */,

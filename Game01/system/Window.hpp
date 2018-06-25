@@ -17,10 +17,7 @@
 #include <GLFW/glfw3.h>
 #pragma clang diagnostic pop
 
-
-
-
-
+    
 class Window{
 private:
     GLFWwindow *const window;
@@ -39,5 +36,6 @@ public:
     const int shouldClose();
     void swapBuffers();
 };
+    
 
 #endif /* Window_hpp */
