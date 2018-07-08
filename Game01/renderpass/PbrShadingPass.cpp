@@ -30,8 +30,7 @@ void PbrShadingPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m
 }
 
 
-void PbrShadingPass::draw(){
-
+void PbrShadingPass::drawPass(){
     int directionalLightNum = 0, spotLightNum = 0, pointLightNum = 0;
     for(int i=0; i<lights.size(); i++){
         Light *light = lights[i];

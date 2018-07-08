@@ -34,7 +34,6 @@
 		9B6CEFA7202AE8BA00C03397 /* ShadowmapPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFA5202AE8BA00C03397 /* ShadowmapPass.cpp */; };
 		9B6CEFAD202BE1C800C03397 /* RecordLightDepthPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFAB202BE1C800C03397 /* RecordLightDepthPass.cpp */; };
 		9B6CEFB2202BEC7300C03397 /* GBufferPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB0202BEC7300C03397 /* GBufferPass.cpp */; };
-		9B6CEFB5202C622400C03397 /* ShadingPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB3202C622400C03397 /* ShadingPass.cpp */; };
 		9B6CEFBA202C668C00C03397 /* QuadScreenMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B6CEFB8202C668C00C03397 /* QuadScreenMesh.cpp */; };
 		9BA07C2120D662C40090841A /* PlaneBoth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9BA07C1F20D662C40090841A /* PlaneBoth.cpp */; };
 		9BB643941FE04C0000C88834 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BB643921FE04A2700C88834 /* libGLEW.2.1.0.dylib */; };
@@ -1589,8 +1588,6 @@
 		9B6CEFAF202BEA4900C03397 /* gBufferPass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = gBufferPass.frag; sourceTree = "<group>"; };
 		9B6CEFB0202BEC7300C03397 /* GBufferPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GBufferPass.cpp; sourceTree = "<group>"; };
 		9B6CEFB1202BEC7300C03397 /* GBufferPass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = GBufferPass.hpp; sourceTree = "<group>"; };
-		9B6CEFB3202C622400C03397 /* ShadingPass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShadingPass.cpp; sourceTree = "<group>"; };
-		9B6CEFB4202C622400C03397 /* ShadingPass.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ShadingPass.hpp; sourceTree = "<group>"; };
 		9B6CEFB6202C624000C03397 /* shadingPass.vert */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadingPass.vert; sourceTree = "<group>"; };
 		9B6CEFB7202C625600C03397 /* shadingPass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadingPass.frag; sourceTree = "<group>"; };
 		9B6CEFB8202C668C00C03397 /* QuadScreenMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QuadScreenMesh.cpp; sourceTree = "<group>"; };
@@ -3509,8 +3506,6 @@
 				9B6CEFAC202BE1C800C03397 /* RecordLightDepthPass.hpp */,
 				9B6CEFB0202BEC7300C03397 /* GBufferPass.cpp */,
 				9B6CEFB1202BEC7300C03397 /* GBufferPass.hpp */,
-				9B6CEFB3202C622400C03397 /* ShadingPass.cpp */,
-				9B6CEFB4202C622400C03397 /* ShadingPass.hpp */,
 				9B65B46520963AB4001D132F /* PbrShadingPass.cpp */,
 				9B65B46620963AB4001D132F /* PbrShadingPass.hpp */,
 			);
@@ -3692,7 +3687,6 @@
 				9B6CEF94202ABE6000C03397 /* Object3D.cpp in Sources */,
 				9B3EC7CF2013045000F01A0A /* Shape.cpp in Sources */,
 				9B07D92F207682F0009482A6 /* TextureMeshMaterial.cpp in Sources */,
-				9B6CEFB5202C622400C03397 /* ShadingPass.cpp in Sources */,
 				9B47187220179926009366A0 /* Quad.cpp in Sources */,
 				9BC4297D2045A39B00913FF0 /* MeshMaterial.cpp in Sources */,
 				9B63745420DE2F9D00DD5A1D /* TestBehaviour.cpp in Sources */,

@@ -17,7 +17,8 @@ class RecordLightDepthPass:public RenderPass{
 private:
 public:
     RecordLightDepthPass();
-    void draw() override;
+    void drawPass() override;
+    void drawObjects(Object3D *object);
     void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) override;
 };
 

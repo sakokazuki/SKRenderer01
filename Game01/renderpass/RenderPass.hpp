@@ -21,6 +21,7 @@
 #include "../camera/Camera.hpp"
 //#include "../meshes/Mesh.hpp"
 
+class Object3D;
 class Light;
 class Mesh;
 
@@ -37,7 +38,7 @@ public:
     GLint mvploc, modelviewloc, normalloc;
     glm::mat4 viewMatrix, projectionMatrix;
     RenderPass(std::string vert, std::string frag);
-    virtual void draw();
+    virtual void drawPass();
     virtual void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m);
 //    Light* light;
     Camera* camera;
@@ -53,6 +54,8 @@ public:
     
     //tmp
     void setTextureUniform(const char* name, int index, GLuint tex);
+    
+    
 };
 
 #endif /* RenderPass_hpp */

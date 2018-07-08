@@ -20,7 +20,7 @@ private:
     Mesh* quad;
 public:
     PbrShadingPass();
-    void draw() override;
+    void drawPass() override;
     void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) override;
     
 };

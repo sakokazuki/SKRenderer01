@@ -16,9 +16,10 @@ class GBufferPass:public RenderPass{
 private:
 public:
     GBufferPass();
-    void draw() override;
+    void drawPass() override;
+    void drawObjects(Object3D *object);
     void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) override;
-    
+    void test(Object3D* mesh);
 };
 
 #endif /* GBufferPass_hpp */

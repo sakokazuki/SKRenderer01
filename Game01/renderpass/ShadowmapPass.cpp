@@ -23,8 +23,18 @@ void ShadowmapPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m)
     RenderPass::init(l, c, m);
 }
 
+void ShadowmapPass::drawObjects(Object3D *mesh, Light *light){
+    glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &(light->getPVMatrix() * mesh->getModelMatrix())[0][0]);
+    mesh->draw(this);
+    auto children = mesh->getChildren();
+    for(int i=0; i<children.size(); i++){
+        drawObjects(children.at(i), light);
+    }
+}
 
-void ShadowmapPass::draw(){
+
+
+void ShadowmapPass::drawPass(){
     viewMatrix = camera->viewMatrix;
     projectionMatrix = camera->projectionMatrix;
     
@@ -38,9 +48,9 @@ void ShadowmapPass::draw(){
     }
     
     for(int i=0; i<meshes.size(); i++){
-
-        glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &(light->getPVMatrix() * meshes[i]->getModelMatrix())[0][0]);
-        meshes[i]->draw(this);
+        drawObjects(meshes[i], light);
+//        glUniformMatrix4fv(shadowMatrixLoc, 1, GL_FALSE, &(light->getPVMatrix() * meshes[i]->getModelMatrix())[0][0]);
+//        meshes[i]->draw(this);
     }    
 }
 

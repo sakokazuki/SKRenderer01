@@ -18,9 +18,15 @@ void RecordLightDepthPass::init(std::vector<Light*> l, Camera* c, std::vector<Me
     RenderPass::init(l, c, m);
 }
 
+void RecordLightDepthPass::drawObjects(Object3D* mesh){
+    mesh->draw(this);
+    auto children = mesh->getChildren();
+    for(int i=0; i<children.size(); i++){
+        drawObjects(children.at(i));
+    }
+}
 
-void RecordLightDepthPass::draw(){
-    
+void RecordLightDepthPass::drawPass(){
     //シャドウマップ生成に使うライトは1つだけ。castshadow=trueにしたものにする。
     Light *light = lights[0];
     for(int i=0; i<lights.size(); i++){
@@ -33,7 +39,7 @@ void RecordLightDepthPass::draw(){
     projectionMatrix = light->getProjectionMatrix();
     
     for(int i=0; i<meshes.size(); i++){
-
-        meshes[i]->draw(this);
+//        meshes[i]->draw(this);
+        drawObjects(meshes[i]);
     }
 }

@@ -9,6 +9,7 @@
 #include "RenderPass.hpp"
 #include "../meshes/Mesh.hpp"
 #include "../lights/Light.hpp"
+#include "../system/Object3D.hpp"
 
 RenderPass::RenderPass(std::string vert, std::string frag): shadername_vert(vert), shadername_frag(frag){
     compileShader();
@@ -25,7 +26,7 @@ void RenderPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m){
     meshes = m;
 }
 
-void RenderPass::draw(){
+void RenderPass::drawPass(){
 
 }
 

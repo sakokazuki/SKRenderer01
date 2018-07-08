@@ -14,38 +14,39 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
 
     
     Light* spotLight = new SpotLight(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 20.0f, 25.0f, 1.0f, 1.0f);
-    spotLight->setTranslate(2, 8, 1);
+    spotLight->setPosition(glm::vec3(2, 8, 1));
     lights.push_back(spotLight);
     
     Light* directionalLight = new DirectionalLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
-    directionalLight->setTranslate(-2, 3, -3);
+    directionalLight->setPosition(glm::vec3(-2, 3, -3));
     directionalLight->castShadow = true;
     
     lights.push_back(directionalLight);
     
     
     Light* pointLight0 = new PointLight(glm::vec3(0.9f, 0.0f, 0.0f), 2.0f, 5.0f, 1.0f);
-    pointLight0->setTranslate(3, 3, 0);
+    pointLight0->setPosition(glm::vec3(3, 3, 0));
     lights.push_back(pointLight0);
     
     Light* pointLight1 = new PointLight(glm::vec3(0.0f, 0.9f, 0.0f), 2.0f, 5.0f, 1.0f);
-    pointLight1->setTranslate(-3, 3, 0);
+    pointLight1->setPosition(glm::vec3(-3, 3, 0));
     lights.push_back(pointLight1);
     
     Light* pointLight2 = new PointLight(glm::vec3(0.0f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
-    pointLight2->setTranslate(0, 3, 3);
+    pointLight2->setPosition(glm::vec3(0, 3, 3));
     lights.push_back(pointLight2);
     
     Light* pointLight3 = new PointLight(glm::vec3(0.9f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
-    pointLight3->setTranslate(0, 3, -3);
+    pointLight3->setPosition(glm::vec3(0, 3, -3));
     lights.push_back(pointLight3);
     
     camera = new Camera(windowW, windowH);
-    camera->setTranslate(0, 2, 5);
+    camera->setPosition(glm::vec3(0, 2, 5));
+    
     
     plane = new PlaneMesh();
-    plane->setTranslate(0, 0, 0);
-    plane->setScale(20, 20, 20);
+    plane->setPosition(glm::vec3(0, 0, 0));
+    plane->setScale(glm::vec3(20, 20, 20));
     
     
     
@@ -57,33 +58,43 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     
     
     torus = new TorusMesh();
-    torus->setTranslate(2, 1, -1);
-    torus->setScale(0.5, 0.5, 0.5);
+    torus->setPosition(glm::vec3(0, 2, -1));
+    torus->setScale(glm::vec3(0.5, 0.5, 0.5));
     torusMeshMat = new PbrMeshMaterial();
     torusMeshMat->metallic = 0.5;
     torusMeshMat->roughness = 0.5;
     torus->meshMaterial = torusMeshMat;
     
-//    torus->setAngleAxis(90.0f, glm::vec3(0, 1, 0));
     
     Object3DBehaviour* test = new behaviour::TestBehaviour();
-    torus->addBheaviour(test);
+    
+    
+    
     
     
     model = new ModelMesh("assets/objs/teapot.obj");
-    model->setTranslate(-2, 0, 0);
-    model->setScale(0.5, 0.5, 0.5);
+    model->setPosition(glm::vec3(0, 0, -3));
+    model->setScale(glm::vec3(0.5, 0.5, 0.5));
+    model->setEularAngle(glm::vec3(90, 0, 0));
     teapotMeshMat = new PbrMeshMaterial();
     teapotMeshMat->metallic = 0.5;
     teapotMeshMat->roughness = 0.5;
     model->meshMaterial = teapotMeshMat;
+    model->addBheaviour(test);
     
     
+    childTorus = new TorusMesh;
     
     
+    childTorus->isDebug = true;
+    model->addChild(childTorus);
+    childTorus->setScale(glm::vec3(0.5, 0.5, 0.5));
+    childTorus->setLocalPosition(glm::vec3(5, 0, 0));
+    childTorus->setLocalEularAngle(glm::vec3(90, 0, 0));
+
     
     meshes.push_back(model);
-    meshes.push_back(torus);
+//    meshes.push_back(torus);
     meshes.push_back(plane);
     
     
@@ -209,14 +220,19 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
 
 void Scene01::render() const{
     Scene::render();
-    
     camera->update();
+//    camera->updateWorldMatrix(glm::mat4());
     for(int i=0; i<lights.size(); i++){
         lights[i]->update();
+//        lights[i]->updateWorldMatrix(glm::mat4());
     }
     for(int i=0; i<meshes.size(); i++){
         meshes[i]->update();
+//        meshes[i]->updateWorldMatrix(glm::mat4());
+        meshes[i]->updateParent(nullptr);
     }
+
+    
     
     glEnable(GL_DEPTH_TEST);
     
@@ -230,7 +246,7 @@ void Scene01::render() const{
     glCullFace(GL_FRONT);
 
     glUseProgram(recordLightDepthPass->prog);
-    recordLightDepthPass->draw();
+    recordLightDepthPass->drawPass();
     glUseProgram(0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -245,7 +261,7 @@ void Scene01::render() const{
     glUseProgram(shadowmapPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadowmapPass->setTextureUniform("ShadowMap", 0, depthTex);
-    shadowmapPass->draw();
+    shadowmapPass->drawPass();
     glUseProgram(0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -260,7 +276,7 @@ void Scene01::render() const{
     glUseProgram(gBufferPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    gBufferPass->draw();
+    gBufferPass->drawPass();
     glUseProgram(0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -278,7 +294,7 @@ void Scene01::render() const{
     shadingPass->setTextureUniform("ColorTex", 2, colorTex);
     shadingPass->setTextureUniform("ShadowmapTex", 3, unlitColorTex);
     shadingPass->setTextureUniform("TestTex", 4, depthTex);
-    shadingPass->draw();
+    shadingPass->drawPass();
     glUseProgram(0);
 
 }

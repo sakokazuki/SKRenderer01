@@ -45,6 +45,7 @@ private:
     
     PlaneMesh* plane;
     TorusMesh* torus;
+    TorusMesh* childTorus;
     ModelMesh* model;
 
     GLuint shadowFBO;

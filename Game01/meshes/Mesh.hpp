@@ -23,8 +23,8 @@ protected:
 public:
     Mesh();
     MeshMaterial *meshMaterial;
+    void draw(RenderPass *renderPass) const override;
     virtual void draw() const;
-    virtual void draw(RenderPass *renderPass) const;
     ~Mesh();
     
 };

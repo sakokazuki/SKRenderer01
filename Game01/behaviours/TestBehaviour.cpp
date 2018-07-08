@@ -20,15 +20,15 @@ namespace behaviour {
         
         testNum = fmodf(testNum, 360);
         setAngleAxis(testNum, glm::vec3(0, 1, 0));
-        std::cout <<"angle: " << glm::to_string(getEulerAnlge()) << std::endl;
-        std::cout <<"num  : " << testNum << std::endl;
+//        std::cout <<"angle: " << glm::to_string(getEulerAnlge()) << std::endl;
+//        std::cout <<"num  : " << testNum << std::endl;
         
         
         auto q = getQuaternion();
 //        if(testNum > 360){
 //            testNum = testNum-360;
 //        }
-//        setTranslate(p.x, testNum, p.z);
+//        setPosition(p.x, testNum, p.z);
         
     }
 }

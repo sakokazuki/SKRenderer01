@@ -17,7 +17,8 @@ private:
     GLint shadowMatrixLoc;
 public:
     ShadowmapPass();
-    void draw() override;
+    void drawPass() override;
+    void drawObjects(Object3D *object, Light *light);
     void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) override;
 };
 
