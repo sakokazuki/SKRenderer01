@@ -28,7 +28,8 @@ class Object3DBehaviour;
 class Object3D{
 private:
     std::vector<Object3D*> children;
-    std::vector<Object3D*> behaviours;
+    std::vector<Object3DBehaviour*> behaviours;
+//    std::vector<std::unique_ptr<Object3DBehaviour> > behaviours;
     glm::mat4 tMatrix, sMatrix, rMatrix;
     glm::mat4 *p_tMatrix, *p_sMatrix, *p_rMatrix;
     Object3D *parent;
@@ -57,6 +58,7 @@ public:
     
     void addChild(Object3D *object);
     void addBheaviour(Object3DBehaviour *behaviour);
+    void addBehaviour(std::string name);
     
     void updateParent(Object3D *object);
     

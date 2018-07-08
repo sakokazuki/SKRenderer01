@@ -1592,6 +1592,8 @@
 		9B6CEFB7202C625600C03397 /* shadingPass.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = shadingPass.frag; sourceTree = "<group>"; };
 		9B6CEFB8202C668C00C03397 /* QuadScreenMesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QuadScreenMesh.cpp; sourceTree = "<group>"; };
 		9B6CEFB9202C668C00C03397 /* QuadScreenMesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = QuadScreenMesh.hpp; sourceTree = "<group>"; };
+		9B7A66AB20F2833B00F71437 /* Fractory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fractory.h; sourceTree = "<group>"; };
+		9B7A66AC20F29DF000F71437 /* Object3DBehaviourList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Object3DBehaviourList.h; sourceTree = "<group>"; };
 		9BA07C1F20D662C40090841A /* PlaneBoth.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlaneBoth.cpp; sourceTree = "<group>"; };
 		9BA07C2020D662C40090841A /* PlaneBoth.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlaneBoth.hpp; sourceTree = "<group>"; };
 		9BA91F0D201F9111007E5076 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
@@ -1649,6 +1651,8 @@
 				9B6CEF93202ABE6000C03397 /* Object3D.hpp */,
 				9B63744E20DE274300DD5A1D /* Object3DBehaviour.cpp */,
 				9B63744F20DE274300DD5A1D /* Object3DBehaviour.hpp */,
+				9B7A66AB20F2833B00F71437 /* Fractory.h */,
+				9B7A66AC20F29DF000F71437 /* Object3DBehaviourList.h */,
 			);
 			path = system;
 			sourceTree = "<group>";

@@ -248,6 +248,15 @@ void Object3D::addBheaviour(Object3DBehaviour *behaviour){
     behaviour->p_tMatrix = p_tMatrix;
     behaviour->p_sMatrix = p_sMatrix;
     behaviour->p_rMatrix = p_rMatrix;
+
+    behaviours.push_back(behaviour);
+}
+
+void Object3D::addBehaviour(std::string name){
+    Object3DBehaviour* behaviour = Object3DBehaviour::create(name);
+    behaviour->p_tMatrix = p_tMatrix;
+    behaviour->p_sMatrix = p_sMatrix;
+    behaviour->p_rMatrix = p_rMatrix;
     
     behaviours.push_back(behaviour);
 }

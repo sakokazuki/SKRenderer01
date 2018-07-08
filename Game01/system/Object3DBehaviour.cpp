@@ -7,9 +7,11 @@
 //
 
 #include "Object3DBehaviour.hpp"
+#include "./Fractory.h"
+
+Object3DBehaviour::Factory Object3DBehaviour::_factory;
 
 Object3DBehaviour::Object3DBehaviour(){
-    
     
 }
 
@@ -22,4 +24,7 @@ Object3DBehaviour::~Object3DBehaviour(){
     
 }
 
+Object3DBehaviour::Factory::Type Object3DBehaviour::create(Factory::Key const & name){
+    return _factory.create(name);
+}
 

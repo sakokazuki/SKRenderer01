@@ -66,12 +66,6 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     torus->meshMaterial = torusMeshMat;
     
     
-    Object3DBehaviour* test = new behaviour::TestBehaviour();
-    
-    
-    
-    
-    
     model = new ModelMesh("assets/objs/teapot.obj");
     model->setPosition(glm::vec3(0, 0, -3));
     model->setScale(glm::vec3(0.5, 0.5, 0.5));
@@ -80,8 +74,8 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     teapotMeshMat->metallic = 0.5;
     teapotMeshMat->roughness = 0.5;
     model->meshMaterial = teapotMeshMat;
-    model->addBheaviour(test);
-    
+//    model->addBheaviour(test);
+    model->addBehaviour("TestBehaviour");
     
     childTorus = new TorusMesh;
     

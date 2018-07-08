@@ -378,5 +378,11 @@ updateはObject3D内で再帰させて更新していくけどdraw()はRenderPas
 検証やデバッグの時間をとられてしまった。だし思いのほかテンションがのらずにだらだら作業してしまった。
 まぁ一応根幹の部分なのでバグのないように、後々変更しなくていいように、、という気持ちはあったが。
 
+### 7/9
+behaviourスクリプトをnewしてObject3Dにaddする仕様になっていたのだが外でnewすると
+メモリ管理的な視点？で危ないような気がしたので(テキストでうまく説明できないが
+newしたbehaviourに消した後もアクセスできちゃうような)、stringからクラス生成できる
+ファクトリメソッドをもたせて、(参考: https://stackoverflow.com/questions/1832003/instantiating-classes-by-name-with-factory-pattern)
+よりunityのaddCompoent<T>っぽい書き方になるようにした。
 
 
