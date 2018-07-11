@@ -12,6 +12,19 @@
 #include "../behaviours/TestBehaviour.hpp"
 #include "./Object3DBehaviour.hpp"
 
-Object3DBehaviour::define<behaviour::TestBehaviour>("TestBehaviour");
+class DefineBehaviours{
+private:
+    DefineBehaviours();
+    
+public:
+    static void define(){
+        static bool isDefine = false;
+        if(isDefine == true) return;
+        
+        Object3DBehaviour::define<behaviour::TestBehaviour>("TestBehaviour");
+        isDefine = true;
+    }
+};
+
 
 #endif /* Object3DBehaviourList_h */

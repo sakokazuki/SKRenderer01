@@ -28,22 +28,20 @@
 #include <gli/gli.hpp>
 
 
-#include "scenes/Scene01.hpp"
+#include "renderers/Renderer01.hpp"
 
 #include <glm/glm.hpp>
 
-#include <map>
-
-
-#include "behaviours/TestBehaviour.hpp"
-#include "system/Object3DBehaviour.hpp"
+#include "apps/TestApp.hpp"
+#include "apps/AppBase.hpp"
+#include "system/Object3DBehaviourList.h"
 
 
 int main(void)
 {
     atexit(glfwTerminate);
     
-    #include "system/Object3DBehaviourList.h"
+    DefineBehaviours::define();
     
 
     
@@ -65,10 +63,6 @@ int main(void)
         return 1;
     }
 
-    const GLfloat *const size(window.getSize());
-    const Scene01* scene = new Scene01(size[0], size[1]);
-//    const SceneDeferred* scene = new SceneDeferred(size[0], size[1]);
-
     glfwSetTime(0.0);
 
     glFrontFace(GL_CCW);
@@ -79,11 +73,11 @@ int main(void)
     glDepthFunc(GL_LESS);
     glEnable(GL_DEPTH_TEST);
 
-
+    app::AppBase* app = new app::TestApp(&window);
 
     while (window.shouldClose() == GL_FALSE)
     {
-        scene->render();
+        app->loop();
         /* Swap front and back buffers */
         window.swapBuffers();
     }

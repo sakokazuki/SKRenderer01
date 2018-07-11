@@ -1,109 +1,21 @@
 //
-//  Scene01.cpp
+//  Renderer01.cpp
 //  Game01
 //
 //  Created by kazuki sako on 2018/02/07.
 //  Copyright © 2018年 kazuki sako. All rights reserved.
 //
 
-#include "Scene01.hpp"
+#include "Renderer01.hpp"
 
 
-Scene01::Scene01(int ww, int wh):Scene(ww, wh){
+Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
-
-    
-    Light* spotLight = new SpotLight(glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 20.0f, 25.0f, 1.0f, 1.0f);
-    spotLight->setPosition(glm::vec3(2, 8, 1));
-    lights.push_back(spotLight);
-    
-    Light* directionalLight = new DirectionalLight(glm::vec3(1.0f, 1.0f, 1.0f), 0.1f);
-    directionalLight->setPosition(glm::vec3(-2, 3, -3));
-    directionalLight->castShadow = true;
-    
-    lights.push_back(directionalLight);
-    
-    
-    Light* pointLight0 = new PointLight(glm::vec3(0.9f, 0.0f, 0.0f), 2.0f, 5.0f, 1.0f);
-    pointLight0->setPosition(glm::vec3(3, 3, 0));
-    lights.push_back(pointLight0);
-    
-    Light* pointLight1 = new PointLight(glm::vec3(0.0f, 0.9f, 0.0f), 2.0f, 5.0f, 1.0f);
-    pointLight1->setPosition(glm::vec3(-3, 3, 0));
-    lights.push_back(pointLight1);
-    
-    Light* pointLight2 = new PointLight(glm::vec3(0.0f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
-    pointLight2->setPosition(glm::vec3(0, 3, 3));
-    lights.push_back(pointLight2);
-    
-    Light* pointLight3 = new PointLight(glm::vec3(0.9f, 0.0f, 0.9f), 2.0f, 5.0f, 1.0f);
-    pointLight3->setPosition(glm::vec3(0, 3, -3));
-    lights.push_back(pointLight3);
-    
-    camera = new Camera(windowW, windowH);
-    camera->setPosition(glm::vec3(0, 2, 5));
-    
-    
-    plane = new PlaneMesh();
-    plane->setPosition(glm::vec3(0, 0, 0));
-    plane->setScale(glm::vec3(20, 20, 20));
-    
-    
-    
-    groundMeshMat = new PbrMeshMaterial();
-    groundMeshMat->metallic = 0.5;
-    groundMeshMat->roughness = 0.5;
-    plane->meshMaterial = groundMeshMat;
-    
-    
-    
-    torus = new TorusMesh();
-    torus->setPosition(glm::vec3(0, 2, -1));
-    torus->setScale(glm::vec3(0.5, 0.5, 0.5));
-    torusMeshMat = new PbrMeshMaterial();
-    torusMeshMat->metallic = 0.5;
-    torusMeshMat->roughness = 0.5;
-    torus->meshMaterial = torusMeshMat;
-    
-    
-    model = new ModelMesh("assets/objs/teapot.obj");
-    model->setPosition(glm::vec3(0, 0, -3));
-    model->setScale(glm::vec3(0.5, 0.5, 0.5));
-    model->setEularAngle(glm::vec3(90, 0, 0));
-    teapotMeshMat = new PbrMeshMaterial();
-    teapotMeshMat->metallic = 0.5;
-    teapotMeshMat->roughness = 0.5;
-    model->meshMaterial = teapotMeshMat;
-//    model->addBheaviour(test);
-    model->addBehaviour("TestBehaviour");
-    
-    childTorus = new TorusMesh;
-    
-    
-    childTorus->isDebug = true;
-    model->addChild(childTorus);
-    childTorus->setScale(glm::vec3(0.5, 0.5, 0.5));
-    childTorus->setLocalPosition(glm::vec3(5, 0, 0));
-    childTorus->setLocalEularAngle(glm::vec3(90, 0, 0));
-
-    
-    meshes.push_back(model);
-//    meshes.push_back(torus);
-    meshes.push_back(plane);
-    
-    
     
     shadowmapPass = new ShadowmapPass();
-    shadowmapPass->init(lights, camera, meshes);
-    
     recordLightDepthPass = new RecordLightDepthPass();
-    recordLightDepthPass->init(lights, camera, meshes);
-    
     gBufferPass = new GBufferPass();
-    gBufferPass->init(lights, camera, meshes);
-    
     shadingPass = new PbrShadingPass();
-    shadingPass->init(lights, camera, meshes);
 
     
     //FBO 1 -----------------------------------------------------------
@@ -189,20 +101,7 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
     glDrawBuffers(4, drawBuffers3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
-    
-    //test texture
-    if(!greenTex.loadTexture("assets/images/green.dds")){
-        std::cout << "texture load is failed" << std::endl;
-    }
-    
-    if(!groundTex.loadTexture("assets/images/floor.dds")){
-        std::cout << "texture load is failed" << std::endl;
-    }
 
-    
-    groundMeshMat->mainTex = groundTex.getID();
-    torusMeshMat->mainTex = greenTex.getID();
-    teapotMeshMat->mainTex = greenTex.getID();
     
     GLubyte whiteTexColor[] = { 255, 255, 255, 255 };
     glGenTextures(1, &whiteTex);
@@ -211,26 +110,20 @@ Scene01::Scene01(int ww, int wh):Scene(ww, wh){
         
 }
 
-
-void Scene01::render() const{
-    Scene::render();
-    camera->update();
-//    camera->updateWorldMatrix(glm::mat4());
-    for(int i=0; i<lights.size(); i++){
-        lights[i]->update();
-//        lights[i]->updateWorldMatrix(glm::mat4());
-    }
-    for(int i=0; i<meshes.size(); i++){
-        meshes[i]->update();
-//        meshes[i]->updateWorldMatrix(glm::mat4());
-        meshes[i]->updateParent(nullptr);
-    }
-
+void Renderer01::render(Scene::Scene* scene) const{
+    Renderer::render(scene);
     
+    scene->update();
+    auto lights = scene->getLights();
+    auto meshes = scene->getMehses();
+    auto camera = scene->getCamera();
+    
+    shadowmapPass->init(lights, camera, meshes);
+    recordLightDepthPass->init(lights, camera, meshes);
+    gBufferPass->init(lights, camera, meshes);
+    shadingPass->init(lights, camera, meshes);
     
     glEnable(GL_DEPTH_TEST);
-    
-    
     
     //pass1 record depth ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
@@ -238,51 +131,51 @@ void Scene01::render() const{
     glClear(GL_DEPTH_BUFFER_BIT);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
-
+    
     glUseProgram(recordLightDepthPass->prog);
     recordLightDepthPass->drawPass();
     glUseProgram(0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-
+    
+    
     //pass2 create shadowmap ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
-
+    
     glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
     glCullFace(GL_FRONT);
-
+    
     glUseProgram(shadowmapPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadowmapPass->setTextureUniform("ShadowMap", 0, depthTex);
     shadowmapPass->drawPass();
     glUseProgram(0);
-
+    
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//
+    //
     //pass3 create g-buffer ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
-
+    
     glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
-
+    
     glCullFace(GL_BACK);
-
+    
     glUseProgram(gBufferPass->prog);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     gBufferPass->drawPass();
     glUseProgram(0);
-
+    
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-
+    
+    
     //pass4 shading ====================================
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
-
+    
     glUseProgram(shadingPass->prog);
-
+    
     shadingPass->setTextureUniform("PositionTex", 0, posTex);
     shadingPass->setTextureUniform("NormalTex", 1, normTex);
     shadingPass->setTextureUniform("ColorTex", 2, colorTex);
@@ -290,7 +183,8 @@ void Scene01::render() const{
     shadingPass->setTextureUniform("TestTex", 4, depthTex);
     shadingPass->drawPass();
     glUseProgram(0);
-
+    
+    
 }
 
 

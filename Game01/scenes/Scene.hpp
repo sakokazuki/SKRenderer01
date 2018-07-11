@@ -2,7 +2,7 @@
 //  Scene.hpp
 //  Game01
 //
-//  Created by kazuki sako on 2018/01/29.
+//  Created by kazuki sako on 2018/07/09.
 //  Copyright © 2018年 kazuki sako. All rights reserved.
 //
 
@@ -10,24 +10,33 @@
 #define Scene_hpp
 
 #include <stdio.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
-#include <glm/ext.hpp>
-#include <gli/gli.hpp>
-#include <GL/glew.h>
-#include "../system/Object3D.hpp"
+#include <vector>
+#include "../meshes/Mesh.hpp"
+#include "../camera/Camera.hpp"
+#include "../lights/Light.hpp"
 
-class Scene{
-protected:
-public:
-    int windowW;
-    int windowH;
-    Scene(int ww, int wh);
-    virtual void render() const;
+namespace Scene {
+    class Scene {
+        Camera* camera;
+        std::vector<Mesh*> meshes;
+        std::vector<Light*> lights;
+        
+    public:
+        Scene();
+        void addMesh(Mesh* mesh);
+        void addLight(Light* light);
+        void setCamera(Camera* camera);
+        std::vector<Mesh*> getMehses();
+        std::vector<Light*> getLights();
+        Camera* getCamera();
+        
+        void update();
+        void draw();
+        ~Scene();
+    };
     
-    
-    
-};
+}
+
 
 #endif /* Scene_hpp */
+

@@ -385,4 +385,11 @@ newしたbehaviourに消した後もアクセスできちゃうような)、stri
 ファクトリメソッドをもたせて、(参考: https://stackoverflow.com/questions/1832003/instantiating-classes-by-name-with-factory-pattern)
 よりunityのaddCompoent<T>っぽい書き方になるようにした。
 
+### 7/11
+シーンクラスをつくってオブジェクト等の管理とかはそっちに任せることにした。
+AppBaseを起点にいろいろnewしてsceneにaddしてrendererにsceneを渡す。
+rendererはsceneをレンダリングする。
+three.jsのような方向性になってきたような気がする。
+ずっと目を背けていたのだがdeleteしたときのメモリ周りを一切確認していないので
+それさえちゃんとすれば、一旦はゲーム制作の方に移れるのかなぁと思う。
 

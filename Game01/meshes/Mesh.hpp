@@ -15,6 +15,7 @@
 #include "../system/Object3D.hpp"
 #include "../meshMaterials/MeshMaterial.hpp"
 class RenderPass;
+
 //#include "../renderpass/RenderPass.hpp"
 
 
