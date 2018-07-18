@@ -12,14 +12,15 @@
 #include <stdio.h>
 #include <vector>
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/transform.hpp>
+//#include <glm/gtx/transform.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include "glm/ext.hpp"
 #include <typeinfo>
-#include <cxxabi.h>
+//#include <cxxabi.h>
 #include <iostream>
 
 class RenderPass;

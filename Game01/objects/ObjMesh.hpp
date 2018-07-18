@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <vector>
 using:: std::vector;
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 using glm:: vec3;
 using glm:: vec2;

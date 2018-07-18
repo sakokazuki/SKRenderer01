@@ -19,6 +19,7 @@ using std::ifstream;
 
 
 bool CreateCompileShader( std::string filename, GLenum shaderType, GLuint& shader );
+bool CreateCompileShaderTest(std::string filename, GLenum shaderType, GLuint& shader);
 GLuint LinkShader( GLint shader1, GLint shader2 );
 
 #endif /* ShaderFuncNew_hpp */

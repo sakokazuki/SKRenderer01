@@ -8,135 +8,114 @@
 
 #include "zTexture.hpp"
 
+
+
 zTexture::zTexture() {
-    
+
 }
 
-bool zTexture::loadTexture(const char* fileName) {
-    gli::texture Texture = gli::load(fileName);
-    if (Texture.empty())
-        return false;
-    
-    gli::gl GL(gli::gl::PROFILE_GL33);
-    gli::gl::format const Format = GL.translate(Texture.format(), Texture.swizzles());
-    GLenum Target = GL.translate(Texture.target());
-    
-    GLuint TextureName = 0;
-    glGenTextures(1, &TextureName);
-    GLenum e = glGetError();
-    glBindTexture(Target, TextureName);
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_BASE_LEVEL, 0);
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_MAX_LEVEL, static_cast<GLint>(Texture.levels() - 1));
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_SWIZZLE_R, Format.Swizzles[0]);
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_SWIZZLE_G, Format.Swizzles[1]);
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_SWIZZLE_B, Format.Swizzles[2]);
-    e = glGetError();
-    glTexParameteri(Target, GL_TEXTURE_SWIZZLE_A, Format.Swizzles[3]);
-    e = glGetError();
-    glTexParameterf(Target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    e = glGetError();
-    glTexParameterf(Target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    e = glGetError();
-    
-    glm::tvec3<GLsizei> const Extent(Texture.extent());
-    GLsizei const FaceTotal = static_cast<GLsizei>(Texture.layers() * Texture.faces());
-    
-    switch (Texture.target())
-    {
-        case gli::TARGET_1D:
-            glTexStorage1D(Target, static_cast<GLint>(Texture.levels()), Format.Internal, Extent.x);
-            e = glGetError();
-            break;
-        case gli::TARGET_1D_ARRAY:
-        case gli::TARGET_2D:
-        case gli::TARGET_CUBE:
-            glTexStorage2D(Target, static_cast<GLint>(Texture.levels()), Format.Internal, Extent.x, Texture.target() == gli::TARGET_2D ? Extent.y : FaceTotal);
-            e = glGetError();
-            break;
-        case gli::TARGET_2D_ARRAY:
-        case gli::TARGET_3D:
-        case gli::TARGET_CUBE_ARRAY:
-            glTexStorage3D(Target, static_cast<GLint>(Texture.levels()), Format.Internal, Extent.x, Extent.y, Texture.target() == gli::TARGET_3D ? Extent.z : FaceTotal);
-            e = glGetError();
-            break;
-        default:
-            assert(0);
-            break;
-    }
-    
-    for (std::size_t Layer = 0; Layer < Texture.layers(); ++Layer){
-        for (std::size_t Face = 0; Face < Texture.faces(); ++Face) {
-            for (std::size_t Level = 0; Level < Texture.levels(); ++Level)
-            {
-                GLsizei const LayerGL = static_cast<GLsizei>(Layer);
-                glm::tvec3<GLsizei> Extent(Texture.extent(Level));
-                Target = gli::is_target_cube(Texture.target()) ? static_cast<GLenum>(GL_TEXTURE_CUBE_MAP_POSITIVE_X + Face) : Target;
-                
-                switch (Texture.target())
-                {
-                    case gli::TARGET_1D:
-                        if (gli::is_compressed(Texture.format())) {
-                            glCompressedTexSubImage1D(Target, static_cast<GLint>(Level), 0, Extent.x, Format.Internal, static_cast<GLsizei>(Texture.size(Level)), Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        else {
-                            glTexSubImage1D(Target, static_cast<GLint>(Level), 0, Extent.x, Format.External, Format.Type, Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        break;
-                    case gli::TARGET_1D_ARRAY:
-                    case gli::TARGET_2D:
-                    case gli::TARGET_CUBE:
-                        if (gli::is_compressed(Texture.format())) {
-                            glCompressedTexSubImage2D(Target, static_cast<GLint>(Level), 0, 0, Extent.x, Texture.target() == gli::TARGET_1D_ARRAY ? LayerGL : Extent.y, Format.Internal, static_cast<GLsizei>(Texture.size(Level)), Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        else {
-                            glTexSubImage2D(Target, static_cast<GLint>(Level), 0, 0, Extent.x, Texture.target() == gli::TARGET_1D_ARRAY ? LayerGL : Extent.y, Format.External, Format.Type, Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        break;
-                    case gli::TARGET_2D_ARRAY:
-                    case gli::TARGET_3D:
-                    case gli::TARGET_CUBE_ARRAY:
-                        if (gli::is_compressed(Texture.format())) {
-                            glCompressedTexSubImage3D(Target, static_cast<GLint>(Level), 0, 0, 0, Extent.x, Extent.y, Texture.target() == gli::TARGET_3D ? Extent.z : LayerGL, Format.Internal, static_cast<GLsizei>(Texture.size(Level)), Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        else {
-                            glTexSubImage3D(Target, static_cast<GLint>(Level), 0, 0, 0, Extent.x, Extent.y, Texture.target() == gli::TARGET_3D ? Extent.z : LayerGL, Format.External, Format.Type, Texture.data(Layer, Face, Level));
-                            e = glGetError();
-                        }
-                        break;
-                    default:
-                        assert(0);
-                        break;
-                }
-            }
-        }
-    }
-    e = glGetError();
-    glBindTexture(Target, 0);
-    e = glGetError();
-    texture = TextureName;
-    return true;
+void zTexture::render(GLenum target) {
+	glActiveTexture(target);
+	glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-void zTexture::render(GLenum target){
-    glActiveTexture(target);
-    glBindTexture(GL_TEXTURE_2D, texture);
-}
-
-GLuint zTexture::getID() const{
-    return texture;
+GLuint zTexture::getID() const {
+	std::cout << texture << std::endl;
+	return texture;
 }
 
 
+bool zTexture::loadTexture(const char *filename) {
+
+	FILE *fp;
+	png_structp pPng = NULL;
+	png_infop pInfo = NULL;
+	int depth, colorType, interlaceType;
+	unsigned int width, height;
+	int rowSize, imgSize;
+	unsigned int i;
+	unsigned char *data;
+	GLuint tex;
+
+
+	//PNGファイルを開く
+	fopen_s(&fp, filename, "rb");
+	if (!fp) {
+		fprintf(stderr, "createTextureFromPNGFile: Failed to fopen.");
+		return false;
+	}
+
+	//PNGファイルを読み込むための構造体を作成
+	pPng = png_create_read_struct(
+		PNG_LIBPNG_VER_STRING,
+		NULL, NULL, NULL
+	);
+	pInfo = png_create_info_struct(pPng);
+
+	//初期化
+	png_init_io(pPng, fp);
+
+	//画像情報を読み込み
+	//画像の幅、高さ、ビット深度、色の表現方法、インターレースの情報を取得する
+	png_read_info(pPng, pInfo);
+	png_get_IHDR(pPng, pInfo,
+		&width, &height,
+		&depth, &colorType,
+		&interlaceType, NULL, NULL
+	);
+
+	//RGBとRGBAのみに対応
+	if (colorType != PNG_COLOR_TYPE_RGB && colorType != PNG_COLOR_TYPE_RGBA) {
+		fprintf(stderr, "createTextureFromPNGFile: Supprted color type are RGB and RGBA.");
+		return false;
+	}
+
+	//インターレースは非対応
+	if (interlaceType != PNG_INTERLACE_NONE) {
+		fprintf(stderr, "createTextureFromPNGFile: Interlace image is not supprted.");
+		return false;
+	}
+
+	//1行のデータサイズと画像の高さから必要なメモリ量を計算して、メモリ確保
+	rowSize = (int)png_get_rowbytes(pPng, pInfo);
+	//    imgSize = rowSize * height;
+	imgSize = width * 4 * height;
+	data = (unsigned char *)malloc(imgSize);
+
+	std::cout << rowSize << ": " << height << "  " << width << std::endl;
+	//ピクセルの読み込み
+	for (i = 0; i < height; i++) {
+		png_read_row(pPng, &data[i * rowSize], NULL);
+	}
+
+	png_read_end(pPng, pInfo);
+
+	//OpenGLテクスチャの作成
+	glGenTextures(1, &tex);
+
+	//テクスチャを選択
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+
+	//テクスチャにPNGファイルから読み込んだピクセルを書き込む
+	glTexImage2D(
+		GL_TEXTURE_2D, 0, GL_RGBA,
+		width, height,
+		0, GL_RGBA, GL_UNSIGNED_BYTE, data
+	);
+
+	//後片付け
+	free(data);
+	png_destroy_info_struct(pPng, &pInfo);
+	png_destroy_read_struct(&pPng, NULL, NULL);
+	fclose(fp);
+	std::cout << ": " << tex << std::endl;
+	texture = tex;
+	return true;
+
+}
 
 
 

@@ -8,6 +8,61 @@
 
 #include "ShaderFunc.hpp"
 
+bool CreateCompileShaderTest(std::string filename, GLenum shaderType, GLuint& shader)
+{
+	//create shader
+	shader = glCreateShader(shaderType);
+	if (0 == shader)
+	{
+		fprintf(stderr, "Error creating shader.\n");
+		exit(1);
+	}
+
+	std::ifstream shaderFile("./shaders/" + filename, ifstream::ate);
+
+	if (!shaderFile) {
+		fprintf(stderr, "Error opening shader file\n");
+		exit(1);
+	}
+
+	int len = shaderFile.tellg();
+	GLchar* shaderSource = new GLchar[len + 1];
+	shaderFile.clear();
+	shaderFile.seekg(0, shaderFile.beg);
+	for (int i = 0; i < len; i++) {
+		shaderFile.get(shaderSource[i]);
+	}
+	shaderSource[len] = '\0';
+
+	//compile shader
+	glShaderSource(shader, 1, &shaderSource, NULL);
+	glCompileShader(shader);
+
+	// Check compilation status
+	GLint result;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+	if (GL_FALSE == result) {
+		fprintf(stderr, "shader compilation failed!\n");
+
+		GLint logLen;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
+
+		if (logLen > 0) {
+			char * log = new char[logLen];
+
+			GLsizei written;
+			glGetShaderInfoLog(shader, logLen, &written, log);
+
+			fprintf(stderr, "Shader log: \n%s", log);
+
+			delete[] log;
+		}
+
+		return false;
+	}
+	return true;
+}
+
 bool CreateCompileShader( std::string filename, GLenum shaderType, GLuint& shader )
 {
     //create shader

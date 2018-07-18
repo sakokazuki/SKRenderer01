@@ -10,9 +10,10 @@
 #define zTexture_hpp
 
 #include <stdio.h>
+#include <iostream>
 
 #include <GL/glew.h>
-#include <gli/gli.hpp>
+#include <png.h>
 
 class zTexture {
 private:

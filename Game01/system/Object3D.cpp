@@ -26,8 +26,10 @@ Object3D::Object3D()
 }
 
 char* Object3D::classname(){
-    int n;
-    return abi::__cxa_demangle(typeid(*this).name(), 0, 0, &n);
+    /*int n;
+    return abi::__cxa_demangle(typeid(*this).name(), 0, 0, &n);*/
+	char n = 'n';
+	return &n;
 }
 
 void Object3D::update(){
@@ -160,13 +162,13 @@ void Object3D::setEularAngle(glm::vec3 angle){
         return;
     }
     glm::mat4 parentMat = glm::toMat4(getQuaternion());
-    glm::quat targetQuat = glm::quat(angle * 2.0f * M_PI / 360.0f);
+    glm::quat targetQuat = glm::quat(angle * 2.0f * glm::pi<float>() / 360.0f);
     glm::mat4 targetMat = glm::toMat4(targetQuat);
     *p_rMatrix = glm::inverse(parentMat) * targetMat;
 }
 
 void Object3D::setLocalEularAngle(glm::vec3 angle){
-    glm::quat q = glm::quat(angle * 2.0f * M_PI / 360.0f);
+    glm::quat q = glm::quat(angle * 2.0f * glm::pi<float>() / 360.0f);
     *p_rMatrix = glm::toMat4(q);
 }
 
@@ -178,12 +180,12 @@ glm::vec3 Object3D::getEulerAnlge() const{
     }
     
     glm::quat q = getQuaternion();
-    return glm::eulerAngles(q) * 360.0f / (M_PI * 2.0f);
+    return glm::eulerAngles(q) * 360.0f / (glm::pi<float>() * 2.0f);
 }
 
 glm::vec3 Object3D::getLocalEulerAnlge() const{
     glm::quat q = getLocalQuaternion();
-    return glm::eulerAngles(q) * 360.0f / (M_PI * 2.0f);
+    return glm::eulerAngles(q) * 360.0f / (glm::pi<float>() * 2.0f);
     
 }
 

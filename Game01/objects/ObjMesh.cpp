@@ -155,7 +155,7 @@ void ObjMesh::center( vector<vec3> & points ) {
     vec3 minPoint = points[0];
     
     // Find the AABB
-    for( uint i = 0; i < points.size(); ++i ) {
+    for( int i = 0; i < points.size(); ++i ) {
         vec3 & point = points[i];
         if( point.x > maxPoint.x ) maxPoint.x = point.x;
         if( point.y > maxPoint.y ) maxPoint.y = point.y;
@@ -171,7 +171,7 @@ void ObjMesh::center( vector<vec3> & points ) {
                        (maxPoint.z + minPoint.z) / 2.0f );
     
     // Translate center of the AABB to the origin
-    for( uint i = 0; i < points.size(); ++i ) {
+    for( int i = 0; i < points.size(); ++i ) {
         vec3 & point = points[i];
         point = point - center;
     }
@@ -182,11 +182,11 @@ void ObjMesh::generateAveragedNormals(
                                       vector<vec3> & normals,
                                       const vector<int> & faces )
 {
-    for( uint i = 0; i < points.size(); i++ ) {
+    for( int i = 0; i < points.size(); i++ ) {
         normals.push_back(vec3(0.0f));
     }
     
-    for( uint i = 0; i < faces.size(); i += 3) {
+    for( int i = 0; i < faces.size(); i += 3) {
         const vec3 & p1 = points[faces[i]];
         const vec3 & p2 = points[faces[i+1]];
         const vec3 & p3 = points[faces[i+2]];
@@ -200,7 +200,7 @@ void ObjMesh::generateAveragedNormals(
         normals[faces[i+2]] += n;
     }
     
-    for( uint i = 0; i < normals.size(); i++ ) {
+    for( int i = 0; i < normals.size(); i++ ) {
         normals[i] = glm::normalize(normals[i]);
     }
 }
@@ -215,14 +215,14 @@ void ObjMesh::generateTangents(
     vector<vec3> tan1Accum;
     vector<vec3> tan2Accum;
     
-    for( uint i = 0; i < points.size(); i++ ) {
+    for( int i = 0; i < points.size(); i++ ) {
         tan1Accum.push_back(vec3(0.0f));
         tan2Accum.push_back(vec3(0.0f));
         tangents.push_back(vec4(0.0f));
     }
     
     // Compute the tangent vector
-    for( uint i = 0; i < faces.size(); i += 3 )
+    for( int i = 0; i < faces.size(); i += 3 )
     {
         const vec3 &p1 = points[faces[i]];
         const vec3 &p2 = points[faces[i+1]];
@@ -251,7 +251,7 @@ void ObjMesh::generateTangents(
         tan2Accum[faces[i+2]] += tan2;
     }
     
-    for( uint i = 0; i < points.size(); ++i )
+    for( int i = 0; i < points.size(); ++i )
     {
         const vec3 &n = normals[i];
         vec3 &t1 = tan1Accum[i];

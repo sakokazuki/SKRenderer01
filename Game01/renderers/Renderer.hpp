@@ -10,11 +10,11 @@
 #define Renderer_hpp
 
 #include <stdio.h>
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/ext.hpp>
-#include <gli/gli.hpp>
 #include <GL/glew.h>
 #include "../system/Object3D.hpp"
 #include "../scenes/Scene.hpp"

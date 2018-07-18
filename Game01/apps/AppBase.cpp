@@ -22,7 +22,13 @@ namespace app {
     }
     
     void AppBase::loop(){
-        renderer->render(scene);
+		if (renderer && scene) {
+			renderer->render(scene);
+		}
+		else {
+			fprintf(stderr, "renderer or scene is null");
+		}
+        
         
     }
     

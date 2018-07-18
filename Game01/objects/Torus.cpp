@@ -9,6 +9,9 @@
 #include "Torus.hpp"
 
 #include <GL/glew.h>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/glm.hpp>
+#include "glm/ext.hpp"
 
 #include <cstdio>
 #include <cmath>
@@ -83,8 +86,8 @@ void Torus::generateVerts(float * verts, float * norms, float * tex,
                             unsigned int * el,
                              float outerRadius, float innerRadius)
 {
-    float ringFactor  = (float)(M_PI*2.0 / rings);
-    float sideFactor = (float)(M_PI*2.0 / sides);
+    float ringFactor  = (float)(glm::pi<float>()*2.0 / rings);
+    float sideFactor = (float)(glm::pi<float>()*2.0 / sides);
     int idx = 0, tidx = 0;
     for( int ring = 0; ring <= rings; ring++ ) {
         float u = ring * ringFactor;
@@ -101,8 +104,8 @@ void Torus::generateVerts(float * verts, float * norms, float * tex,
             norms[idx] = cv * cu * r;
             norms[idx + 1] = cv * su * r;
             norms[idx + 2] = sv * r;
-            tex[tidx] = (float)(u / M_PI*2.0);
-            tex[tidx+1] = (float)(v / M_PI*2.0);
+            tex[tidx] = (float)(u / glm::pi<float>()*2.0);
+            tex[tidx+1] = (float)(v / glm::pi<float>()*2.0);
             tidx += 2;
             // Normalize
             float len = sqrt( norms[idx] * norms[idx] +

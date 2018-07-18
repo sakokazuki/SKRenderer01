@@ -29,7 +29,7 @@ public:
         bool new_key = _factory.define(name,
                                        &Object3DBehaviour::Factory::template create_func<Object3DBehaviour, Deriverd>);
         if (not new_key) {
-            throw std::logic_error(std::string(__PRETTY_FUNCTION__) +
+            throw std::logic_error(std::string(__FUNCSIG__) +
                                    ": name already registered");
         }
     }

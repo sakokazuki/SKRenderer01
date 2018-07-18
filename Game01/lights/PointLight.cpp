@@ -8,7 +8,7 @@
 
 #include "PointLight.hpp"
 #include "../renderpass/RenderPass.hpp"
-#include <fmt/format.h>
+#include <fmt/core.h>
 
 PointLight::PointLight(glm::vec3 color, float intensity, float distance, float decay): Light(color, intensity){
     //point lihgtは影に使うmatrix関連は適当のまま

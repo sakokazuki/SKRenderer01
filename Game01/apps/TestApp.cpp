@@ -115,11 +115,11 @@ namespace app {
         //test texture
         zTexture greenTex;
         zTexture groundTex;
-        if(!greenTex.loadTexture("assets/images/green.dds")){
+        if(!greenTex.loadTexture("assets/images/green.png")){
             std::cout << "texture load is failed" << std::endl;
         }
         
-        if(!groundTex.loadTexture("assets/images/floor.dds")){
+        if(!groundTex.loadTexture("assets/images/floor.png")){
             std::cout << "texture load is failed" << std::endl;
         }
         

@@ -38,8 +38,11 @@ namespace Scene{
     }
     
     void Scene::update(){
-        camera->update();
-        camera->updateParent(nullptr);
+		if (camera) {
+			camera->update();
+			camera->updateParent(nullptr);
+		}
+        
         
         for(int i=0; i<lights.size(); i++){
             lights[i]->update();

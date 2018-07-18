@@ -24,7 +24,7 @@ struct Factory {
     Type create(Key const& key) {
         typename Registry::const_iterator i = _registry.find(key);
         if (i == _registry.end()) {
-            throw std::invalid_argument(std::string(__PRETTY_FUNCTION__) +
+            throw std::invalid_argument(std::string(__FUNCSIG__) +
                                         ": key not registered");
         }
         else return i->second();
@@ -34,6 +34,7 @@ struct Factory {
     static Base* create_func() {
         return new Actual();
     }
+	
     
 private:
     typedef std::map<Key, Creator> Registry;
