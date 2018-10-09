@@ -23,6 +23,7 @@ private:
     GLFWwindow *const window;
     
     GLfloat size[2];
+	
     GLfloat scale;
     GLfloat location[2];
     
@@ -31,6 +32,7 @@ public:
     const GLfloat *getSize();
     const GLfloat getScale();
     const GLfloat *getLocation();
+	const GLint *getViewport();
     static void resize(GLFWwindow *const window, int width, int height);
     virtual ~Window();
     const int shouldClose();

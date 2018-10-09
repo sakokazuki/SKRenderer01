@@ -8,6 +8,7 @@
 
 #include "Mesh.hpp"
 #include "../renderpass/RenderPass.hpp"
+#include "glm/gtx/string_cast.hpp"
 
 Mesh::Mesh():Object3D(){
 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);    meshMaterial = new MeshMaterial();
@@ -25,7 +26,10 @@ void Mesh::draw(RenderPass *renderPass) const{
     glUniformMatrix3fv(renderPass->normalloc, 1, GL_FALSE, &normal[0][0]);
     glm::mat4 mvp = renderPass->projectionMatrix * mv;
     glUniformMatrix4fv(renderPass->mvploc, 1, GL_FALSE, &mvp[0][0]);
-    draw();
+
+
+	draw();
+
 }
 
 

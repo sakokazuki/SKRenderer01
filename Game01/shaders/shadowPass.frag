@@ -15,8 +15,11 @@ void main(){
     float bias = 0.0003;
     float shadow = texture( ShadowMap, vec3(ShadowCoord.xy, (ShadowCoord.z-bias)/ShadowCoord.w));
 
-
-    FragColor = vec4(shadow, shadow, shadow, 1.0);
-    UnlitColor = vec4(shadow, shadow, shadow, 1.0);
+	shadow = 1.0;
+	if ( texture( shadowMap, ShadowCoord.xy ).z  <  ShadowCoord.z){
+		shadow = 0.0;
+	}
+    FragColor = vec4(shadow, shadow, 0.0, 1.0);
+    UnlitColor = vec4(shadow, shadow, 0.0, 1.0);
 
 }

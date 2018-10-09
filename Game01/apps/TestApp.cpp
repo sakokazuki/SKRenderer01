@@ -26,9 +26,9 @@
 namespace app {
     TestApp::TestApp(Window *window) : app::AppBase(window){
         
-        const GLfloat *const size(window->getSize());
-        int windowW = size[0];
-        int windowH = size[1];
+        const GLint *const size(window->getViewport());
+        int windowW = size[2];
+        int windowH = size[3];
         Renderer* renderer = new Renderer01(windowW, windowH);
         Scene::Scene* scene = new Scene::Scene();
         
@@ -63,7 +63,7 @@ namespace app {
         scene->addLight(pointLight3);
         
         Camera* camera = new Camera(windowW, windowH);
-        camera->setPosition(glm::vec3(0, 2, 5));
+        camera->setPosition(glm::vec3(0, 5, 6));
         scene->setCamera(camera);
         
         
@@ -90,7 +90,7 @@ namespace app {
         
         
         Mesh* model = new ModelMesh("assets/objs/teapot.obj");
-        model->setPosition(glm::vec3(0, 0, -3));
+        model->setPosition(glm::vec3(0, 0, 0));
         model->setScale(glm::vec3(0.5, 0.5, 0.5));
         model->setEularAngle(glm::vec3(90, 0, 0));
         PbrMeshMaterial* teapotMeshMat = new PbrMeshMaterial();
@@ -124,8 +124,8 @@ namespace app {
         }
         
         groundMeshMat->mainTex = groundTex.getID();
-        torusMeshMat->mainTex = greenTex.getID();
-        teapotMeshMat->mainTex = greenTex.getID();
+        torusMeshMat->mainTex = groundTex.getID();
+        teapotMeshMat->mainTex = groundTex.getID();
         
     }
     

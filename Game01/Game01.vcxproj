@@ -144,6 +144,7 @@
     <ClCompile Include="meshes\TorusMesh.cpp" />
     <ClCompile Include="meshMaterials\MeshMaterial.cpp" />
     <ClCompile Include="meshMaterials\PbrMeshMaterial.cpp" />
+    <ClCompile Include="meshMaterials\SimpleMeshMaterial.cpp" />
     <ClCompile Include="meshMaterials\TextureMeshMaterial.cpp" />
     <ClCompile Include="objects\Box.cpp" />
     <ClCompile Include="objects\Object.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="renderpass\RenderPass.cpp" />
     <ClCompile Include="renderpass\ShadowmapPass.cpp" />
     <ClCompile Include="renderpass\TestPass.cpp" />
+    <ClCompile Include="renderpass\TestRenderViewPass.cpp" />
     <ClCompile Include="scenes\Scene.cpp" />
     <ClCompile Include="system\Object3D.cpp" />
     <ClCompile Include="system\Object3DBehaviour.cpp" />
@@ -186,6 +188,7 @@
     <ClInclude Include="meshes\TorusMesh.hpp" />
     <ClInclude Include="meshMaterials\MeshMaterial.hpp" />
     <ClInclude Include="meshMaterials\PbrMeshMaterial.hpp" />
+    <ClInclude Include="meshMaterials\SimpleMeshMaterial.h" />
     <ClInclude Include="meshMaterials\TextureMeshMaterial.hpp" />
     <ClInclude Include="objects\Box.hpp" />
     <ClInclude Include="objects\Object.hpp" />
@@ -204,6 +207,7 @@
     <ClInclude Include="renderpass\RenderPass.hpp" />
     <ClInclude Include="renderpass\ShadowmapPass.hpp" />
     <ClInclude Include="renderpass\TestPass.h" />
+    <ClInclude Include="renderpass\TestRenderViewPass.h" />
     <ClInclude Include="scenes\Scene.hpp" />
     <ClInclude Include="system\defines.h" />
     <ClInclude Include="system\Fractory.h" />
@@ -228,12 +232,16 @@
     <Image Include="assets\images\ogre_normalmap.dds" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\memo.md" />
+    <None Include="..\README.md" />
     <None Include="shaders\gBufferPass.frag" />
     <None Include="shaders\gBufferPass.vert" />
     <None Include="shaders\init.frag" />
     <None Include="shaders\init.vert" />
     <None Include="shaders\pbrShadingPass.frag" />
     <None Include="shaders\pbrShadingPass.vert" />
+    <None Include="shaders\point.frag" />
+    <None Include="shaders\point.vert" />
     <None Include="shaders\recordLightDepthPass.frag" />
     <None Include="shaders\recordLightDepthPass.vert" />
     <None Include="shaders\shadingPass.frag" />

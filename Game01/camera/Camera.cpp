@@ -11,6 +11,7 @@
 Camera::Camera(int w, int h){
     
     lookPos = glm::vec3(0.0f, 0.0f, 0.0f);
+	lookAxis= glm::vec3(0.0f, 1.0f, 0.0f);
     
     viewMatrix = glm::lookAt(Object3D::getPosition(), lookPos, glm::vec3(0.0f, 1.0f, 0.0f));
     width = w;
@@ -30,4 +31,12 @@ void Camera::update(){
     
 }
 
+void Camera::lookAt(glm::vec3 pos) {
+	lookPos = pos;
+}
+
+void Camera::lookAt(glm::vec3 pos, glm::vec3 axis) {
+	lookPos = pos;
+	lookAxis = axis;
+}
 

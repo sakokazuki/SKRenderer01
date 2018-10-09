@@ -32,10 +32,12 @@ void RenderPass::drawPass(){
 
 void RenderPass::compileShader(){
     GLuint frag, vert;
+	
     if(!CreateCompileShaderTest(shadername_vert, GL_VERTEX_SHADER, vert)){
         throw "vertexshader compile error";
     }
-    if(!CreateCompileShaderTest(shadername_frag, GL_FRAGMENT_SHADER, frag)){
+
+	if(!CreateCompileShaderTest(shadername_frag, GL_FRAGMENT_SHADER, frag)){
         throw "fragmentshader compile error";
     }
     prog = LinkShader(vert, frag);

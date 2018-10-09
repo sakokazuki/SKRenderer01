@@ -27,7 +27,6 @@
 #include "system/Window.hpp"
 
 
-#include "renderers/Renderer01.hpp"
 #include "./system/ShaderFunc.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -40,8 +39,7 @@
 #include <sstream>
 
 
-
-int main(void)
+int main()
 {
 	atexit(glfwTerminate);
 
@@ -76,15 +74,18 @@ int main(void)
 	glClearDepth(1.0);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_DEPTH_TEST);
+	
 
 	
-	app::AppBase* app = new app::TestApp2(&window);
+	//app::AppBase* app = new app::TestApp2(&window);
 
-    //app::AppBase* app = new app::TestApp(&window);
-
+    app::AppBase* app = new app::TestApp(&window);
+	
     while (window.shouldClose() == GL_FALSE)
     {
-		//app->loop();
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		app->loop();
         /* Swap front and back buffers */
         window.swapBuffers();
     }

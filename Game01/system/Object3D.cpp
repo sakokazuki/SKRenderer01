@@ -14,9 +14,9 @@
 
 Object3D::Object3D()
 {
-    tMatrix = glm::translate(glm::mat4(), glm::vec3(0));
+    tMatrix = glm::translate(glm::mat4(1), glm::vec3(0));
     sMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1));
-    rMatrix = glm::rotate(glm::mat4(), float(0), glm::vec3(1.0f, 0.0f, 0.0f));
+    rMatrix = glm::rotate(glm::mat4(1), float(0), glm::vec3(1.0f, 0.0f, 0.0f));
 
     p_tMatrix = &tMatrix;
     p_sMatrix = &sMatrix;
@@ -70,13 +70,13 @@ void Object3D::setPosition(glm::vec3 p){
     }
     
     glm::vec3 parentPos = parent->getPosition();
-    glm::mat4 parentMat = glm::translate(glm::mat4(), parentPos);
-    glm::mat4 targetMat = glm::translate(glm::mat4(), p);
+    glm::mat4 parentMat = glm::translate(glm::mat4(1), parentPos);
+    glm::mat4 targetMat = glm::translate(glm::mat4(1), p);
     *p_tMatrix = glm::inverse(parentMat) * targetMat;
 }
 
 void Object3D::setLocalPosition(glm::vec3 p){
-    *p_tMatrix = glm::translate(glm::mat4(), p);
+    *p_tMatrix = glm::translate(glm::mat4(1), p);
     
 }
 
@@ -105,8 +105,8 @@ void Object3D::setScale(glm::vec3 s){
     }
     
     glm::vec3 parentScale = parent->getScale();
-    glm::mat4 parentMat = glm::translate(glm::mat4(), parentScale);
-    glm::mat4 targetMat = glm::translate(glm::mat4(), s);
+    glm::mat4 parentMat = glm::translate(glm::mat4(1), parentScale);
+    glm::mat4 targetMat = glm::translate(glm::mat4(1), s);
     *p_sMatrix = glm::inverse(parentMat) * targetMat;
 }
 

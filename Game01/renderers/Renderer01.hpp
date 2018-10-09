@@ -21,6 +21,7 @@
 #include "../renderpass/RecordLightDepthPass.hpp"
 #include "../renderpass/GBufferPass.hpp"
 #include "../renderpass/PbrShadingPass.hpp"
+#include "../renderpass/TestPass.h"
 
 class Renderer01:public Renderer{
 private:
@@ -35,6 +36,7 @@ private:
     RenderPass* recordLightDepthPass;
     RenderPass* gBufferPass;
     RenderPass* shadingPass;
+	RenderPass* testPass;
     
     GLuint whiteTex;
     

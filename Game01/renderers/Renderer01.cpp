@@ -16,13 +16,14 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     recordLightDepthPass = new RecordLightDepthPass();
     gBufferPass = new GBufferPass();
     shadingPass = new PbrShadingPass();
+	testPass = new TestPass();
 
     
     //FBO 1 -----------------------------------------------------------
     GLfloat border[] = {1.0f, 0.0f, 0.0f, 0.0f};
     glGenTextures(1, &depthTex);
     glBindTexture(GL_TEXTURE_2D, depthTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, windowW*2, windowH*2, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, windowW, windowH, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -48,11 +49,11 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     
     glGenRenderbuffers(1, &shadowDepthBuf);
     glBindRenderbuffer(GL_RENDERBUFFER, shadowDepthBuf);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW*2, windowH*2);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW, windowH);
     
     glGenTextures(1, &unlitColorTex);
     glBindTexture(GL_TEXTURE_2D, unlitColorTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW*2, windowH*2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW, windowH, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
@@ -70,24 +71,24 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     
     glGenRenderbuffers(1, &depthBuf);
     glBindRenderbuffer(GL_RENDERBUFFER, depthBuf);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW*2, windowH*2);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW, windowH);
     
     glGenTextures(1, &posTex);
     glBindTexture(GL_TEXTURE_2D, posTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW*2, windowH*2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW, windowH, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
     glGenTextures(1, &normTex);
     glBindTexture(GL_TEXTURE_2D, normTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW*2, windowH*2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW, windowH, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
+   
 
     glGenTextures(1, &colorTex);
     glBindTexture(GL_TEXTURE_2D, colorTex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW*2, windowH*2, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW, windowH, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
@@ -122,8 +123,19 @@ void Renderer01::render(Scene::Scene* scene) const{
     recordLightDepthPass->init(lights, camera, meshes);
     gBufferPass->init(lights, camera, meshes);
     shadingPass->init(lights, camera, meshes);
+	testPass->init(lights, camera, meshes);
     
     glEnable(GL_DEPTH_TEST);
+
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_BLEND);
+
+	//glUseProgram(testPass->prog);
+
+	//testPass->drawPass();
+
+	//glUseProgram(0);
     
     //pass1 record depth ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
@@ -152,7 +164,7 @@ void Renderer01::render(Scene::Scene* scene) const{
     glUseProgram(0);
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    //
+    
     //pass3 create g-buffer ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, deferredFBO);
     
