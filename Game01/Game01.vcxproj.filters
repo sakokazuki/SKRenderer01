@@ -318,14 +318,10 @@
     <None Include="shaders\shadingPass.vert" />
     <None Include="shaders\shadowmap.frag" />
     <None Include="shaders\shadowmap.vert" />
-    <None Include="shaders\shadowmappass.frag" />
-    <None Include="shaders\shadowmappass.vert" />
     <None Include="shaders\shadowPass.frag" />
     <None Include="shaders\shadowPass.vert" />
     <None Include="shaders\simple.frag" />
     <None Include="shaders\simple.vert" />
-    <None Include="shaders\point.vert" />
-    <None Include="shaders\point.frag" />
     <None Include="..\README.md" />
     <None Include="..\memo.md" />
   </ItemGroup>

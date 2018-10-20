@@ -87,11 +87,10 @@ namespace app {
         torusMeshMat->metallic = 0.5;
         torusMeshMat->roughness = 0.5;
         torus->meshMaterial = torusMeshMat;
-        
-        
-        Mesh* model = new ModelMesh("assets/objs/teapot.obj");
-        model->setPosition(glm::vec3(0, 0, 0));
-        model->setScale(glm::vec3(0.5, 0.5, 0.5));
+		
+        Mesh* model = new ModelMesh("assets/objs/teddy.obj");
+        model->setPosition(glm::vec3(0, 1, 0));
+        model->setScale(glm::vec3(0.06, 0.06, 0.06));
         model->setEularAngle(glm::vec3(90, 0, 0));
         PbrMeshMaterial* teapotMeshMat = new PbrMeshMaterial();
         teapotMeshMat->metallic = 0.5;
@@ -103,14 +102,16 @@ namespace app {
         
         
         childTorus->isDebug = true;
-        model->addChild(childTorus);
-        childTorus->setScale(glm::vec3(0.5, 0.5, 0.5));
-        childTorus->setLocalPosition(glm::vec3(5, 0, 0));
-        childTorus->setLocalEularAngle(glm::vec3(90, 0, 0));
         
+        childTorus->setScale(glm::vec3(10.5, 10.5, 10.5));
+        childTorus->setLocalPosition(glm::vec3(50.6, 2, 0));
+        childTorus->setLocalEularAngle(glm::vec3(0, 0, 0));
+        
+		model->addChild(childTorus);
+
         scene->addMesh(model);
         scene->addMesh(plane);
-//        scene->addMesh(torus);
+        //scene->addMesh(torus);
         
         //test texture
         zTexture greenTex;

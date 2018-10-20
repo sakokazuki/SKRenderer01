@@ -44,7 +44,7 @@ subroutine(RenderPassType)
 void shadeWithShadow(){
     vec3 ambient = Light.Intensity * Material.Ka;
     vec3 diffAndSpec = phongModelDiffAndSpec();
-    s
+    
     float shadow = textureProj(ShadowMap, ShadowCoord);
     
     // If the fragment is in shadow, use ambient light only.

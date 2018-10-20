@@ -39,6 +39,7 @@ private:
 	RenderPass* testPass;
     
     GLuint whiteTex;
+	
     
 public:
     Renderer01(int ww, int wh);

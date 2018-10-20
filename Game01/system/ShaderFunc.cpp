@@ -7,18 +7,19 @@
 //
 
 #include "ShaderFunc.hpp"
-
-bool CreateCompileShaderTest(std::string filename, GLenum shaderType, GLuint& shader)
+#include <string>
+#include <iostream>
+bool CreateCompileShaderTest(const std::string filename, GLenum shaderType, GLuint& shader)
 {
+	std::cout << filename << std::endl;
 	//create shader
 	shader = glCreateShader(shaderType);
 	if (0 == shader)
 	{
 		fprintf(stderr, "Error creating shader.\n");
 		exit(1);
-	}
-
-	std::ifstream shaderFile("./shaders/" + filename, ifstream::ate);
+	}	
+	std::ifstream shaderFile("./shaders/" + filename, ifstream::ate | ifstream::binary);
 
 	if (!shaderFile) {
 		fprintf(stderr, "Error opening shader file\n");
@@ -33,6 +34,9 @@ bool CreateCompileShaderTest(std::string filename, GLenum shaderType, GLuint& sh
 		shaderFile.get(shaderSource[i]);
 	}
 	shaderSource[len] = '\0';
+	std::cout << "len: " << len << std::endl;
+	std::cout << shaderSource[len-1] << std::endl;
+	std::cout << shaderSource << std::endl;
 
 	//compile shader
 	glShaderSource(shader, 1, &shaderSource, NULL);
@@ -42,7 +46,8 @@ bool CreateCompileShaderTest(std::string filename, GLenum shaderType, GLuint& sh
 	GLint result;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 	if (GL_FALSE == result) {
-		fprintf(stderr, "shader compilation failed!\n");
+		std::cout << filename << std::endl;
+		fprintf(stderr, "shader compilation failed!! \n");
 
 		GLint logLen;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
@@ -75,7 +80,7 @@ bool CreateCompileShader( std::string filename, GLenum shaderType, GLuint& shade
     
     //read shader file
     GLchar * shaderCode;
-    ifstream fragFile( "./shaders/"+filename, ifstream::in );
+    ifstream fragFile( "./shaders/"+filename, ifstream::in | ifstream::binary);
     
     if( !fragFile ) {
         fprintf(stderr, "Error opening shader file\n" );
@@ -103,7 +108,7 @@ bool CreateCompileShader( std::string filename, GLenum shaderType, GLuint& shade
     GLint result;
     glGetShaderiv( shader, GL_COMPILE_STATUS, &result );
     if( GL_FALSE == result ) {
-        fprintf( stderr, "shader compilation failed!\n" );
+        fprintf( stderr, "shader compilation failed! \n");
         
         GLint logLen;
         glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &logLen );

@@ -9,6 +9,7 @@
 #include "Renderer01.hpp"
 
 
+
 Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     glClearColor(1.0f,1.0f,1.0f,1.0f);
     
@@ -24,8 +25,8 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     glGenTextures(1, &depthTex);
     glBindTexture(GL_TEXTURE_2D, depthTex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, windowW, windowH, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border);
@@ -127,22 +128,13 @@ void Renderer01::render(Scene::Scene* scene) const{
     
     glEnable(GL_DEPTH_TEST);
 
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_BLEND);
-
-	//glUseProgram(testPass->prog);
-
-	//testPass->drawPass();
-
-	//glUseProgram(0);
-    
     //pass1 record depth ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowFBO);
     
-    glClear(GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_DEPTH_BUFFER_BIT);
     glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT);
+	glCullFace(GL_BACK);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glUseProgram(recordLightDepthPass->prog);
     recordLightDepthPass->drawPass();
@@ -154,11 +146,12 @@ void Renderer01::render(Scene::Scene* scene) const{
     //pass2 create shadowmap ====================================
     glBindFramebuffer(GL_FRAMEBUFFER, shadowmapFBO);
     
-    glEnable(GL_CULL_FACE | GL_DEPTH_TEST);
-    glCullFace(GL_FRONT);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glUseProgram(shadowmapPass->prog);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shadowmapPass->setTextureUniform("ShadowMap", 0, depthTex);
     shadowmapPass->drawPass();
     glUseProgram(0);

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -240,16 +240,12 @@
     <None Include="shaders\init.vert" />
     <None Include="shaders\pbrShadingPass.frag" />
     <None Include="shaders\pbrShadingPass.vert" />
-    <None Include="shaders\point.frag" />
-    <None Include="shaders\point.vert" />
     <None Include="shaders\recordLightDepthPass.frag" />
     <None Include="shaders\recordLightDepthPass.vert" />
     <None Include="shaders\shadingPass.frag" />
     <None Include="shaders\shadingPass.vert" />
     <None Include="shaders\shadowmap.frag" />
     <None Include="shaders\shadowmap.vert" />
-    <None Include="shaders\shadowmappass.frag" />
-    <None Include="shaders\shadowmappass.vert" />
     <None Include="shaders\shadowPass.frag" />
     <None Include="shaders\shadowPass.vert" />
     <None Include="shaders\simple.frag" />

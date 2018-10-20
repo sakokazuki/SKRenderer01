@@ -32,7 +32,9 @@ void DirectionalLight::update(){
     Object3D::update();
     
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	//std::cout << "--------" << std::endl;
+	//std::cout << "[old view matrix]: " << glm::to_string(glm::lookAt(Object3D::getPosition(), lookPos, up)) << std::endl;
+	//std::cout << "[new view matrix]: " << glm::to_string(glm::toMat4(Object3D::getQuaternion())) << std::endl;
     viewMatrix = glm::lookAt(Object3D::getPosition(), lookPos, up);
-    
-    
+     
 }

@@ -15,6 +15,14 @@
 class ShadowmapPass:public RenderPass{
 private:
     GLint shadowMatrixLoc;
+
+	int jitterMapSize;
+	int samplesU, samplesV;
+	float shadowRadius;
+	
+	GLuint jitterTex;
+	GLuint createJitterTex() const;
+	float jitter() const;
 public:
     ShadowmapPass();
     void drawPass() override;

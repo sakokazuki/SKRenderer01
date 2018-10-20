@@ -31,7 +31,6 @@ void ObjMesh::render() const {
 }
 
 void ObjMesh::loadOBJ( const char * fileName, bool reCenterMesh ) {
-    
     vector <vec3> points;
     vector <vec3> normals;
     vector <vec2> texCoords;

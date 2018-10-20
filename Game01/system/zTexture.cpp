@@ -20,7 +20,6 @@ void zTexture::render(GLenum target) {
 }
 
 GLuint zTexture::getID() const {
-	std::cout << texture << std::endl;
 	return texture;
 }
 
@@ -111,7 +110,6 @@ bool zTexture::loadTexture(const char *filename) {
 	png_destroy_info_struct(pPng, &pInfo);
 	png_destroy_read_struct(&pPng, NULL, NULL);
 	fclose(fp);
-	std::cout << ": " << tex << std::endl;
 	texture = tex;
 	return true;
 
