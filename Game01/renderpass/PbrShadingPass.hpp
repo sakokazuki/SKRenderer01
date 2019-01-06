@@ -16,7 +16,6 @@
 
 class PbrShadingPass:public RenderPass{
 private:
-    GLint KdLoc, ShininessLoc, lightPositionLoc, lightIntensityLoc, postexloc, normtexloc, coltexloc, shadowtexloc;
     Mesh* quad;
 public:
     PbrShadingPass();

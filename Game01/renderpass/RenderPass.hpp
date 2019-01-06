@@ -40,6 +40,7 @@ public:
     glm::mat4 viewMatrix, projectionMatrix;
     RenderPass(std::string vert, std::string frag);
     virtual void drawPass();
+	virtual void drawPass(GLuint prevPassTex);
     virtual void init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m);
 //    Light* light;
     Camera* camera;
@@ -51,6 +52,8 @@ public:
     void setUniform(const char* name, glm::mat4 data) const;
     void setUniform(const char* name, float data) const;
     void setUniform(const char* name, int data) const;
+	void setVertexSubRoutine(const char* name) const;
+	void setFragmentSubRoutine(const char* name) const;
 
     
     //tmp

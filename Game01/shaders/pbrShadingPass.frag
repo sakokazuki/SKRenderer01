@@ -28,6 +28,7 @@ in vec3 Normal;
 in vec2 TexCoord;
 
 layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 FboColor;
 
 struct GeometricContext {
     vec3 position;
@@ -269,6 +270,7 @@ void main(){
     
     vec3 outgoingLight = emissive + reflectedLight.directDiffuse + reflectedLight.directSpecular + reflectedLight.indirectDiffuse + reflectedLight.indirectSpecular;
     FragColor =  vec4(outgoingLight, 1.0f);
+	FboColor = FragColor;
 //    FragColor.rgb = geometry.normal;
     
 //    FragColor = vec4(diffuseModel(pos, norm, albedo), 1.0);

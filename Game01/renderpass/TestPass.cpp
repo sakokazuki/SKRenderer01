@@ -1,7 +1,8 @@
 #include "TestPass.h"
 
 
-
+#include <GL/gl.h>
+#include <GL/glu.h>
 TestPass::TestPass():RenderPass("simple.vert", "simple.frag")
 {
 	quad = new QuadScreenMesh();
@@ -14,11 +15,11 @@ void TestPass::init(std::vector<Light*> l, Camera* c, std::vector<Mesh*> m) {
 }
 
 void TestPass::drawPass() {
+
 	quad->draw(this);
 }
 
 TestPass::~TestPass()
 {
 
-	
 }

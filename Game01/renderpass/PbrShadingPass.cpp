@@ -13,10 +13,6 @@
 #include "../lights/PointLight.hpp"
 
 PbrShadingPass::PbrShadingPass():RenderPass("pbrShadingPass.vert", "pbrShadingPass.frag"){
-    postexloc = glGetUniformLocation(prog, "PositionTex");
-    normtexloc= glGetUniformLocation(prog, "NormalTex");
-    coltexloc = glGetUniformLocation(prog, "ColorTex");
-    shadowtexloc = glGetUniformLocation(prog, "ShadowmapTex");
     
     quad = new QuadScreenMesh();
     
@@ -51,16 +47,6 @@ void PbrShadingPass::drawPass(){
     setUniform("numDirectionalLights", directionalLightNum);
     setUniform("numPointLights", pointLightNum);
     setUniform("numSpotLights", spotLightNum);
-
-    glUniform1i(postexloc, 0);
-    glUniform1i(normtexloc, 1);
-    glUniform1i(coltexloc, 2);
-    glUniform1i(shadowtexloc, 3);
     
-    quad->draw(this);
-    
-    
-    
-    
-    
+    quad->draw(this); 
 }

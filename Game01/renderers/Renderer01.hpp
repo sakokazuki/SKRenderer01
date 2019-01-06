@@ -22,6 +22,7 @@
 #include "../renderpass/GBufferPass.hpp"
 #include "../renderpass/PbrShadingPass.hpp"
 #include "../renderpass/TestPass.h"
+#include "../renderpass/PostProcessPass.h"
 
 class Renderer01:public Renderer{
 private:
@@ -30,13 +31,16 @@ private:
     GLuint depthTex;
     GLuint deferredFBO;
     GLuint depthBuf, shadowDepthBuf, posTex, normTex, colorTex, shadowTex;
-    GLuint shadowmapFBO, unlitColorTex;
+    GLuint shadowmapFBO, shadowColorTex;
+
+	GLuint defferedFbo, defferedColorBuf, defferedFboTex;
     
     RenderPass* shadowmapPass;
     RenderPass* recordLightDepthPass;
     RenderPass* gBufferPass;
     RenderPass* shadingPass;
 	RenderPass* testPass;
+	RenderPass* postProcessPass;
     
     GLuint whiteTex;
 	

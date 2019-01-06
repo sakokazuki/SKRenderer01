@@ -159,6 +159,7 @@
     <ClCompile Include="renderers\TestRenderer.cpp" />
     <ClCompile Include="renderpass\GBufferPass.cpp" />
     <ClCompile Include="renderpass\PbrShadingPass.cpp" />
+    <ClCompile Include="renderpass\PostProcessPass.cpp" />
     <ClCompile Include="renderpass\RecordLightDepthPass.cpp" />
     <ClCompile Include="renderpass\RenderPass.cpp" />
     <ClCompile Include="renderpass\ShadowmapPass.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="renderers\TestRenderer.h" />
     <ClInclude Include="renderpass\GBufferPass.hpp" />
     <ClInclude Include="renderpass\PbrShadingPass.hpp" />
+    <ClInclude Include="renderpass\PostProcessPass.h" />
     <ClInclude Include="renderpass\RecordLightDepthPass.hpp" />
     <ClInclude Include="renderpass\RenderPass.hpp" />
     <ClInclude Include="renderpass\ShadowmapPass.hpp" />
@@ -240,6 +242,8 @@
     <None Include="shaders\init.vert" />
     <None Include="shaders\pbrShadingPass.frag" />
     <None Include="shaders\pbrShadingPass.vert" />
+    <None Include="shaders\ppTest.frag" />
+    <None Include="shaders\ppTest.vert" />
     <None Include="shaders\recordLightDepthPass.frag" />
     <None Include="shaders\recordLightDepthPass.vert" />
     <None Include="shaders\shadingPass.frag" />

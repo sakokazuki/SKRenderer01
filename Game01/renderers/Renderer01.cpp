@@ -18,6 +18,7 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     gBufferPass = new GBufferPass();
     shadingPass = new PbrShadingPass();
 	testPass = new TestPass();
+	postProcessPass = new PostProcessPass();
 
     
     //FBO 1 -----------------------------------------------------------
@@ -52,14 +53,14 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     glBindRenderbuffer(GL_RENDERBUFFER, shadowDepthBuf);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, windowW, windowH);
     
-    glGenTextures(1, &unlitColorTex);
-    glBindTexture(GL_TEXTURE_2D, unlitColorTex);
+    glGenTextures(1, &shadowColorTex);
+    glBindTexture(GL_TEXTURE_2D, shadowColorTex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, windowW, windowH, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadowDepthBuf);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, unlitColorTex, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadowColorTex, 0);
     
     GLenum drawbuffers2[] = {GL_NONE, GL_COLOR_ATTACHMENT0};
     glDrawBuffers(2, drawbuffers2);
@@ -102,14 +103,34 @@ Renderer01::Renderer01(int ww, int wh):Renderer(ww, wh){
     GLenum drawBuffers3[] = {GL_NONE, GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
     glDrawBuffers(4, drawBuffers3);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    
+
+
+
+	glGenFramebuffers(1, &defferedFbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, defferedFbo);
+
+	glGenRenderbuffers(1, &defferedColorBuf);
+	glBindRenderbuffer(GL_RENDERBUFFER, defferedColorBuf);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, defferedColorBuf);
+
+	glGenTextures(1, &defferedFboTex);
+	glBindTexture(GL_TEXTURE_2D, defferedFboTex);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, windowW, windowH, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, defferedFboTex, 0);
+
+	GLenum defferedDrawBuffers[] = { GL_NONE, GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(2, defferedDrawBuffers);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     
     GLubyte whiteTexColor[] = { 255, 255, 255, 255 };
     glGenTextures(1, &whiteTex);
     glBindTexture(GL_TEXTURE_2D,whiteTex);
     glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,1,1,0,GL_RGBA,GL_UNSIGNED_BYTE,whiteTexColor);
-        
+       
 }
 
 void Renderer01::render(Scene::Scene* scene) const{
@@ -175,6 +196,7 @@ void Renderer01::render(Scene::Scene* scene) const{
     
     
     //pass4 shading ====================================
+	glBindFramebuffer(GL_FRAMEBUFFER, defferedFbo);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_BLEND);
@@ -184,12 +206,15 @@ void Renderer01::render(Scene::Scene* scene) const{
     shadingPass->setTextureUniform("PositionTex", 0, posTex);
     shadingPass->setTextureUniform("NormalTex", 1, normTex);
     shadingPass->setTextureUniform("ColorTex", 2, colorTex);
-    shadingPass->setTextureUniform("ShadowmapTex", 3, unlitColorTex);
+    shadingPass->setTextureUniform("ShadowmapTex", 3, shadowColorTex);
     shadingPass->setTextureUniform("TestTex", 4, depthTex);
     shadingPass->drawPass();
     glUseProgram(0);
-    
-    
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	postProcessPass->drawPass(defferedFboTex);
+	
+   
 }
 
 

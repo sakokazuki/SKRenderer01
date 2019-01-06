@@ -13,7 +13,7 @@ uniform vec3 OffsetTexSize;
 
 
 layout (location = 0) out vec4 FragColor;
-layout (location = 1) out vec4 UnlitColor;
+layout (location = 1) out vec4 ShadowmapColor;
 
 void main() {
 	vec3 n = normalize(Normal);
@@ -38,9 +38,9 @@ void main() {
 		sum += texture( ShadowMap, vec3(sc.xy, (sc.z-bias)/sc.w));
 
 	}
-	float _shadow = sum / 8.0;
+	float shadow = sum / 8.0;
 	
-	if(_shadow != 1.0 && _shadow != 0.0){
+	if(shadow != 1.0 && shadow != 0.0){
 		for(int i=0; i<4; i++){
 			offsetCoord.z = i;
 			vec4 offsets = texelFetch(OffsetTex, offsetCoord, 0) * Radius * ShadowCoord.w;
@@ -51,17 +51,14 @@ void main() {
 			sum += texture( ShadowMap, vec3(sc.xy, (sc.z-bias)/sc.w));
 
 		}
-		_shadow = sum/float(samplesDiv2 * 2.0);
+		shadow = sum/float(samplesDiv2 * 2.0);
 	}
 
-	_shadow += 0.3;
-	_shadow = clamp(_shadow, 0.0, 1.0);
+	shadow += 0.3;
+	shadow = clamp(shadow, 0.0, 1.0);
 	
-    FragColor = vec4(_shadow, _shadow, _shadow, 1.0);
-
-
-	
-	UnlitColor = FragColor;
+    FragColor = vec4(vec3(shadow), 1.0);
+	ShadowmapColor = FragColor;
 
 
 }

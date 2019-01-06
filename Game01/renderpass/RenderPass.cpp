@@ -30,6 +30,10 @@ void RenderPass::drawPass(){
 
 }
 
+void RenderPass::drawPass(GLuint prevPassTex) {
+
+}
+
 void RenderPass::compileShader(){
     GLuint frag, vert;
 	
@@ -77,7 +81,13 @@ void RenderPass::setUniform(const char *name, int data) const{
 }
 
 
+void RenderPass::setVertexSubRoutine(const char *name) const{
+	GLuint index = glGetSubroutineIndex(prog, GL_VERTEX_SHADER, name);
+	glUniformSubroutinesuiv(GL_VERTEX_SHADER, 1, &index);
+}
 
 
-
-
+void RenderPass::setFragmentSubRoutine(const char *name) const {
+	GLuint index = glGetSubroutineIndex(prog, GL_FRAGMENT_SHADER, name);
+	glUniformSubroutinesuiv(GL_FRAGMENT_SHADER, 1, &index);
+}

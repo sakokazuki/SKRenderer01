@@ -144,6 +144,9 @@
     <ClCompile Include="renderpass\TestRenderViewPass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="renderpass\PostProcessPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\defines.h">
@@ -281,6 +284,9 @@
     <ClInclude Include="renderpass\TestRenderViewPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="renderpass\PostProcessPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\alphaTex.dds" />
@@ -324,5 +330,7 @@
     <None Include="shaders\simple.vert" />
     <None Include="..\README.md" />
     <None Include="..\memo.md" />
+    <None Include="shaders\ppTest.frag" />
+    <None Include="shaders\ppTest.vert" />
   </ItemGroup>
 </Project>

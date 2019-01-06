@@ -6,5 +6,7 @@
 #define TO_RADIANS(x) (x * 0.017453292519943295)
 #define TO_DEGREES(x) (x * 57.29577951308232)
 
+#define WINDOW_W 1920/2
+#define WINDOW_H 1080/2
 #endif // DEFINES_H
 
