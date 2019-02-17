@@ -460,4 +460,4 @@ gitignoreしてプロジェクトに含んでいたがgithubのマークダウ�
 drop box paperにまるっと移そうかな。
 
 
-<img src="./screenshots/image23.png" width="480px">
+<img src="./screenshots/image23.jpeg" width="480px">
