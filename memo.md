@@ -29,7 +29,7 @@ githubで適当な検索ワードでシンプルめなゲームのリポジト�
 次は、meshをつくって、それにshaderをあてるmeshの位置が動くところまでを目標にする。
 ※なんとなく、window部分だけclass分けたり、、みたいなリファクタリングをしたくなるだろうが我慢する。とりあえず書くことを目標に。
 
-
+<img src="./screenshots/image01.png" width="480px">
 
 ### 12/9
 
@@ -117,7 +117,7 @@ C++がわからないというフェーズにも差し掛かってきた気が�
 
 chrome閉じちゃうのでブクマ(http://miffysora.wikidot.com/opengl-deprecated)
 
-
+<img src="./screenshots/image02.png" width="480px">
 
 
 ### 1/11
@@ -137,6 +137,7 @@ chrome閉じちゃうのでブクマ(http://miffysora.wikidot.com/opengl-depreca
 glBindVertexArray(0)で終了？を明示的にしないといけないらしく、
 そうしないがために違うオブジェクトでVAOつくる時に影響がでていたっぽいという
 ところで解決しましたー　
+<img src="./screenshots/image03.png" width="480px">
 
 ### 1/15
 こないだ何故かトーラスを回転させると
@@ -157,6 +158,7 @@ normalのuniformを送り忘れていてtorusのものが使用されちゃっ�
 不安なので、本についてるモデルで試そうと思う＝objをロードするvboメッシュが必要になるので
 明日はその辺から進めようと思う
 
+<img src="./screenshots/image04.png" width="480px">
 
 ### 1/24
 objをロードしてnormal貼るやつをやった。
@@ -167,6 +169,7 @@ texcoordのyが逆になってて？ずれてたのには少しはまった。
 少しコード量も増えてきたし一度整理するためにまたテクスチャを貼ってない
 トーラスを描画して、レンダーテクスチャにするところまでをシンプルにやった。
 
+<img src="./screenshots/image05.png" width="480px">
 
 ### 1/25
 main()にいろいろ詰め込みすぎて、整理しきれなくなってきたのと、
@@ -174,6 +177,7 @@ main()にいろいろ詰め込みすぎて、整理しきれなくなってき�
 一旦整理するために自分なりにmeshクラス、materialクラスなるものを作成した。
 c++の知らない部分でちょくちょく詰まる。。
 
+<img src="./screenshots/image06.png" width="480px">
 
 ### 1/26
 ついに遅延シェーディングっぽいものができた。(気がする)
@@ -191,6 +195,10 @@ deferredやってみていくつかどうしようみたいなことが生じた
 どのマテリアルがあったってるかテクスチャみたいなのも保持しておくとかしか思いつかない。
 
 そして、この勉強果たして意味のあるものなのだろうかという不安が急にきた。どうしよう。
+
+<img src="./screenshots/image07.png" width="320px"> <img src="./screenshots/image08.png" width="320px">
+<img src="./screenshots/image09.png" width="320px"> <img src="./screenshots/image10.png" width="320px">
+
 
 ### 1/29
 deferred shadingについていろいろ考えたことメモ。
@@ -244,6 +252,7 @@ deferredでテクスチャを貼ったメッシュを出してないのでそれ
 実はzを評価してなくて書いた順にオブジェクトが重なっちゃってるので定石(ってどこかのサイトに書いてあった)っぽく
 深度バッファをするパスを追加するなどしてそれをもとにg-buffer生成する感じにしたいと思う。
 
+<img src="./screenshots/image11.png" width="320px"> <img src="./screenshots/image12.png" width="320px">
 
 ### 4/4
 しらばらく仕事が立て込んでいてまったくこれに手を付けれていなかった。
@@ -261,6 +270,10 @@ meshにrenderPassの参照を渡してそれぞれでuniformをセットしよ�
 セットする方針。Meshクラスに渡されたRenderPassをそのままMeshMaterialにもわたしてsetUniformする。
 ひとまずtextureをセットするTextureMeshMaterialというクラスをつくってPlane, Torusにそれぞれ設定したところ
 ちゃんと別々のテクスチャが描画されたので成功したっぽい。
+
+<img src="./screenshots/image13.png" width="320px"> <img src="./screenshots/image14.png" width="320px">
+
+
 
 ### 4/7
 z位置の評価がされてなく、オブジェクト描画順を変えると前後関係が変になる件について向き合った。
@@ -291,6 +304,8 @@ normalとpositionはgbufferで取ってきているのでそれを使う。metal
 
 あと今影にモアレみたいなのがうつっていてこれは物理ベースレンダリングが終わったあと対応する予定。
 どうやらシャドウアクネという現象らしい(めも)(https://msdn.microsoft.com/ja-jp/library/ee416324(v=vs.85).aspx)
+
+<img src="./screenshots/image15.png" width="320px"> <img src="./screenshots/image16.png" width="320px">
 
 
 ### 5/13
@@ -334,6 +349,11 @@ lightクラスひとまず実装できた。c++、文字列をいい感じにfor
 感じの絵を得ることができた。結構時間かかってしまったー。
 今後の展開としてはIBL、GI、影、各種ポストエフェクトかなあ。
 影>IBL>ポストエフェクト>GIくらいの優先度でやっていこうと思いつつしばらく違うこともやりたいなと。
+
+<img src="./screenshots/image17.png" width="320px"> <img src="./screenshots/image18.png" width="320px">
+<img src="./screenshots/image19.png" width="320px"> <img src="./screenshots/image20.png" width="320px">
+
+
 
 ### 6/17
 6月某日、appleでこれからOpenGLを非推奨にしていくという発表があった・・・
@@ -427,6 +447,8 @@ forでまわすだけみたいな感じにしたい(伝わってほしい)
 ところでシェーダーってincludeとかrequireみたいなのないのだろうか。UnityのshaderLab(hlsl)にはあるよね。
 軽く調べて見た感じ簡単にはなさそうだったのでしばらく放置する。
 
+<img src="./screenshots/image21.png" width="320px"> <img src="./screenshots/image22.png" width="320px">
+
 ### 1/6
 数ヶ月に1度しかやらないみたいなルーティーンができてしてしまった。
 とりあえず前回までの部分にポストプロセスのシステム部分作ったと書いてあるが動かなかったので直した。
@@ -436,3 +458,6 @@ forでまわすだけみたいな感じにしたい(伝わってほしい)
 ひとまずこのメモも当時のスクショを足したりしてまとめる。
 gitignoreしてプロジェクトに含んでいたがgithubのマークダウン改行とかが見づらい印象にあるので
 drop box paperにまるっと移そうかな。
+
+
+<img src="./screenshots/image23.png" width="480px">
