@@ -81,7 +81,7 @@ bool zTexture::loadTexture(const char *filename) {
 	imgSize = width * 4 * height;
 	data = (unsigned char *)malloc(imgSize);
 
-	std::cout << rowSize << ": " << height << "  " << width << std::endl;
+	//std::cout << rowSize << ": " << height << "  " << width << std::endl;
 	//ピクセルの読み込み
 	for (i = 0; i < height; i++) {
 		png_read_row(pPng, &data[i * rowSize], NULL);

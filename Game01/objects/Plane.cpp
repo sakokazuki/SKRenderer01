@@ -65,11 +65,11 @@ Plane::Plane(float xsize, float zsize, int xdivs, int zdivs)
             idx += 6;
         }
     }
-    std::cout << "vertex size: " << (3 * (xdivs + 1) * (zdivs + 1))/3 << std::endl;
-    std::cout << "texcoord size: " << (2 * (xdivs + 1) * (zdivs + 1))/2 << std::endl;
-    std::cout << "faces: " << faces << "," << xdivs << "," << zdivs << std::endl;
-    std::cout << "indices: " << sizeof(el) << std::endl;
-    
+    //std::cout << "vertex size: " << (3 * (xdivs + 1) * (zdivs + 1))/3 << std::endl;
+    //std::cout << "texcoord size: " << (2 * (xdivs + 1) * (zdivs + 1))/2 << std::endl;
+    //std::cout << "faces: " << faces << "," << xdivs << "," << zdivs << std::endl;
+    //std::cout << "indices: " << sizeof(el) << std::endl;
+    //
 
     
     for(int i=0; i <6 * xdivs * zdivs; i+=3){

@@ -18,7 +18,11 @@ vec3 pass0(){
 subroutine(passType)
 vec3 pass1(){
 	vec4 col = texture(MainTex, TexCoord);
-	return vec3(col.r);
+	if(TexCoord.x < 0.5){
+		return vec3(col.r);
+	}
+	return col.xyz;
+	
 }
 
 void main() {

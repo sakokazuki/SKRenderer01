@@ -13,6 +13,7 @@
 #include "../system/defines.h"
 
 ShadowmapPass::ShadowmapPass():RenderPass("shadowPass.vert", "shadowPass.frag"){
+	shadowMatrixLoc = glGetUniformLocation(prog, "ShadowMatrix");
 	shadowRadius = 10.0f;
 	samplesU = 4;
 	samplesV = 8;

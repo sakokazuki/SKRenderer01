@@ -11,7 +11,7 @@
 #include <iostream>
 bool CreateCompileShaderTest(const std::string filename, GLenum shaderType, GLuint& shader)
 {
-	std::cout << filename << std::endl;
+	//std::cout << filename << std::endl;
 	//create shader
 	shader = glCreateShader(shaderType);
 	if (0 == shader)
@@ -34,9 +34,9 @@ bool CreateCompileShaderTest(const std::string filename, GLenum shaderType, GLui
 		shaderFile.get(shaderSource[i]);
 	}
 	shaderSource[len] = '\0';
-	std::cout << "len: " << len << std::endl;
-	std::cout << shaderSource[len-1] << std::endl;
-	std::cout << shaderSource << std::endl;
+	//std::cout << "len: " << len << std::endl;
+	//std::cout << shaderSource[len-1] << std::endl;
+	//std::cout << shaderSource << std::endl;
 
 	//compile shader
 	glShaderSource(shader, 1, &shaderSource, NULL);
