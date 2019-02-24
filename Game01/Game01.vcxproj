@@ -84,6 +84,10 @@
       <AdditionalDependencies>opengl32.lib;glfw3.lib;libglew32d.lib;zlib.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)shaders\*.*" "$(TargetDir)\shaders" /Y /I /E
+xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -111,6 +115,10 @@
       <AdditionalDependencies>opengl32.lib;glfw3.lib;libglew32d.lib;zlib.lib;libpng.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(ProjectDir)shaders\*.*" "$(TargetDir)\shaders" /Y /I /E
+xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
