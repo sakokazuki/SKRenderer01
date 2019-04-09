@@ -1,5 +1,8 @@
 # original c++ rendering eingine
 
+**released exe file: https://github.com/sakokazuki/SKRenderer01/releases/tag/0.0.1**
+(win x84 build)
+
 ## feature
 - deferred rendering
 - shadow mapping
