@@ -47,6 +47,7 @@ public:
     std::vector<Mesh*> meshes;
     std::vector<Light*> lights;
     
+	void setUniform(const char* name, glm::vec2 data) const;
     void setUniform(const char* name, glm::vec3 data) const;
     void setUniform(const char* name, glm::vec4 data) const;
     void setUniform(const char* name, glm::mat4 data) const;

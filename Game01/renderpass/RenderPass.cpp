@@ -60,6 +60,12 @@ void RenderPass::setUniform(const char *name, glm::vec4 data) const{
     glUniform4fv(loc, 1, glm::value_ptr(data));
 }
 
+
+void RenderPass::setUniform(const char *name, glm::vec2 data) const {
+	GLint loc = glGetUniformLocation(prog, name);
+	glUniform2fv(loc, 1, glm::value_ptr(data));
+}
+
 void RenderPass::setUniform(const char *name, glm::vec3 data) const{
     GLint loc = glGetUniformLocation(prog, name);
     glUniform3fv(loc, 1, glm::value_ptr(data));

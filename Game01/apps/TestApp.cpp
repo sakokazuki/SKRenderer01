@@ -69,13 +69,13 @@ namespace app {
         
         Mesh* plane = new PlaneMesh();
         plane->setPosition(glm::vec3(0, 0, 0));
-        plane->setScale(glm::vec3(20, 20, 20));
+        plane->setScale(glm::vec3(20, 1, 20));
         
         
         
         PbrMeshMaterial* groundMeshMat = new PbrMeshMaterial();
-        groundMeshMat->metallic = 0.5;
-        groundMeshMat->roughness = 0.5;
+        groundMeshMat->metallic = 0.0;
+        groundMeshMat->roughness = 0.0;
         plane->meshMaterial = groundMeshMat;
         
         

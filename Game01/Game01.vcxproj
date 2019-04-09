@@ -171,6 +171,7 @@ xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
     <ClCompile Include="renderpass\RecordLightDepthPass.cpp" />
     <ClCompile Include="renderpass\RenderPass.cpp" />
     <ClCompile Include="renderpass\ShadowmapPass.cpp" />
+    <ClCompile Include="renderpass\GaussianBlurPass.cpp" />
     <ClCompile Include="renderpass\TestPass.cpp" />
     <ClCompile Include="renderpass\TestRenderViewPass.cpp" />
     <ClCompile Include="scenes\Scene.cpp" />
@@ -211,6 +212,7 @@ xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
     <ClInclude Include="renderers\Renderer01.hpp" />
     <ClInclude Include="renderers\TestRenderer.h" />
     <ClInclude Include="renderpass\GBufferPass.hpp" />
+    <ClInclude Include="renderpass\GaussianBlurPass.h" />
     <ClInclude Include="renderpass\PbrShadingPass.hpp" />
     <ClInclude Include="renderpass\PostProcessPass.h" />
     <ClInclude Include="renderpass\RecordLightDepthPass.hpp" />
@@ -244,6 +246,8 @@ xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
   <ItemGroup>
     <None Include="..\memo.md" />
     <None Include="..\README.md" />
+    <None Include="shaders\gaussianFilter.frag" />
+    <None Include="shaders\gaussianFilter.vert" />
     <None Include="shaders\gBufferPass.frag" />
     <None Include="shaders\gBufferPass.vert" />
     <None Include="shaders\init.frag" />
@@ -256,8 +260,6 @@ xcopy "$(ProjectDir)assets\*.*" "$(TargetDir)\assets" /Y /I /E</Command>
     <None Include="shaders\recordLightDepthPass.vert" />
     <None Include="shaders\shadingPass.frag" />
     <None Include="shaders\shadingPass.vert" />
-    <None Include="shaders\shadowmap.frag" />
-    <None Include="shaders\shadowmap.vert" />
     <None Include="shaders\shadowPass.frag" />
     <None Include="shaders\shadowPass.vert" />
     <None Include="shaders\simple.frag" />

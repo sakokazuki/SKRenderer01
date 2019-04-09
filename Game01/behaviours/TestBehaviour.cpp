@@ -19,6 +19,7 @@ namespace behaviour {
 //        setRotation(glm::vec3(testNum, 0, 0));
         
         testNum = fmodf(testNum, 360);
+		//testNum = 180;
         setAngleAxis(testNum, glm::vec3(0, 1, 0));
 //        std::cout <<"angle: " << glm::to_string(getEulerAnlge()) << std::endl;
 //        std::cout <<"num  : " << testNum << std::endl;

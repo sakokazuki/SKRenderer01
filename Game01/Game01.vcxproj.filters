@@ -147,6 +147,9 @@
     <ClCompile Include="renderpass\PostProcessPass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="renderpass\GaussianBlurPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="system\defines.h">
@@ -287,6 +290,9 @@
     <ClInclude Include="renderpass\PostProcessPass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="renderpass\GaussianBlurPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\images\alphaTex.dds" />
@@ -322,8 +328,6 @@
     <None Include="shaders\recordLightDepthPass.vert" />
     <None Include="shaders\shadingPass.frag" />
     <None Include="shaders\shadingPass.vert" />
-    <None Include="shaders\shadowmap.frag" />
-    <None Include="shaders\shadowmap.vert" />
     <None Include="shaders\shadowPass.frag" />
     <None Include="shaders\shadowPass.vert" />
     <None Include="shaders\simple.frag" />
@@ -332,5 +336,7 @@
     <None Include="..\memo.md" />
     <None Include="shaders\ppTest.frag" />
     <None Include="shaders\ppTest.vert" />
+    <None Include="shaders\gaussianFilter.vert" />
+    <None Include="shaders\gaussianFilter.frag" />
   </ItemGroup>
 </Project>
